@@ -1,450 +1,328 @@
-
+/* Font Loading */
 @font-face {
-  font-family: "canelaThin";
-  src: url("../fonts/canelaThin.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
+    font-family: "canelaThin";
+    src: url("../fonts/canelaThin.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: "pitchSansSemiBold";
-  src: url("../fonts/pitchSansSemiBold.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
+    font-family: "pitchSansSemiBold";
+    src: url("../fonts/pitchSansSemiBold.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: "satoshiRegular";
-  src: url("../fonts/satoshiRegular.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
+    font-family: "satoshiRegular";
+    src: url("../fonts/satoshiRegular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
+/* Reset Styles */
 * {
-  padding: 0;
-  margin: 0;
-  border: 0;
-  list-style: none;
-  vertical-align: bottom;
-  box-sizing: border-box;
-  font-style: normal;
-  font-weight: normal;
-  word-wrap: break-word;
-  border-radius: 0;
-  -webkit-appearance: none;
-  -webkit-text-size-adjust: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-style: normal;
+    font-weight: normal;
 }
 
-article h2::after,
-article p::after,
-article li::after {
-  content: "";
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  clear: both;
-  height: 0;
+ul, ol {
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
-nav,
-article {
-  display: block;
-}
-
+/* Typography */
 body {
-  font-family: sans-serif;
-  padding: 40px 80px 0;
-  background: #f1f1f1;
-  color: #222222;
+    font-family: sans-serif;
+    padding: 40px 80px 0;
+    background: #f1f1f1;
+    color: #222222;
 }
 
 strong {
-  font-weight: bold;
+    font-weight: bold;
 }
 
-h1,
-p {
-  font-family: "canelaThin", sans-serif;
-  font-size: 48px;
-  line-height: 56px;
-  margin-bottom: 20px;
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
+h1, p {
+    font-family: "canelaThin", sans-serif;
+    font-size: 48px;
+    line-height: 56px;
+    margin: 0 auto 20px;
+    max-width: 940px;
 }
 
 h2 {
-  font-family: "canelaThin", sans-serif;
-  font-size: 32px;
-  line-height: 40px;
-  clear: both;
-  margin-bottom: 40px;
+    font-family: "canelaThin", sans-serif;
+    font-size: 32px;
+    line-height: 40px;
+    margin: 0 auto 40px;
+    clear: both;
 }
 
 h2 a {
-  color: #00247F;
-  text-decoration: none;
+    color: #0088EA;
+    text-decoration: none;
 }
 
 h2 a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 h2 a:active {
-  color: rgba(64,86,71,.6);
-  text-decoration: none;
+    color: #405647;
+    text-decoration: none;
 }
 
 h3 {
-  font-family: "pitchSansSemiBold";
-  text-transform: uppercase;
-  font-size: 24x;
-  line-height: 24px;
-  letter-spacing: 0.075em;
-  -webkit-font-smoothing: antialiased;
-  margin: 0 auto;
-  max-width: 940px;
+    font-family: "pitchSansSemiBold";
+    text-transform: uppercase;
+    font-size: 24px;
+    line-height: 24px;
+    letter-spacing: 0.075em;
+    margin: 0 auto;
+    max-width: 940px;
 }
 
 h3 a {
-  color: #00247F;
+    color: #0088EA;
 }
 
 h4 {
-  font-family: "satoshiRegular";
-  font-size: 24px;
-  line-height: 32px;
+    font-family: "satoshiRegular";
+    font-size: 24px;
+    line-height: 32px;
 }
 
 h5 {
-  font-family: "pitchSansSemiBold";
-  text-transform: uppercase;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 0.05em;
-  -webkit-font-smoothing: antialiased;
-  margin: 0 auto;
+    font-family: "pitchSansSemiBold";
+    text-transform: uppercase;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.05em;
+    margin: 0 auto;
 }
 
 h6 {
-  font-family: "satoshiRegular";
-  font-size: 16px;
-  line-height: 24px;
-  color: rgba(0,36,127,.4);
-  margin: 0 auto;
+    font-family: "satoshiRegular";
+    font-size: 16px;
+    line-height: 24px;
+    color: #818181;
+    margin: 0 auto;
 }
 
-section,
-header,
-footer {
-  margin-bottom: 40px;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 940px;
+/* Layout */
+section, header, footer, article {
+    margin: 0 auto 40px;
+    max-width: 940px;
 }
 
 article {
     text-align: left;
 }
 
-article h2 {
-  margin-top: 60px;
-  margin-bottom: 40px;
-  max-width: 940px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-
-
+header {
+    margin-bottom: 80px;
 }
 
-article p,
-article li {
-  font-family: "satoshiRegular", sans-serif;
-  font-size: 20px;
-  line-height: 28px;
-  margin-bottom: 28px;
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
+header h3 {
+    float: left;
+}
+
+/* Text Content */
+article p, article li {
+    font-family: "satoshiRegular", sans-serif;
+    font-size: 20px;
+    line-height: 28px;
+    margin-bottom: 28px;
 }
 
 article img {
-  max-width: 940px;
-  width: 100%;
-  margin-top: 28px;
-  margin-bottom: 28px;
+    max-width: 100%;
+    margin-top: 28px;
+    margin-bottom: 28px;
 }
 
 article li {
-  list-style-type: disc;
-  display: list-item;
-  list-style-position: inside;
-  margin-bottom: 8px;
+    list-style-type: disc;
+    list-style-position: inside;
 }
 
 article li:last-child {
-  margin-bottom: 28px;
+    margin-bottom: 28px;
 }
 
+/* Social Icons */
 ul.socials {
-  margin-bottom: 80px;
-  float: left;
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
+    float: right;
 }
 
 ul.socials li {
-  float: left;
-  margin-right: 24px
+    float: left;
+    margin-left: 30px;
 }
 
 ul.socials li a {
-  float: left;
-  font-family: "pitchSansSemiBold";
-  font-size: 24px;
-  line-height: 32px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  text-decoration: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  border: solid 1px #00247F;
-  color: #00247F
+    font-family: "pitchSansSemiBold";
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    color: #0088EA;
 }
 
 ul.socials li a:hover {
-  background: rgba(0,36,127,.1);
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 ul.socials li a:active {
-  background: rgba(0,36,127,.05);
-  color: rgba(0,36,127,.6);
-  border-color: rgba(0,36,127,.4);
-  text-decoration: none;
-}
-
-header ul.socials {
-  float: right;
-  position: relative;
-  top: -33px;
-}
-
-header ul.socials li a {
-  font-size: 20px;
-  line-height: 24px;
-  padding: 8px 16px;
+    background: #405647;
+    color: #0088EA;
+    border-color: #405647;
 }
 
 ul.work {
-  display: flex;
-  flex-direction: row;
-  gap:  16px;
-  overflow: hidden;
-  max-width: 940px;
-  width: 100%;
-  flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    overflow: hidden;
+    max-width: 940px;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 ul.work li {
-  position: relative;
-  background: #efefef;
-  height: 400px;
-  border-radius: 8px;
-  list-style: none;
-  width: calc(50% - 8px);
-  margin: 0;
+    position: relative;
+    background: #efefef;
+    height: 400px;
+    border-radius: 8px;
+    list-style: none;
+    width: calc(50% - 8px);
+    margin: 0;
 }
 
 ul.work + ul.work li {
-  height: 248px;
+    height: 248px;
 }
 
 ul.work li:nth-child(1) {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 ul.work li:nth-child(1) {
-  background: url(../images/1.png) no-repeat center;
-  background-size: cover;
+    background: url(../images/1.png) no-repeat center;
+    background-size: cover;
 }
 
 ul.work li:nth-child(2) {
-  background: url(../images/2.png) no-repeat center;
-  background-size: cover;
+    background: url(../images/2.png) no-repeat center;
+    background-size: cover;
 }
 
-
 ul.work li:nth-child(3) {
-  background: url(../images/3.png) no-repeat center;
-  background-size: cover;
+    background: url(../images/3.png) no-repeat center;
+    background-size: cover;
 }
 
 ul.work li:nth-child(4) {
-  background: url(../images/4.png) no-repeat center;
-  background-size: cover;
+    background: url(../images/4.png) no-repeat center;
+    background-size: cover;
 }
 
 ul.work li:nth-child(5) {
-  background: url(../images/5.png) no-repeat center;
-  background-size: cover;
+    background: url(../images/5.png) no-repeat center;
+    background-size: cover;
 }
 
 ul.work li a {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 ul.work li a div {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 56px 24px 17px;
-  background: rgb(0,0,0);
-  background:
-  linear-gradient(
-    0deg,
-    rgba(0,0,0,1) 0%,
-    rgba(0,0,0,0.738) 19%,
-    rgba(0,0,0,0.541) 34%,
-    rgba(0,0,0,0.382) 47%,
-    rgba(0,0,0,0.278) 56.5%,
-    rgba(0,0,0,0.194) 65%,
-    rgba(0,0,0,0.126) 73%,
-    rgba(0,0,0,0.075) 80.2%,
-    rgba(0,0,0,0.042) 86.1%,
-    rgba(0,0,0,0.021) 91%,
-    rgba(0,0,0,0.008) 95.2%,
-    rgba(0,0,0,0.002) 98.2%,
-    rgba(0,0,0,0) 100%
-  );
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 56px 24px 17px;
+    background: rgb(0,0,0);
+    background:
+        linear-gradient(
+        0deg,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0.738) 19%,
+        rgba(0,0,0,0.541) 34%,
+        rgba(0,0,0,0.382) 47%,
+        rgba(0,0,0,0.278) 56.5%,
+        rgba(0,0,0,0.194) 65%,
+        rgba(0,0,0,0.126) 73%,
+        rgba(0,0,0,0.075) 80.2%,
+        rgba(0,0,0,0.042) 86.1%,
+        rgba(0,0,0,0.021) 91%,
+        rgba(0,0,0,0.008) 95.2%,
+        rgba(0,0,0,0.002) 98.2%,
+        rgba(0,0,0,0) 100%
+        );
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 
 ul.work li a div h4,
 ul.work li a div h5 {
-color: #fff;
+    color: #fff;
 }
 
 ul.work li a div h5 {
-  margin-bottom: 4px;
+    margin-bottom: 4px;
 }
 
 ul.work li a:hover h4 {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 ul.work li a:active h4 {
-  text-decoration: none;
-  opacity: .5;
+    text-decoration: none;
+    opacity: .5;
 }
 
 ul.work li a:active h5 {
-  opacity: .5;
+    opacity: .5;
 }
 
+/* Responsive Design */
 @media screen and (max-width: 900px) {
+    body {
+        padding: 40px 16px 0;
+    }
 
-  body {
-    font-family: sans-serif;
-    padding: 40px 16px 0;
-  }
-
-  h1,
-  p {
-    font-size: 32px;
-    line-height: 40px;
-    margin-bottom: 32px;
-  }
-
-  h2 {
-    font-size: 24px;
-    line-height: 32px;
-    margin-bottom: 40px;
-  }
-
-  section,
-  header,
-  footer {
-    margin-bottom: 40px;
-  }
-
-  h4 {
-    font-size: 20px;
-    line-height: 28px;
-  }
-
-  h5 {
-    font-size: 14px;
-    line-height: 16px;
-  }
-
-  ul.socials {
-    margin-bottom: 32px;
-  }
-
-  ul.socials li {
-    margin-right: 16px;
-    margin-bottom: 16px;
-  }
-
-  ul.socials li a {
-    font-size: 20px;
-    line-height: 26px;
-    padding: 8px 16px;
-    border-radius: 28px;
-  }
-
-  h6 {
-    font-size: 16px;
-    line-height: 20px;
-  }
-
+    /* Adjustments for smaller screens can be added here */
 }
 
 @media screen and (max-width: 640px) {
+    ul.work {
+        display: block;
+    }
 
-  ul.work {
-    display: block;
-  }
+    ul.work li,
+    ul.work + ul.work li {
+        height: 320px;
+    }
 
-  ul.work li,
-  ul.work + ul.work li {
-    height: 320px;
-  }
+    ul.work li {
+        width: 100%;
+        margin: 0 0 16px;
+    }
 
-  ul.work li {
-    width: 100%;
-    margin: 0 0 16px;
-  }
-
-  header .socials {
-    display: none;
-  }
-
+    header ul.socials {
+        display: none;
+    }
 }
-
-
-/* @media screen and (min-width: 1600px) {
-
-  ul.work li {
-    height: 520px
-  }
-
-  ul.work + ul.work li {
-    height: 400px;
-  }
-
-} */

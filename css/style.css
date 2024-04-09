@@ -23,6 +23,14 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "satoshiBold";
+    src: url("../fonts/satoshiBold.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* Reset Styles */
 * {
     padding: 0;
@@ -47,8 +55,7 @@ body {
 }
 
 ul li strong {
-    font-weight: 900 !important;
-	color: ##0a0a0a;
+	font-family: "satoshiBold";
 }
 
 h1, p {
@@ -141,7 +148,7 @@ article p, article li {
     font-family: "satoshiRegular", sans-serif;
     font-size: 20px;
     line-height: 28px;
-    margin-bottom: 28px;
+    margin-bottom: 16px;
 }
 
 article img {
@@ -149,11 +156,6 @@ article img {
     margin: 40px auto 40px auto;
 	display: block;
 	
-}
-
-article li {
-    list-style-type: none;
-	line-height: 20px;
 }
 
 article li:last-child {
@@ -172,7 +174,7 @@ ul.socials li {
 
 ul.socials li a {
     font-family: "pitchSansSemiBold";
-    font-size: 24px;
+    font-size: 20px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     text-decoration: none;

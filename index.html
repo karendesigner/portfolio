@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
 <title>Karen Viana — Product Designer</title>
 <style>
 /* Layout idea: the portfolio reads like a design-system spec sheet — redline annotations, token labels and measured rules frame real work. */
@@ -13,19 +14,8 @@
   --mono:ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
   --s1:4px; --s2:8px; --s3:16px; --s4:24px; --s5:40px; --s6:64px; --s7:104px;
   --wrap:1200px; --radius:14px;
-  color-scheme:light;
+  color-scheme:only light;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#0E0F13; --surface:#171920; --ink:#ECEDF1; --muted:#9A9FAD; --line:#2A2D37; --accent:#25B1E3; --accent-ink:#25B1E3;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0E0F13; --surface:#171920; --ink:#ECEDF1; --muted:#9A9FAD; --line:#2A2D37; --accent:#25B1E3; --accent-ink:#25B1E3;
-  color-scheme:dark;
-}
-
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}

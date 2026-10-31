@@ -1,8 +1,1510 @@
- <html xmlns="http://www.w3.org/1999/xhtml">    
-  <head>      
-    <title>Design matters</title>      
-    <meta http-equiv="refresh" content="0;URL='https://publishdesignmatter.framer.website/'" />    
-  </head>    
-  <body>
-  </body>  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karen Viana — Product Designer</title>
+<style>
+/* Layout idea: the portfolio reads like a design-system spec sheet — redline annotations, token labels and measured rules frame real work. */
+:root{
+  --paper:#F2F3F5; --surface:#FFFFFF; --ink:#121318; --muted:#5B6070; --line:#D8DBE2; --accent:#25B1E3; --accent-ink:#0874A3;
+  --display:-apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+  --body:-apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+  --mono:ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --s1:4px; --s2:8px; --s3:16px; --s4:24px; --s5:40px; --s6:64px; --s7:104px;
+  --wrap:1200px; --radius:14px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E0F13; --surface:#171920; --ink:#ECEDF1; --muted:#9A9FAD; --line:#2A2D37; --accent:#25B1E3; --accent-ink:#25B1E3;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E0F13; --surface:#171920; --ink:#ECEDF1; --muted:#9A9FAD; --line:#2A2D37; --accent:#25B1E3; --accent-ink:#25B1E3;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--surface);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.02em}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;font-weight:500;letter-spacing:-.02em}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:11px 20px;border-radius:999px;font-weight:500;font-size:15px;text-decoration:none;border:1px solid var(--line);transition:border-color .2s,color .2s}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent-ink)}
+
+/* original-style homepage */
+.top{border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:20}
+.top .bar{display:flex;justify-content:space-between;align-items:center;height:64px;padding:0 max(20px,3.6vw)}
+.brand{text-decoration:none;font-weight:500;font-size:16px}
+.links{display:flex;gap:28px}
+.links a{text-decoration:none;font-size:16px}
+.links a:hover,.brand:hover{color:var(--accent-ink)}
+.page{max-width:1000px;margin:0 auto;padding:0 max(20px,4vw)}
+.intro{padding:48px 0 80px}
+.intro h1{font-size:clamp(26px,2.6vw,34px);line-height:1.25;font-weight:500;letter-spacing:-.02em}
+.intro .big{margin:28px 0 0;font-size:clamp(19px,1.9vw,24px);line-height:1.5;font-weight:300;color:var(--muted);max-width:60ch;letter-spacing:-.01em}
+.intro .small{margin:22px 0 0;font-size:clamp(16px,1.4vw,19px);line-height:1.5;max-width:70ch}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:72px 60px;padding-bottom:96px}
+@media (max-width:760px){.grid{grid-template-columns:1fr;gap:48px}}
+.proj{text-decoration:none;display:block}
+.proj .img{border-radius:10px;overflow:hidden;aspect-ratio:470/250;background:var(--paper)}
+.proj .img img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.proj:hover .img img{transform:scale(1.02)}
+.proj h2{font-size:clamp(20px,1.8vw,24px);line-height:1.3;margin:24px 0 0;font-weight:500}
+.proj p{margin:12px 0 0;font-size:clamp(16px,1.4vw,18px);line-height:1.55;font-weight:300;color:var(--muted);max-width:40ch}
+.proj .res{display:block;margin-top:10px;font-size:14px;font-weight:500;color:var(--accent-ink)}
+.proj:hover h2{color:var(--accent-ink)}
+footer{border-top:1px solid var(--line);padding:40px 20px;text-align:center;font-size:13px;color:var(--muted)}
+footer a{color:var(--muted)}
+/* case study overlay */
+.case{position:fixed;inset:0;z-index:50;background:var(--surface);overflow-y:auto;display:none}
+.case.open{display:block;animation:rise .35s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+body.locked{overflow:hidden}
+.case-bar{position:sticky;top:0;z-index:2;background:color-mix(in srgb, var(--surface) 92%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.case-bar .wrap{display:flex;justify-content:space-between;align-items:center;height:60px;gap:var(--s3)}
+.close{font:600 15px var(--body);background:none;border:1.5px solid var(--ink);color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer}
+.close:hover{border-color:var(--accent-ink);color:var(--accent-ink)}
+.case-inner{max-width:880px;margin:0 auto;padding:var(--s6) max(20px,4vw) var(--s7)}
+.case-inner .meta{margin-bottom:var(--s3)}
+.case-inner h2{font-size:clamp(28px,3.4vw,40px);line-height:1.15;letter-spacing:-.025em}
+.case-inner .sub{font-size:18px;color:var(--muted);margin:var(--s3) 0 var(--s5);max-width:56ch}
+.case-hero{border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);margin-bottom:var(--s5)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);margin-bottom:var(--s6)}
+.facts div{padding:var(--s3) var(--s4);border-right:1px solid var(--line)}
+.facts div:last-child{border-right:0}
+.facts .mono{color:var(--muted);display:block;margin-bottom:4px}
+.facts b{font-weight:600;font-size:16px}
+.facts b.hot{color:var(--accent-ink);font-family:var(--display);font-size:18px;letter-spacing:-.02em}
+@media (max-width:640px){.facts{grid-template-columns:1fr}.facts div{border-right:0;border-bottom:1px solid var(--line)}}
+.case-inner h3{font-size:20px;margin:var(--s5) 0 var(--s2);display:flex;gap:14px;align-items:baseline}
+.case-inner h3 .mono{color:var(--accent-ink);font-family:var(--mono)}
+.case-inner p,.case-inner li{max-width:66ch;color:var(--ink)}
+.case-inner p{margin:0 0 var(--s3)}
+.case-inner ul{padding-left:20px;margin:0 0 var(--s3)}
+.case-inner li{margin-bottom:8px}
+.case-inner li::marker{color:var(--accent)}
+.callout{border-left:3px solid var(--accent);padding:var(--s3) var(--s4);background:var(--surface);border-radius:0 10px 10px 0;margin:var(--s4) 0}
+.callout p{margin:0}
+.nda{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center;justify-content:space-between;padding:var(--s4);border:1.5px dashed var(--accent);border-radius:var(--radius);margin-top:var(--s5)}
+.nda p{margin:0;color:var(--muted)}
+.next{margin-top:var(--s6);padding-top:var(--s4);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:var(--s3);flex-wrap:wrap}
+.next a{text-decoration:none;font-family:var(--display);font-size:22px;font-weight:600;letter-spacing:-.02em}
+.next a:hover{color:var(--accent-ink)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 max(20px,3.6vw)}
+.fig{margin:var(--s4) 0 var(--s4);}
+.fig-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:var(--s4) 0 0}
+.fig-grid .fig{margin:0}
+@media (max-width:560px){.fig-grid{grid-template-columns:1fr}}
+.fig-cap{font-size:14px;color:var(--muted);margin-top:8px !important}
+.fig video{width:100%;display:block;border-radius:10px;border:1px solid #EEF0F3}
+.fig img{width:100%;border-radius:10px;border:1px solid #EEF0F3}
+.fig figcaption{margin-top:8px;font-size:14px;color:var(--muted)}
+.tbl{overflow-x:auto;margin:var(--s4) 0;border:1px solid var(--line);border-radius:10px}
+.tbl table{width:100%;border-collapse:collapse;font-size:15.5px}
+.tbl th{text-align:left;font-weight:600;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--paper)}
+.tbl td{padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.fig img{cursor:zoom-in}
+.lb{position:fixed;inset:0;z-index:100;background:rgba(10,11,14,.92);display:none;overflow:auto;-webkit-overflow-scrolling:touch}
+.lb.open{display:block;animation:lbfade .2s ease both}
+@keyframes lbfade{from{opacity:0}to{opacity:1}}
+.lb-stage{min-height:100%;display:flex;align-items:center;justify-content:center;padding:56px 24px 24px}
+.lb img{max-width:100%;max-height:calc(100vh - 80px);border-radius:8px;cursor:zoom-in;display:block}
+.lb.single img{cursor:default}
+.lb.zoomed .lb-stage{display:block;padding:56px 0 0}
+.lb.zoomed img{max-width:none;max-height:none;cursor:zoom-out;border-radius:0;margin:0 auto}
+.lb-bar{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;color:#F2F3F5;font-size:13px;z-index:1;pointer-events:none}
+.lb-bar button{pointer-events:auto;font:500 14px var(--body);color:#F2F3F5;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:7px 14px;cursor:pointer}
+.lb-bar button:hover{background:rgba(255,255,255,.22)}
+
+/* ===== IG prototype ===== */
+.pp{display:grid;grid-template-columns:350px 1fr;gap:32px;align-items:start;margin:var(--s4) 0 var(--s5)}
+@media (max-width:760px){.pp{grid-template-columns:1fr;justify-items:center}.pp-side{width:100%;max-width:400px}}
+.pp-device{--pp-bg:#FFFFFF;--pp-surface:#F5F5F6;--pp-text:#171717;--pp-muted:#707379;--pp-line:#EDEDEF;--pp-teal:#00D1C1;--pp-teal-ink:#007A71;--pp-up:#1E9E3F;--pp-down:#E0261B;--pp-red:#E3262A;--pp-ai1:#8B45F0;--pp-ai2:#E0264C;
+  width:350px;height:730px;border-radius:50px;border:9px solid #0D0E10;background:var(--pp-bg);color:var(--pp-text);position:relative;overflow:hidden;box-shadow:0 30px 70px -36px rgba(0,0,0,.5);font-family:var(--body);font-size:14px;line-height:1.35;transition:background .3s,color .3s;-webkit-font-smoothing:antialiased}
+.pp-device[data-theme="dark"]{--pp-bg:#171717;--pp-surface:#222223;--pp-text:#D4D4D4;--pp-muted:#9B9EA4;--pp-line:#2A2A2C;--pp-teal:#00D1C1;--pp-teal-ink:#2FE0D2;--pp-up:#4FC46B;--pp-down:#FF6A5C;--pp-ai1:#B38BFF;--pp-ai2:#FF6A86}
+.pp-device *{box-sizing:border-box}
+.pp-device button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0;text-align:inherit}
+.pp-device button:focus-visible,.pp-device input:focus-visible{outline:2px solid var(--pp-teal);outline-offset:2px;border-radius:6px}
+.pp-device::after{content:"";position:absolute;left:50%;bottom:7px;width:128px;height:4.5px;border-radius:3px;background:var(--pp-text);transform:translateX(-50%);z-index:6;opacity:.9}
+.pp-device.photo::after{background:#171717}
+.pp-screen{position:absolute;inset:0 0 82px 0;overflow-y:auto;scrollbar-width:none}
+.pp-device.no-nav .pp-screen{bottom:0}
+.pp-screen::-webkit-scrollbar{display:none}
+.pp-view{min-height:100%;position:relative}
+.pp-anim{animation:ppin .26s ease both}
+@keyframes ppin{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.pp-anim{animation:none}}
+.pp-status{display:flex;justify-content:space-between;align-items:center;padding:16px 26px 8px;font-weight:600;font-size:15px;letter-spacing:-.01em}
+.pp-status.on-photo{color:#fff;position:absolute;top:0;left:0;right:0}
+.pp-head{display:flex;align-items:center;justify-content:space-between;padding:8px 16px 10px;min-height:46px}
+.pp-head.brand{padding:10px 20px 14px}
+.pp-head .chev{color:var(--pp-muted)}
+.pp-logo{display:flex;align-items:center;gap:9px;font-weight:500;letter-spacing:.03em;font-size:14.5px}
+.pp-logo span{color:var(--pp-red);font-weight:800;font-size:19px;letter-spacing:-.04em}
+.pp-title{font-weight:600;font-size:16.5px;text-align:center;flex:1}
+.pp-back{width:30px;height:30px;display:grid;place-items:center;border-radius:50%}
+.pp-back:hover{background:var(--pp-surface)}
+.pp-tabs{display:flex;border-bottom:1px solid var(--pp-line)}
+.pp-tabs button{flex:1;padding:4px 0 11px;font-size:13.5px;color:var(--pp-muted);border-bottom:2px solid transparent;text-align:center}
+.pp-tabs button[aria-selected="true"]{color:var(--pp-text);font-weight:600;border-bottom-color:var(--pp-text)}
+.up{color:var(--pp-up)}.down{color:var(--pp-down)}
+.pp-device .pp-row{display:flex;align-items:center;gap:11px;padding:13px 16px 13px 18px;border-bottom:1px solid var(--pp-line);width:100%}
+button.pp-row:hover{background:var(--pp-surface)}
+.pp-ic{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;flex:none;letter-spacing:-.03em}
+.pp-ic.sm{font-size:8.5px}
+.pp-ic.ring{box-shadow:inset 0 0 0 1px var(--pp-line)}
+.pp-row .n{flex:1;min-width:0;display:flex;flex-direction:column}
+.pp-row .n b{font-weight:500;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp-row .n span{color:var(--pp-muted);font-size:12.5px;line-height:1.45}
+.pp-row .n span+span{font-size:11.5px}
+.pp-row .p{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;flex:none;display:flex;flex-direction:column;gap:2px}
+.pp-row .p b{font-weight:600;font-size:14.5px}
+.pp-row .p b.reg{font-weight:400}
+.pp-row .p span{font-size:11px;color:var(--pp-muted)}
+.pp-row .p span i{font-style:normal}
+.pp-row .chev{color:var(--pp-muted);flex:none}
+.pp-hold.open .chev{transform:rotate(180deg)}
+.pp-hold.open .pp-row{border-bottom-color:transparent}
+.pp-exp{padding:0 41px 14px 55px;border-bottom:1px solid var(--pp-line);display:grid;gap:7px;font-size:13px}
+.pp-exp div{display:flex;justify-content:space-between}
+.pp-exp span{color:var(--pp-muted)}
+.pp-exp b{font-weight:500;font-variant-numeric:tabular-nums}
+.pp-exp .acts{gap:8px;margin-top:4px}
+.pp-empty{padding:36px 24px;color:var(--pp-muted);text-align:center;font-size:13.5px}
+.pp-search{display:flex;align-items:center;gap:12px;margin:10px 16px 18px}
+.pp-field{flex:1;min-width:0;display:flex;align-items:center;gap:8px;border:2px solid var(--pp-teal);border-radius:18px;padding:10px 12px;color:var(--pp-muted)}
+.pp-field input{flex:1;min-width:0;border:0;background:none;color:var(--pp-text);font:inherit;font-size:15px;outline:none;padding:0}
+.pp-field input::placeholder{color:var(--pp-muted)}
+.pp-field input::-webkit-search-cancel-button{-webkit-appearance:none}
+.pp-search .cancel{font-weight:600;font-size:15px;flex:none}
+.pp-sec{padding:0 18px 4px;color:var(--pp-muted);font-size:14px}
+.pp-md{padding:4px 18px 0}
+.pp-md h5{margin:0;font-size:17px;font-weight:600;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pp-md h5 small{font-weight:400;color:var(--pp-muted);font-size:12.5px}
+.pp-chip{font-size:11.5px;padding:3px 8px;border-radius:5px;background:var(--pp-surface);color:var(--pp-muted);font-weight:500;margin-left:4px}
+.pp-md .px{font-size:13.5px;margin-top:3px;font-variant-numeric:tabular-nums}
+.pp-sub{display:flex;gap:2px;padding:14px 0 0;border-bottom:1px solid var(--pp-line);font-size:13.5px;overflow:hidden}
+.pp-sub button{padding:0 12px 10px;color:var(--pp-muted);display:inline-flex;align-items:center;gap:5px;white-space:nowrap;border-bottom:2px solid transparent}
+.pp-sub button[aria-selected="true"]{color:var(--pp-text);font-weight:600;border-bottom-color:var(--pp-text)}
+.pp-sub button.ai{background:linear-gradient(90deg,var(--pp-ai1),var(--pp-ai2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.pp-sub button.ai[aria-selected="true"]{border-image:linear-gradient(90deg,var(--pp-ai1),var(--pp-ai2)) 1;border-bottom:2px solid}
+.pp-chart{padding:14px 6px 0 12px;touch-action:none;cursor:crosshair}
+.pp-chart svg{width:100%;height:auto;display:block;overflow:visible}
+.pp-chart .gl{stroke:var(--pp-line);stroke-width:1}
+.pp-chart .ax{font:500 8.5px var(--body);fill:var(--pp-muted)}
+.pp-chart .ax-ic{color:var(--pp-muted)}
+.pp-chart .tg{font:600 8px var(--body);fill:#fff}
+.pp-chart .tg.s{font-weight:500;font-size:7px}
+.pp-about{padding:18px 18px 100px}
+.pp-about h6{margin:0 0 6px;font-size:16px;font-weight:600}
+.pp-about p{margin:0;color:var(--pp-muted);font-size:13.5px}
+.pp-ai{margin:16px;padding:14px;border-radius:14px;background:linear-gradient(135deg,color-mix(in srgb,var(--pp-ai1) 10%,transparent),color-mix(in srgb,var(--pp-ai2) 8%,transparent));animation:ppin .22s ease both}
+.pp-ai-h{display:flex;align-items:center;gap:6px;font-weight:600;font-size:14px}
+.pp-ai-h small{margin-left:auto;font-weight:400;color:var(--pp-muted);font-size:11px}
+.pp-ai .spark{color:var(--pp-ai1)}
+.pp-ai ul{margin:10px 0 0;padding-left:18px;display:grid;gap:7px;font-size:13px}
+.pp-ai li::marker{color:var(--pp-ai1)}
+.disc{margin:12px 0 0;font-size:11px;color:var(--pp-muted)}
+.pp-sig{margin:16px;border:1px solid var(--pp-line);border-radius:14px;padding:4px 14px 12px}
+.pp-sig div{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--pp-line);font-size:13.5px}
+.pp-sig span{color:var(--pp-muted)}
+.pp-sig b{font-weight:600}
+.pp-cta{position:sticky;bottom:0;display:flex;gap:10px;padding:12px 16px 26px;background:var(--pp-bg);border-top:1px solid var(--pp-line);margin-top:auto}
+.pp-view:has(.pp-cta){display:flex;flex-direction:column}
+.pp-btn{flex:1;height:44px;border-radius:999px;font-weight:500 !important;font-size:15px;display:inline-flex !important;align-items:center;justify-content:center;gap:8px;text-align:center !important}
+.pp-btn.fill{background:var(--pp-teal) !important;color:#062B28 !important}
+.pp-btn.line{border:1px solid var(--pp-text) !important}
+.pp-btn.sm{height:34px;font-size:13px}
+.pp-welcome{position:absolute;inset:0;display:flex;flex-direction:column;background:#2F2F33}
+.pp-welcome .photo{flex:1;background:url("img/ig/welcome.jpg") center top/cover no-repeat;position:relative}
+.pp-welcome .sheet{background:#fff;color:#171717;border-radius:22px 22px 0 0;margin-top:-22px;position:relative;padding:14px 14px 34px;display:grid;gap:8px}
+.pp-welcome .sheet .pp-btn.line{border-color:#171717 !important}
+.pp-welcome .or{text-align:center;color:#7B7E84;font-size:12.5px;padding:6px 0}
+.pp-welcome .skip{text-align:center !important;font-weight:500;padding:12px 0 0;font-size:15px}
+.pp-seg2{display:flex;background:var(--pp-surface);border-radius:12px;padding:3px;margin:8px 16px 16px}
+.pp-seg2 button{flex:1;padding:8px;border-radius:9px;font-size:13.5px;color:var(--pp-muted);text-align:center}
+.pp-seg2 button[aria-pressed="true"]{background:var(--pp-bg);color:var(--pp-text);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.pp-amt{text-align:center;padding:6px 16px 0}
+.pp-amt label{display:block;color:var(--pp-muted);font-size:12.5px;margin-bottom:8px}
+.pp-amt .box{display:flex;align-items:center;justify-content:center;gap:14px}
+.pp-amt .step{width:36px;height:36px;border-radius:50%;border:1px solid var(--pp-line) !important;font-size:20px;line-height:1;text-align:center !important}
+.pp-amt .val{font-size:34px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;min-width:150px}
+.pp-amt .hint{margin-top:6px;font-size:12.5px;color:var(--pp-muted)}
+.pp-quick{display:flex;gap:6px;justify-content:center;margin-top:12px}
+.pp-quick button{font-size:12.5px;padding:6px 11px;border-radius:999px;border:1px solid var(--pp-line) !important;color:var(--pp-muted)}
+.pp-quick button[aria-pressed="true"]{border-color:var(--pp-text) !important;color:var(--pp-text);font-weight:600}
+.pp-kv{margin:16px;border:1px solid var(--pp-line);border-radius:14px;overflow:hidden}
+.pp-kv div{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid var(--pp-line);font-size:13.5px}
+.pp-kv div:last-child{border-bottom:0}
+.pp-kv span{color:var(--pp-muted)}
+.pp-kv b{font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.pp-kv .tot b{font-weight:700}
+.pp-kv .tot span{color:var(--pp-text);font-weight:600}
+.pp-kv .hl{background:color-mix(in srgb, var(--pp-teal) 13%, transparent)}
+.pp-kv .hl b{color:var(--pp-teal-ink);font-weight:600}
+.pp-kv .pp-fixtag{display:inline-block;margin-left:6px;font-size:10px;font-weight:600;padding:2px 6px;border-radius:5px;background:var(--pp-teal);color:#062B28;vertical-align:1px}
+.pp-rev{display:flex;gap:12px;align-items:center;padding:8px 18px 0}
+.pp-rev .pp-ic{width:36px;height:36px;font-size:14px}
+.pp-rev b{display:block;font-size:16px;font-weight:600}
+.pp-rev span{color:var(--pp-muted);font-size:13px}
+.pp-fine{margin:0 18px;color:var(--pp-muted);font-size:11.5px}
+.pp-acct{padding:24px 18px}
+.pp-acct .lock{border:1.5px dashed var(--pp-line);border-radius:14px;padding:16px;color:var(--pp-muted);font-size:13.5px}
+.pp-acct .lock b{color:var(--pp-text)}
+.pp-nav{position:absolute;left:0;right:0;bottom:0;height:82px;padding-bottom:20px;display:flex;border-top:1px solid var(--pp-line);background:var(--pp-bg);z-index:4}
+.pp-device.no-nav .pp-nav{display:none}
+.pp-nav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11.5px;color:var(--pp-muted);text-align:center}
+.pp-nav button svg{width:21px;height:21px}
+.pp-nav button[aria-current="page"]{color:var(--pp-text);font-weight:600}
+.pp-toast{position:absolute;left:50%;bottom:94px;transform:translate(-50%,8px);background:#262628;color:#fff;padding:9px 14px;border-radius:8px;font-size:13px;display:flex;gap:8px;align-items:center;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;white-space:nowrap;z-index:5;box-shadow:0 6px 18px -8px rgba(0,0,0,.5)}
+.pp-device[data-theme="dark"] .pp-toast{background:#3A3A3C}
+.pp-toast.show{opacity:1;transform:translate(-50%,0)}
+.pp-toast i{width:16px;height:16px;border-radius:50%;background:#1E9E3F;display:grid;place-items:center;font-style:normal;font-size:9px;color:#fff}
+.pp-side{display:grid;gap:16px}
+.pp-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pp-seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px}
+.pp-seg button{font:500 14px var(--body);border:0;background:none;color:var(--muted);padding:6px 14px;border-radius:999px;cursor:pointer}
+.pp-seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.pp-reset{font:500 14px var(--body);border:1px solid #D0211F;background:#D0211F;color:#fff;padding:7px 14px;border-radius:999px;cursor:pointer;transition:background .2s,border-color .2s}
+.pp-reset:hover{background:#A91A19;border-color:#A91A19}
+.pp-contrast{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;flex-wrap:wrap}
+.pp-contrast .mono{color:var(--muted);flex:1}
+.pp-contrast b{font-size:18px;font-variant-numeric:tabular-nums}
+.pp-badge{font:600 12px var(--mono);padding:3px 8px;border-radius:6px;background:color-mix(in srgb, var(--accent) 16%, transparent);color:var(--accent-ink)}
+.pp-steps{display:flex;flex-wrap:wrap;gap:6px}
+.pp-steps button{font:500 12.5px var(--body);border:1px solid var(--line);background:none;color:var(--muted);padding:5px 10px;border-radius:999px;cursor:pointer}
+.pp-steps button[aria-current="step"]{border-color:var(--accent);color:var(--accent-ink);background:color-mix(in srgb, var(--accent) 10%, transparent)}
+.pp-note{padding:16px;border-left:3px solid var(--accent);background:var(--paper);border-radius:0 10px 10px 0}
+.pp-note .mono{color:var(--accent-ink)}
+.pp-note h4{margin:6px 0 6px;font-size:17px;font-weight:600}
+.pp-note p{margin:0;font-size:15px;color:var(--muted)}
+/* ===== Transaction search prototype ===== */
+.ts{display:grid;grid-template-columns:350px 1fr;gap:32px;align-items:start;margin:var(--s4) 0 var(--s5)}
+@media (max-width:760px){.ts{grid-template-columns:1fr;justify-items:center}.ts-side{width:100%;max-width:400px}}
+.ts-device{--t-bg:#fff;--t-surface:#F2F2F4;--t-text:#1A1A1A;--t-muted:#6E6E73;--t-line:#E8E8EB;--t-purple:#7A00C8;--t-purple-ink:#6A00AE;--t-green:#118A2B;
+  width:350px;height:730px;border-radius:50px;border:9px solid #0D0E10;background:var(--t-bg);color:var(--t-text);position:relative;overflow:hidden;box-shadow:0 30px 70px -36px rgba(0,0,0,.5);font-family:var(--body);font-size:14px;line-height:1.35;-webkit-font-smoothing:antialiased}
+.ts-device *{box-sizing:border-box}
+.ts-device button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0;text-align:inherit}
+.ts-device button:focus-visible,.ts-device input:focus-visible,.ts-device select:focus-visible{outline:2px solid var(--t-purple);outline-offset:2px;border-radius:6px}
+.ts-device::after{content:"";position:absolute;left:50%;bottom:7px;width:128px;height:4.5px;border-radius:3px;background:#111;transform:translateX(-50%);z-index:9}
+.ts-screen{position:absolute;inset:0;display:flex;flex-direction:column}
+.ts-anim{animation:ppin .24s ease both}
+.ts-status{display:flex;justify-content:space-between;align-items:center;padding:16px 26px 8px;font-weight:600;font-size:15px;flex:none}
+.ts-purple{background:var(--t-purple);color:#fff}
+.ts-head{display:flex;align-items:center;justify-content:space-between;padding:6px 14px 14px;min-height:44px;flex:none}
+.ts-head .t{flex:1;text-align:center;font-weight:600;font-size:16px}
+.ts-head .b{width:30px;height:30px;display:grid;place-items:center;border-radius:50%}
+.ts-scroll{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:30px}
+.ts-scroll::-webkit-scrollbar{display:none}
+.ts-acc{margin:12px 14px 0;border:1px solid var(--t-line);border-radius:10px}
+.ts-acc .tp{padding:12px 14px}
+.ts-acc .tp b{display:block;font-size:14px}
+.ts-acc .tp span{color:var(--t-muted);font-size:12px}
+.ts-acc .tp .bal{text-align:right;font-weight:700;font-size:15px;margin-top:4px;font-variant-numeric:tabular-nums}
+.ts-acc .man{display:block;width:100%;text-align:center !important;border-top:1px solid var(--t-line) !important;padding:11px !important;color:var(--t-purple-ink);font-weight:600;font-size:13.5px}
+.ts-sbar{display:flex;gap:10px;align-items:center;margin:16px 14px 6px}
+.ts-device .ts-fake{flex:1;display:flex;align-items:center;gap:7px;background:var(--t-surface);border-radius:9px;padding:9px 10px;color:var(--t-muted);font-size:14px}
+.ts-device .ts-ficon{width:30px;height:30px;display:grid;place-items:center;color:var(--t-purple);border-radius:8px}
+.ts-device .ts-ficon.dot{position:relative}
+.ts-device .ts-ficon.dot::after{content:"";position:absolute;top:4px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--t-purple)}
+.ts-grp{display:flex;justify-content:space-between;padding:14px 16px 8px;font-size:11.5px;color:var(--t-muted);font-weight:500;border-bottom:1px solid var(--t-line);margin:0 0 0}
+.ts-grp em{font-style:normal;color:var(--t-purple-ink);font-weight:600}
+.ts-device .ts-tx{display:flex;align-items:center;gap:10px;width:100%;padding:13px 16px;border-bottom:1px solid var(--t-line);font-size:14.5px}
+.ts-device .ts-tx:hover{background:var(--t-surface)}
+.ts-tx .nm{flex:1}
+.ts-tx .am{font-weight:700;font-variant-numeric:tabular-nums}
+.ts-tx .am.in{color:var(--t-green)}
+.ts-tx svg{color:var(--t-muted);flex:none}
+.ts-empty{padding:40px 24px;text-align:center;color:var(--t-muted);font-size:13.5px}
+.ts-srch{display:flex;gap:12px;align-items:center;margin:4px 14px 10px;flex:none}
+.ts-srch label{flex:1;min-width:0;display:flex;align-items:center;gap:7px;background:var(--t-surface);border-radius:9px;padding:8px 10px;color:var(--t-muted)}
+.ts-srch input{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:15px;color:var(--t-text);outline:none;padding:0}
+.ts-srch input::-webkit-search-cancel-button{-webkit-appearance:none}
+.ts-device .ts-srch .clr{color:var(--t-muted);font-size:13px;width:18px;text-align:center}
+.ts-device .ts-srch .cancel{color:var(--t-purple-ink);font-size:15px;flex:none}
+.ts-pills{display:flex;gap:6px;padding:0 14px 6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;flex:none}
+.ts-pills::-webkit-scrollbar{display:none}
+.ts-device .ts-pill{flex:none;border:1px solid #C9C9CE;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:500;display:inline-flex;gap:6px;align-items:center}
+.ts-device .ts-pill.on{background:color-mix(in srgb,var(--t-purple) 12%,#fff);border-color:transparent;color:var(--t-text)}
+.ts-pill.on i{font-style:normal;color:var(--t-purple-ink);font-size:13px;line-height:1}
+.ts-kb{background:#D1D3D9;padding:8px 3px 30px;display:grid;gap:9px;flex:none}
+.ts-kb .kr{display:flex;gap:5px;justify-content:center}
+.ts-kb .kr.r2{padding:0 14px}
+.ts-device .ts-kb button{flex:1;max-width:31px;height:38px;border-radius:5px;background:#fff;color:#111;font-size:17px;box-shadow:0 1px 0 rgba(0,0,0,.3);text-align:center}
+.ts-device .ts-kb button.fn{background:#ABAFB8;max-width:42px;font-size:14px}
+.ts-device .ts-kb button.w{max-width:86px;font-size:14px}
+.ts-device .ts-kb button.sp{max-width:none;flex:3;font-size:14px}
+.ts-kb button:active{background:#B9BCC4 !important}
+.ts-sheet-wrap{position:absolute;inset:0;z-index:7;display:none}
+.ts-sheet-wrap.open{display:block}
+.ts-dim{position:absolute;inset:0;background:rgba(0,0,0,.42);animation:tsfade .2s ease both}
+@keyframes tsfade{from{opacity:0}to{opacity:1}}
+.ts-sheet{position:absolute;left:0;right:0;bottom:0;background:var(--t-bg);border-radius:16px 16px 0 0;padding:8px 14px 34px;animation:ppup .28s cubic-bezier(.2,.8,.2,1) both;max-height:92%;display:flex;flex-direction:column}
+.ts-sheet.full{top:44px;max-height:none;border-radius:12px 12px 0 0}
+.ts-sheet .grab{width:36px;height:4px;border-radius:2px;background:#D5D5DA;margin:0 auto 10px;flex:none}
+.ts-sheet .hd{display:flex;align-items:center;justify-content:space-between;padding:4px 0 12px;flex:none}
+.ts-sheet .hd b{font-size:16px;font-weight:600;flex:1}
+.ts-sheet.full .hd b{text-align:center}
+.ts-device .ts-sheet .x{width:28px;height:28px;color:var(--t-purple);font-size:15px;text-align:center}
+.ts-sheet .bd{overflow-y:auto;scrollbar-width:none;flex:1}
+.ts-sheet .bd::-webkit-scrollbar{display:none}
+.ts-lbl{font-size:13.5px;margin:6px 0 8px}
+.ts-radios{border:1px solid var(--t-line);border-radius:10px;margin-bottom:14px}
+.ts-device .ts-radio{display:flex;justify-content:space-between;align-items:center;width:100%;padding:11px 12px;border-bottom:1px solid var(--t-line);font-size:14px}
+.ts-radio:last-child{border-bottom:0}
+.ts-radio i{width:18px;height:18px;border-radius:50%;border:1.6px solid var(--t-purple);position:relative;flex:none}
+.ts-radio[aria-checked="true"] i::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--t-purple)}
+.ts-sel{display:flex;flex-direction:column;border:1px solid var(--t-line);border-radius:10px;padding:9px 12px;margin-bottom:14px;position:relative}
+.ts-sel span{font-size:11.5px;color:var(--t-muted)}
+.ts-sel select{appearance:none;-webkit-appearance:none;border:0;background:none;font:600 14px var(--body);color:var(--t-text);padding:0;outline:none}
+.ts-sel::after{content:"›";position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--t-muted);font-size:18px}
+.ts-inp{width:100%;border:1px solid var(--t-line);border-radius:10px;padding:10px 12px;font:inherit;font-size:14px;color:var(--t-text);background:var(--t-bg);margin-bottom:8px}
+.ts-row2{display:flex;gap:8px;align-items:center}
+.ts-row2 .ts-inp{margin:0}
+.ts-row2 span{color:var(--t-muted);font-size:13px}
+.ts-device .ts-apply{display:block;width:100%;height:44px;border-radius:9px;background:var(--t-purple);color:#fff;font-weight:600;text-align:center;margin-top:12px;flex:none}
+.ts-det{text-align:center;padding:24px 16px 0}
+.ts-det .a{font-size:28px;font-weight:600;font-variant-numeric:tabular-nums}
+.ts-det .n{font-size:18px;margin-top:2px}
+.ts-det .d{font-size:12.5px;color:var(--t-muted);margin-top:2px}
+.ts-det .chip{display:inline-block;margin-top:10px;padding:5px 12px;border-radius:999px;background:var(--t-surface);font-size:12.5px;font-weight:600}
+.ts-device .ts-disp{display:flex;justify-content:space-between;margin:26px 14px 0;width:calc(100% - 28px);border:1px solid var(--t-line);border-radius:8px;padding:11px 12px;font-size:13.5px}
+.ts-bgrey{background:var(--t-surface)}
+.ts-side{display:grid;gap:16px}
+.ts-ver{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ts-ver button{font:500 14px var(--body);border:1px solid var(--line);background:none;color:var(--muted);padding:10px 12px;border-radius:12px;cursor:pointer;text-align:left;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ts-ver button b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;background:var(--paper);color:var(--ink);font-size:12px}
+.ts-ver button em{font-style:normal;font-size:11px;font-weight:600;color:var(--accent-ink);background:color-mix(in srgb,var(--accent) 14%,transparent);padding:2px 6px;border-radius:5px}
+.ts-ver button[aria-pressed="true"]{border-color:var(--ink);color:var(--ink)}
+.ts-ver button[aria-pressed="true"] b{background:var(--ink);color:var(--surface)}
+.ts-task{border:1px solid var(--line);border-radius:12px;padding:14px}
+.ts-task .mono{color:var(--accent-ink)}
+.ts-task p{margin:6px 0 12px;font-size:15px}
+.ts-meter{display:flex;gap:10px;align-items:center}
+.ts-meter div{flex:1;background:var(--paper);border-radius:10px;padding:8px 12px;display:flex;flex-direction:column}
+.ts-meter span{font-size:12px;color:var(--muted)}
+.ts-meter b{font-size:20px;font-variant-numeric:tabular-nums}
+.ts-restart{font:500 14px var(--body);border:1px solid #D0211F;background:#D0211F;color:#fff;padding:9px 14px;border-radius:999px;cursor:pointer}
+.ts-restart:hover{background:#A91A19;border-color:#A91A19}
+.ts-res{display:grid;gap:6px;margin-top:10px}
+.ts-res:empty{display:none}
+.ts-res div{display:flex;justify-content:space-between;font-size:14px;padding:8px 12px;border-radius:8px;background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.ts-res div b{font-variant-numeric:tabular-nums}
+.ts-res .done{background:color-mix(in srgb,#1E9E3F 14%,transparent);font-weight:600}
+/* ===== KYC console prototype ===== */
+.ky{margin:var(--s4) 0 var(--s5);display:grid;gap:16px;width:min(1120px,calc(100vw - 40px));position:relative;left:50%;transform:translateX(-50%)}
+.ky-under{margin-top:var(--s4)}
+.ky-frame{--k-bg:#F3F4F6;--k-card:#fff;--k-text:#1C1C1E;--k-muted:#6B6E76;--k-line:#E3E5E9;--k-purple:#8A1FB5;--k-ink:#151515;
+  --k-pend-bg:#E5EEFB;--k-pend:#1F5FBF;--k-ok-bg:#E5F4E8;--k-ok:#1B7A35;--k-bad-bg:#FCE7E6;--k-bad:#C62828;
+  position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--k-bg);color:var(--k-text);font-family:var(--body);font-size:12.5px;line-height:1.4;height:660px;display:flex;flex-direction:column;box-shadow:0 24px 60px -36px rgba(0,0,0,.45)}
+@media (max-width:900px){.ky-frame{overflow-x:auto}.ky-body{min-width:820px}.ky-top{min-width:820px}}
+.ky-frame *{box-sizing:border-box}
+.ky-frame button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0;text-align:inherit}
+.ky-frame button:focus-visible{outline:2px solid var(--k-purple);outline-offset:2px;border-radius:4px}
+.ky-top{flex:none;height:42px;background:var(--k-ink);color:#fff;display:flex;align-items:center;gap:14px;padding:0 14px;border-bottom:3px solid transparent;border-image:linear-gradient(90deg,#E2007A,#8A1FB5) 1}
+.ky-logo{font-size:16px;letter-spacing:.01em}.ky-logo b{font-weight:800}
+.ky-burger{opacity:.8}.ky-sp{flex:1}
+.ky-lang,.ky-user{font-size:12px;display:flex;align-items:center;gap:6px}
+.ky-user i{font-style:normal;width:22px;height:22px;border-radius:50%;background:#8E8E93;display:grid;place-items:center;font-size:10px}
+.ky-body{flex:1;display:flex;min-height:0}
+.ky-side{width:180px;flex:none;background:#E9EAED;padding:10px 0;overflow-y:auto}
+.ky-srch{margin:0 12px 10px;padding:6px 0;border-bottom:1px solid #9A9CA3;color:var(--k-muted);font-size:12px}
+.ky-nav{display:flex;align-items:center;gap:8px;width:100%;padding:8px 12px;font-weight:600;font-size:12px}
+.ky-nav span{flex:1}.ky-nav em{font-style:normal;color:var(--k-muted)}
+.ky-sub{display:flex;align-items:center;gap:8px;width:100%;padding:7px 12px 7px 20px;font-size:12px;color:#3A3A3C;border-left:3px solid transparent}
+.ky-sub i{width:8px;height:8px;border-radius:50%;border:1.3px solid currentColor;font-style:normal}
+.ky-sub[aria-current="page"]{background:#CDD0D6;border-left-color:var(--k-purple);color:var(--k-text)}
+.ky-sub b{margin-left:auto;font-size:10.5px;background:var(--k-purple);color:#fff;border-radius:9px;padding:0 6px;line-height:16px}
+.ky-main{flex:1;overflow-y:auto;padding:12px 16px 24px;min-width:0}
+.ky-crumbs{color:var(--k-purple);font-size:11.5px;margin-bottom:10px}
+.ky-crumbs button{color:var(--k-purple)}
+.ky-card{background:var(--k-card);border:1px solid var(--k-line);border-radius:4px}
+.ky-ph{display:flex;align-items:center;gap:10px;padding:12px 14px;font-weight:700;font-size:15px}
+.ky-ph .bk{font-size:16px}
+.ky-ph .hist{margin-left:auto;font-size:11.5px;font-weight:600;color:var(--k-purple);border:1px solid var(--k-purple);padding:4px 9px;border-radius:3px;display:flex;gap:5px;align-items:center}
+.ky-ph .hist b{background:var(--k-purple);color:#fff;border-radius:8px;padding:0 5px;font-size:10px;line-height:15px}
+.ky-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px}
+.ky-c{padding:12px 14px}
+.ky-c h5{margin:0 0 10px;font-size:13.5px;font-weight:500}
+.ky-av{width:52px;height:52px;border-radius:50%;background:var(--k-bg);display:grid;place-items:center;font-size:14px;margin-bottom:12px}
+.ky-kv{display:grid;grid-template-columns:78px 1fr;gap:7px 10px;font-size:11.5px}
+.ky-kv span{color:var(--k-muted)}
+.ky-li{display:flex;justify-content:space-between;align-items:center;padding:8px 6px;border-bottom:1px solid var(--k-line);font-size:11.5px}
+.ky-li span{color:#3A3A3C}
+.ky-sub2{margin:12px 0 4px;font-size:13.5px;font-weight:500}
+.ky-tag{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:3px;white-space:nowrap}
+.ky-tag.pending{background:var(--k-pend-bg);color:var(--k-pend)}
+.ky-tag.ok{background:var(--k-ok-bg);color:var(--k-ok)}
+.ky-tag.bad{background:var(--k-bad-bg);color:var(--k-bad)}
+.ky-tag.grey{background:#EEEFF2;color:var(--k-muted)}
+.ky-empty{color:var(--k-muted);font-size:11.5px}
+.ky-kbtns{display:flex;gap:6px;justify-content:flex-end;margin-top:12px}
+.ky-ob{font-size:11px;font-weight:600;color:var(--k-purple);border:1px solid var(--k-purple) !important;padding:4px 8px !important;border-radius:3px}
+.ky-ob:disabled{opacity:.4;cursor:not-allowed}
+.ky-sec{margin-top:10px;padding:12px 14px}
+.ky-sec h4{margin:0 0 10px;font-size:13.5px;font-weight:500;padding-bottom:8px;border-bottom:1px solid var(--k-line)}
+.ky-wfh{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.ky-wfh p{margin:0;font-size:11.5px}
+.ky-wfh p small{display:block;color:var(--k-muted)}
+.ky-acts{display:flex;gap:6px}
+.ky-fb{font-size:11.5px;font-weight:600;padding:6px 14px !important;border-radius:3px;background:var(--k-purple) !important;color:#fff !important}
+.ky-fb.rej{background:#fff !important;color:var(--k-bad) !important;border:1px solid var(--k-bad) !important}
+.ky-fb:disabled{background:#D9DBE0 !important;color:#fff !important;border-color:#D9DBE0 !important;cursor:not-allowed}
+.ky-steps{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-top:22px}
+.ky-st{position:relative;border:1px solid var(--k-line);border-radius:4px;padding:16px 4px 8px;text-align:center;min-height:74px;display:flex;flex-direction:column;align-items:center;gap:2px;background:#fff}
+.ky-st.cur{border-color:var(--k-pend);box-shadow:0 0 0 1px var(--k-pend)}
+.ky-st .s{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:700}
+.ky-st .s.ok{background:#1B8A3A}.ky-st .s.act{background:#1F6FE0}.ky-st .s.wait{background:#5F6268}.ky-st .s.bad{background:#D32020}.ky-st .s.none{display:none}
+.ky-st b{font-weight:500;font-size:11.5px}
+.ky-st small{font-size:10px;color:var(--k-muted);line-height:1}
+.ky-st .ic{margin-top:auto;display:flex;gap:6px;color:#8A8D94;font-size:12px}
+.ky-st .ic button{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;text-align:center;position:relative}
+.ky-st .ic button:hover{background:var(--k-bg);color:var(--k-text)}
+.ky-st .ic button.vf{color:var(--k-pend);font-weight:700}
+.ky-st .ic button[data-tip]:hover::after{content:attr(data-tip);position:absolute;top:22px;left:50%;transform:translateX(-50%);background:#3A3B3F;color:#fff;font-size:10px;padding:3px 7px;border-radius:3px;white-space:nowrap;z-index:3}
+.ky-tabs{display:flex;gap:4px;border-bottom:1px solid var(--k-line);margin:0 -14px;padding:0 14px}
+.ky-tabs button{padding:8px 10px;font-size:12px;border-bottom:2px solid transparent;display:flex;gap:5px;align-items:center}
+.ky-tabs button i{width:6px;height:6px;border-radius:50%;background:var(--k-pend)}
+.ky-tabs button[aria-selected="true"]{font-weight:700;border-bottom-color:var(--k-purple)}
+.ky-panel{border:1px solid var(--k-line);border-radius:4px;margin-top:12px;padding:12px}
+.ky-panel .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:13px}
+.ky-fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ky-f span{display:block;font-size:10.5px;color:var(--k-muted);margin-bottom:3px}
+.ky-f div{background:#EEF0F3;border:1px solid #DCDFE4;border-radius:3px;padding:6px 8px;font-size:11.5px}
+.ky-docs{display:flex;gap:12px;margin-top:12px}
+.ky-doc{width:130px}
+.ky-doc span{display:block;font-size:9.5px;color:var(--k-muted);margin-bottom:3px;letter-spacing:.02em}
+.ky-doc .pg{height:86px;border:1px solid #CFD2D8;background:repeating-linear-gradient(180deg,#fff 0 6px,#EEF0F3 6px 7px);position:relative;border-radius:2px}
+.ky-doc .pg::after{content:"";position:absolute;left:10px;right:40px;top:38px;height:12px;border:1.5px solid #4A78C2;border-radius:8px}
+.ky-doc .pg.id{background:linear-gradient(135deg,#EAF0F7,#DDE5EF)}
+.ky-doc .pg.id::before{content:"";position:absolute;left:10px;top:14px;width:30px;height:38px;background:#C3CCD8;border-radius:2px}
+.ky-doc .pg.id::after{left:50px;right:10px;top:18px;height:6px;border:0;background:#AEB8C6;box-shadow:0 12px 0 #C3CCD8,0 24px 0 #C3CCD8}
+.ky-pfoot{display:flex;justify-content:flex-end;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid var(--k-line)}
+.ky-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px;background:#fff}
+.ky-table th{text-align:left;font-weight:600;font-size:11px;color:var(--k-muted);padding:8px 10px;border-bottom:1px solid var(--k-line)}
+.ky-table td{padding:10px;border-bottom:1px solid var(--k-line)}
+.ky-table tr.click{cursor:pointer}
+.ky-table tr.click:hover td{background:#F7F7FA}
+.ky-table td b{font-weight:600}
+.ky-mini{display:flex;gap:3px}
+.ky-mini i{width:9px;height:9px;border-radius:50%;background:#D9DBE0}
+.ky-mini i.ok{background:#1B8A3A}.ky-mini i.act{background:#1F6FE0}.ky-mini i.bad{background:#D32020}
+.ky-toast{position:absolute;top:50px;left:50%;transform:translate(-50%,-8px);padding:8px 12px 8px 14px;border-radius:3px;color:#fff;font-size:12.5px;font-weight:500;display:flex;gap:14px;align-items:center;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:6;box-shadow:0 6px 16px -6px rgba(0,0,0,.4)}
+.ky-toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.ky-toast.bad{background:#D33A2C}.ky-toast.ok{background:#1E7B34}.ky-toast.info{background:#3A3B3F}
+.ky-layer{position:absolute;inset:0;z-index:5;display:none}
+.ky-layer.open{display:block}
+.ky-dim{position:absolute;inset:0;background:rgba(0,0,0,.35)}
+.ky-drawer{position:absolute;top:0;right:0;bottom:0;width:300px;background:#fff;padding:16px;overflow-y:auto;animation:kyin .22s ease both}
+@keyframes kyin{from{transform:translateX(24px);opacity:0}to{transform:none;opacity:1}}
+.ky-drawer h5,.ky-dlg h5{margin:0 0 12px;font-size:14px;display:flex;justify-content:space-between;align-items:center}
+.ky-drawer h5 button,.ky-dlg h5 button{font-size:14px;color:var(--k-muted)}
+.ky-ev{display:grid;grid-template-columns:12px 1fr;gap:8px;padding:8px 0;border-bottom:1px solid var(--k-line)}
+.ky-ev i{width:8px;height:8px;border-radius:50%;margin-top:4px;background:var(--k-pend)}
+.ky-ev i.ok{background:#1B8A3A}.ky-ev i.bad{background:#D32020}.ky-ev i.grey{background:#9A9CA3}
+.ky-ev b{display:block;font-weight:500;font-size:12px}
+.ky-ev span{font-size:11px;color:var(--k-muted)}
+.ky-dlg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:360px;background:#fff;border-radius:6px;padding:16px;box-shadow:0 20px 50px -20px rgba(0,0,0,.5)}
+.ky-dlg p{margin:0 0 10px;color:var(--k-muted);font-size:12px}
+.ky-rad{display:flex;gap:10px;align-items:center;width:100%;padding:7px 2px !important;font-size:12.5px}
+.ky-rad i{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--k-purple);flex:none;position:relative}
+.ky-rad[aria-checked="true"] i::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--k-purple)}
+.ky-dlg .row{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+.ky-switch{margin-left:auto;display:flex;gap:4px;font-size:11.5px;font-weight:500}
+.ky-switch button{padding:5px 10px !important;border-radius:3px;color:var(--k-muted)}
+.ky-switch button[aria-pressed="true"]{background:var(--k-bg);color:var(--k-text);font-weight:600}
+
+/* KYC spacing aligned to reference form */
+.ky-frame{font-size:13.5px;height:740px}
+.ky-main{padding:22px 22px 32px}
+.ky-crumbs{font-size:12.5px;margin-bottom:18px}
+.ky-box{background:#fff;border:1px solid var(--k-line);border-radius:4px}
+.ky-box>.ky-ph{border-bottom:1px solid var(--k-line);padding:16px 22px;font-size:18px}
+.ky-boxb{padding:20px;display:grid;gap:14px;background:#FAFAFB}
+.ky-boxb .ky-grid3{margin-top:0;gap:14px}
+.ky-boxb .ky-sec{margin-top:0}
+.ky-c{padding:22px}
+.ky-c h5{font-size:16px;font-weight:400;margin:0 0 20px}
+.ky-av{width:78px;height:78px;font-size:16px;margin-bottom:24px}
+.ky-kv{grid-template-columns:104px 1fr;gap:16px 14px;font-size:13px}
+.ky-li{padding:12px 8px;font-size:13px}
+.ky-sub2{margin:22px 0 6px;font-size:16px;font-weight:400}
+.ky-tag{font-size:12.5px;padding:3px 10px}
+.ky-empty{font-size:13px}
+.ky-kbtns{margin-top:18px}
+.ky-ob{font-size:12px;padding:6px 10px !important}
+.ky-sec{padding:22px}
+.ky-sec h4{font-size:15px;font-weight:400;padding-bottom:14px;margin-bottom:18px}
+.ky-wfh p{font-size:13px}
+.ky-fb{font-size:12.5px;padding:8px 16px !important}
+.ky-steps{gap:16px;margin-top:34px}
+.ky-st{padding:22px 6px 10px;min-height:86px}
+.ky-st b{font-size:12px}
+.ky-st small{font-size:10.5px}
+.ky-st .ic{gap:8px;font-size:13px}
+.ky-tabs{margin:0 -22px;padding:0 22px}
+.ky-tabs button{padding:16px 14px;font-size:13.5px;border-bottom-width:3px}
+.ky-sec.data h4{border:0;margin-bottom:0;padding-bottom:18px}
+.ky-panel{margin-top:26px;padding:22px}
+.ky-panel .hd{font-size:16px;margin-bottom:24px}
+.ky-panel .hd .r{display:flex;gap:12px;align-items:center;color:var(--k-purple)}
+.ky-h6{display:flex;gap:12px;align-items:center;font-size:15px;margin:0 0 20px}
+.ky-h6.mt{margin-top:32px}
+.ky-fields{gap:30px 22px}
+.ky-f span{font-size:12.5px;margin-bottom:8px}
+.ky-f div{padding:11px 12px;font-size:13px;border-radius:2px}
+.ky-docs{gap:22px;margin-top:0}
+.ky-doc{width:180px}
+.ky-doc span{font-size:10px;margin-bottom:6px}
+.ky-doc .pg{height:180px}
+.ky-doc .pg::after{top:72px;height:16px}
+.ky-pfoot{margin-top:24px;padding-top:16px}
+.ky-table{margin-top:0;font-size:13px}
+.ky-table th{padding:12px 22px;font-size:12px}
+.ky-table td{padding:14px 22px}
+.ky-ph .hist{font-size:12.5px;padding:6px 12px}
+.ky-under{display:flex;gap:16px;align-items:flex-start}
+.ky-under .pp-note{flex:1}
+</style>
+</head>
+<body>
+<header class="top"><div class="bar">
+  <a class="brand" href="#top">Karen Viana</a>
+  <nav class="links" aria-label="Profiles"><a href="https://www.linkedin.com/in/karenviana/">LinkedIn</a><a href="https://dribbble.com/karenviana">Dribbble</a></nav>
+</div></header>
+
+<main id="top" class="page">
+  <section class="intro">
+    <h1>Hey, I’m Karen, a Product Designer.</h1>
+    <p class="big">With 15+ years of experience, I specialise in crafting intuitive, user-centric UX/UI solutions. I’m a proactive problem solver who values simplicity, clarity, and collaboration to deliver meaningful digital experiences.</p>
+    <p class="small">Design System lover and advocate, and early AI adopter exploring how intelligent tools can enhance creativity and efficiency.</p>
+  </section>
+
+  <section class="grid" id="work" aria-label="Projects">
+    <a class="proj" href="#ig"><div class="img"><img src="img/invest.jpg" alt="Investment app portfolio dashboard"></div><h2>Investment App</h2><p>Led the end-to-end design of a new investment app, from early discovery to polished UI.</p></a>
+    <a class="proj" href="#search"><div class="img"><img src="img/search.jpg" alt="Transaction search with pill filters"></div><h2>Enhancing Transaction Search</h2><p>Redesigned the transaction list experience to improve usability and help users find information faster.</p></a>
+    <a class="proj" href="#uw"><div class="img"><img src="img/uwds.jpg" alt="Design system illustration of components and type"></div><h2>Mobile-First DS</h2><p>Spearheaded the creation and implementation of a robust design system to unify products and accelerate delivery.</p></a>
+    <a class="proj" href="#sopra-ds"><div class="img"><img src="img/sopds.jpg" alt="Design System title card"></div><h2>SaaS Design System</h2><p>Designed and managed a scalable DS for a B2B SaaS web application, ensuring consistency, efficiency, and scalability.</p></a>
+    <a class="proj" href="#kyc"><div class="img"><img src="img/kyc.jpg" alt="Back-office KYC console"></div><h2>KYC Verification</h2><p>Streamlined the verification process to ensure compliance and reduce fraud.</p></a>
+    <a class="proj" href="#dooh"><div class="img"><img src="img/dooh.jpg" alt="Billboard booking interface"></div><h2>DOOH Booking Process</h2><p>Redesigned the booking flow to reduce abandonment rates and improve the overall purchase experience.</p></a>
+  </section>
+</main>
+
+<footer>© 2026 Karen Viana · <a href="https://www.linkedin.com/in/karenviana/">LinkedIn</a> · <a href="https://dribbble.com/karenviana">Dribbble</a></footer>
+
+<!-- ============ CASE STUDIES ============ -->
+
+<article class="case" id="case-ig" aria-label="Investment App case study">
+  <div class="case-bar"><div class="wrap"><span class="mono">Case study · IG Group</span><button class="close" type="button">Close ✕</button></div></div>
+  <div class="case-inner">
+    <div class="meta mono"><span>IG Group</span><span>Fintech</span><span>iOS · Android · Web</span></div>
+    <h2>Investment App</h2>
+    <p class="sub">Simplifying investing for new European markets, starting with France.</p>
+    <div class="facts"><div><span class="mono">Role</span><b>Sole Product Designer</b></div><div><span class="mono">Scope</span><b>Research → UI → design system</b></div><div><span class="mono">Outcome</span><b class="hot">1k users, first month</b></div></div>
+
+    <h3><span class="mono">01</span>The problem</h3>
+    <p>IG Group wanted to bring its UK investment offering to Europe, starting with France. The UK app was built for traders: complex, full of jargon and intimidating for new investors. The challenge was a mobile-first app for iOS and Android, made for French investors.</p>
+    <p>One key constraint: technical dependencies meant the account page couldn't change. I had to design the rest of the app around it and still keep the experience cohesive.</p>
+    <p><strong>Success metric:</strong> strong adoption, with 1k users in the first month.</p>
+
+    <h3><span class="mono">02</span>Competitor analysis</h3>
+    <p>I started by analysing how other investment apps balance accessibility and advanced features. This gave me benchmarks for navigation patterns, dashboards and onboarding flows.</p>
+
+    <h3><span class="mono">03</span>Research and navigation</h3>
+    <p>I ran discovery interviews with investors in France, Germany and Spain. People consistently said the UK app felt overwhelming, even "elitist". Their main needs were clear dashboards, simple onboarding, and transparency on costs and portfolio performance.</p>
+    <p>In response, I restructured navigation into one clear flow: login → overview → search → market details → deal ticket → review. The portfolio dashboard became the central hub. Proof-of-concept flows covering three levels of navigation guided the usability tests and validated the information hierarchy.</p>
+
+    <h3><span class="mono">04</span>User testing and validation</h3>
+    <p>I ran usability sessions with French users of the IG UK app to validate flows before launch. I used Claude to analyse the qualitative feedback and surface recurring patterns, and Figma Make to build interactive prototypes faster. Together these shortened the step from raw feedback to the fixes below.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Issue observed</th><th>Impact on users</th><th>Iteration / fix</th></tr></thead>
+      <tbody>
+        <tr><td>Euro symbol missing</td><td>Confusion about pricing</td><td>Added the currency symbol consistently</td></tr>
+        <tr><td>Order expiry unclear</td><td>Users missed expiry details</td><td>Highlighted order expiration in the deal flow</td></tr>
+        <tr><td>P&amp;L timeframe not obvious</td><td>Misunderstood performance figures</td><td>Clarified timeframe labels in the portfolio</td></tr>
+        <tr><td>Account page limitation</td><td>Felt inconsistent with the new UI</td><td>Designed surrounding flows to feel cohesive</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3><span class="mono">05</span>Results</h3>
+    <div class="callout"><p>The redesigned app launched successfully in France. The simpler onboarding and dashboard-first approach drove early adoption, and the app reached <strong>1k users in its first month</strong> in a competitive market.</p></div>
+    <ul>
+      <li><strong>UX impact:</strong> a more intuitive, modern experience than the UK app.</li>
+      <li><strong>Scalable foundation:</strong> the design system kept mobile and web consistent, ready for future EU rollouts.</li>
+      <li><strong>Validation:</strong> MVP adoption confirmed product-market fit, with demand for fractional shares, research tools and tax wrappers.</li>
+    </ul>
+
+        <h3><span class="mono">06</span>Try the prototype</h3>
+    <p>Tap through the core journey I designed: welcome → overview → search → market details → deal ticket → review. It's rebuilt in code from the final designs, with sample data. Switch the theme to see the token-based dark mode.</p>
+    <div class="pp" id="pp">
+      <div class="pp-device" data-theme="light">
+        <div class="pp-screen" id="pp-screen" aria-live="polite"></div>
+        <div class="pp-toast" id="pp-toast" role="status"></div>
+        <nav class="pp-nav" id="pp-nav" aria-label="Prototype navigation">
+          <button type="button" data-go="overview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Overview</button>
+          <button type="button" data-go="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Search</button>
+          <button type="button" data-go="account"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6.5 18.5c1.3-2 3.3-3 5.5-3s4.2 1 5.5 3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>Account</button>
+        </nav>
+      </div>
+      <aside class="pp-side">
+        <div class="pp-controls">
+          <div class="pp-seg" role="group" aria-label="Theme">
+            <button type="button" data-theme-set="light" aria-pressed="true">Light</button>
+            <button type="button" data-theme-set="dark" aria-pressed="false">Dark</button>
+          </div>
+          <button type="button" class="pp-reset" id="pp-reset">Restart</button>
+        </div>
+        <div class="pp-contrast"><span class="mono">Text contrast</span><b id="pp-ratio">–</b><span id="pp-level" class="pp-badge">–</span></div>
+        <div class="pp-steps" id="pp-steps"></div>
+        <div class="pp-note"><span class="mono" id="pp-note-k">Screen</span><h4 id="pp-note-t"></h4><p id="pp-note-p"></p></div>
+      </aside>
+    </div>
+
+    <h3><span class="mono">07</span>Design system</h3>
+    <p>To make the product scalable, I created a design system with reusable tokens, variables and components. It supported both mobile and web, sped up delivery and kept the brand consistent for future European launches.</p>
+
+    <h3><span class="mono">08</span>Dark mode and accessibility</h3>
+    <p>I added dark mode on the same token architecture, so colours adapt across themes without extra component variants. I also applied WCAG standards to colour contrast, typography and interaction states, so the system is accessible by default and needs less rework from designers and developers.</p>
+
+    <h3><span class="mono">09</span>Learnings</h3>
+    <ul>
+      <li><strong>Localisation matters:</strong> research showed that reusing the UK app would have failed in France.</li>
+      <li><strong>Balance simplicity and sophistication:</strong> investors valued clarity, but advanced users also needed depth.</li>
+      <li><strong>Design drives adoption:</strong> the app's early growth showed how UX decisions shape business outcomes.</li>
+      <li><strong>Future-ready:</strong> the groundwork is in place for fractional shares, automation, tax wrappers and broader instrument coverage.</li>
+    </ul>
+    <div class="next"><span class="mono">Next</span><a href="#search">Enhancing Transaction Search →</a></div>
+  </div>
+</article>
+
+<article class="case" id="case-uw" aria-label="Mobile-First DS case study">
+  <div class="case-bar"><div class="wrap"><span class="mono">Case study · Utility Warehouse</span><button class="close" type="button">Close ✕</button></div></div>
+  <div class="case-inner">
+    <div class="meta mono"><span>Utility Warehouse</span><span>Design system</span><span>iOS · Android · Web · Figma</span></div>
+    <h2>Mobile-First DS</h2>
+    <p class="sub">Building a scalable design system</p>
+
+    <h3><span class="mono">01</span>Situation</h3>
+    <p>Utility Warehouse was preparing for a new visual identity, but their legacy design system was fragmented, inconsistent, and hard to maintain. Designers often recreated components from scratch, while developers lacked clear standards or documentation. Scaling design across mobile and web products had become inefficient.</p>
+    <p>This challenge presented an opportunity to rebuild the system from the ground up — with a mobile-first approach to support the rebrand and future product growth.</p>
+
+    <h3><span class="mono">02</span>My role</h3>
+    <p>As the Senior Design System Designer, I led the initiative by:</p>
+    <ul>
+      <li>Partnering with product designers to capture business and product needs.</li>
+      <li>Pairing with developers to translate components into code and document them in Storybook.</li>
+      <li>Defining naming conventions, foundations, and adoption strategies to ensure long-term scalability.</li>
+    </ul>
+
+    <h3><span class="mono">03</span>Process</h3>
+    <p><strong>1. Auditing the legacy UI</strong><br>I began with a comprehensive audit of components across products, surfacing redundancies and inconsistencies in typography, colour, spacing, and interactions.</p>
+    <p>To support this process, I also leveraged AI tools like GPT to analyse and compare usage across the Figma libraries. This allowed me to identify which components were most frequently used, which were redundant, and where gaps existed — helping me prioritise the highest-impact work for the first delivery phase.</p>
+    <figure class="fig"><img data-single-zoom src="img/uw/audit.jpg" alt="Audit of legacy components across Figma libraries" loading="lazy"></figure>
+    <p><strong>2. Planning the system</strong><br>Created a phased roadmap to prioritise delivery:</p>
+    <ul>
+      <li><strong>Phase 1:</strong> tokens, grids, spacing, typography, colours, buttons, inputs, modals.</li>
+      <li><strong>Phase 2:</strong> navigation patterns, banners, illustration library, advanced components.</li>
+    </ul>
+    <figure class="fig"><img data-single-zoom src="img/uw/roadmap.jpg" alt="Phased roadmap for the design system" loading="lazy"></figure>
+    <p><strong>3. Defining foundations</strong><br>Established design tokens for typography, colour, spacing, and motion. Accessibility was embedded into every layer — from semantic colour naming to scalable typography.</p>
+    <figure class="fig" style="max-width:580px;margin-left:auto;margin-right:auto"><img data-single-zoom src="img/uw/foundations.jpg" alt="Design tokens for typography, colour, spacing and motion" loading="lazy"></figure>
+    <p><strong>4. Component design &amp; naming conventions</strong><br>Designed reusable, flexible components with predictable naming conventions (e.g. Variant/ColourScheme/Size/State/Icon). This standardisation improved usability for designers and ensured consistency across Figma and Storybook.</p>
+    <figure class="fig" style="max-width:580px;margin-left:auto;margin-right:auto"><img data-single-zoom src="img/uw/naming.jpg" alt="Component naming convention: Variant / ColourScheme / Size / State / Icon" loading="lazy"></figure>
+    <p><strong>5. Documentation &amp; adoption</strong></p>
+    <ul>
+      <li>Embedded guidelines directly in Figma so designers could access them at the point of use.</li>
+      <li>Paired with engineers to implement components in Storybook with coded examples.</li>
+      <li>Ran workshops to onboard teams and drive adoption across design and development.</li>
+    </ul>
+    <figure class="fig"><img data-single-zoom src="img/uw/docs.jpg" alt="Badge guidelines in Figma alongside the coded component in Storybook" loading="lazy"></figure>
+
+    <h3><span class="mono">04</span>Results</h3>
+    <ul>
+      <li>Established a unified set of design tokens for colour, typography, spacing, and motion.</li>
+      <li>Built a predictable component library with consistent naming conventions.</li>
+      <li>Embedded usage guidelines directly in Figma and documented coded assets in Storybook.</li>
+      <li>Defined a cross-platform release workflow, ensuring iOS, Android, Web, and Figma libraries stayed in sync.</li>
+    </ul>
+    <figure class="fig"><img data-single-zoom src="img/uw/results.jpg" alt="Menu component with its usage guidelines and documentation" loading="lazy"></figure>
+
+    <h3><span class="mono">05</span>Dynamic component</h3>
+    <p>To support a mobile-first approach, I designed components that adapt automatically to different breakpoints. Using Figma variables, components dynamically adjusted their properties according to the viewport — for example, a modal that shifts layout and spacing between mobile, tablet, and desktop.</p>
+    <p>This approach ensured consistency across devices while reducing the need for designers and developers to maintain multiple variants. It also future-proofed the system for scaling into new platforms with minimal extra effort.</p>
+    <figure class="fig"><video src="img/uw/dynamic.mp4" autoplay muted loop playsinline aria-label="A modal adapting its layout and spacing across mobile, tablet and desktop breakpoints"></video></figure>
+
+    <h3><span class="mono">06</span>Dark mode &amp; accessibility</h3>
+    <p>Accessibility and inclusivity were core principles in building the system. I introduced dark mode support using the same token-based architecture, ensuring colours adapted seamlessly across themes without creating extra component variants.</p>
+    <p>In parallel, I applied WCAG standards to colour contrast, typography, and interaction states, making the system accessible by default. This not only improved usability for all users but also reduced rework for designers and developers by embedding accessibility directly into the foundations.</p>
+    <figure class="fig"><img data-single-zoom src="img/uw/darkmode.jpg" alt="Components in light and dark mode using the same tokens" loading="lazy"></figure>
+
+    <h3><span class="mono">07</span>Outcome</h3>
+    <ul>
+      <li><strong>Efficiency:</strong> designers assembled pages in hours instead of days, reducing duplication and rework.</li>
+      <li><strong>Consistency:</strong> reduced design and development inconsistencies across platforms.</li>
+      <li><strong>Collaboration:</strong> improved alignment between design and engineering through shared standards and documentation.</li>
+      <li><strong>Future-proofing:</strong> positioned Utility Warehouse with a scalable, mobile-first foundation for the upcoming rebrand.</li>
+    </ul>
+    <div class="next"><span class="mono">Next</span><a href="#sopra-ds">SaaS Design System →</a></div>
+  </div>
+</article>
+
+<article class="case" id="case-sopra-ds" aria-label="SaaS Design System case study">
+  <div class="case-bar"><div class="wrap"><span class="mono">Case study · Sopra Banking Software</span><button class="close" type="button">Close ✕</button></div></div>
+  <div class="case-inner">
+    <div class="meta mono"><span>Sopra Banking Software</span><span>B2B SaaS</span><span>Web</span></div>
+    <h2>SaaS Design System</h2>
+    <p class="sub">At Sopra Banking Software, as a Product Designer, I was responsible for designing and managing a scalable design system tailored for the B2B platform.</p>
+
+    <h3><span class="mono">01</span>Overview</h3>
+    <p>The goal was to address inconsistencies, improve efficiency, and create a unified experience for complex user workflows in a professional banking environment.</p>
+
+    <h3><span class="mono">02</span>Problem statement</h3>
+    <p>The B2B platform lacked a cohesive design approach, leading to inefficiencies in development and inconsistent user experiences. As the platform grew, the need for a scalable, centralised system to streamline design and engineering collaboration became critical.</p>
+
+    <h3><span class="mono">03</span>Product audit</h3>
+    <p>I began by conducting a comprehensive audit of the existing platform, cataloguing UI components, design patterns, and user workflows. Partnered with stakeholders and developers to understand their perspectives.</p>
+    <div class="fig-grid"><figure class="fig"><img data-single-zoom src="img/sds/audit1.jpg" alt="Product audit: inconsistent modal patterns, example 1" loading="lazy"></figure><figure class="fig"><img data-single-zoom src="img/sds/audit2.jpg" alt="Product audit: inconsistent modal patterns, example 2" loading="lazy"></figure><figure class="fig"><img data-single-zoom src="img/sds/audit3.jpg" alt="Product audit: inconsistent modal patterns, example 3" loading="lazy"></figure><figure class="fig"><img data-single-zoom src="img/sds/audit4.jpg" alt="Product audit: inconsistent modal patterns, example 4" loading="lazy"></figure></div>
+    <p class="fig-cap">Modals are inconsistent throughout the platform; Patterns identified.</p>
+
+    <h3><span class="mono">04</span>Analysis</h3>
+    <p>This audit highlighted redundancies and gaps, serving as the foundation for a streamlined design system. Industry analysis, best practice.</p>
+    <figure class="fig" style="max-width:615px;margin-left:auto;margin-right:auto"><img data-single-zoom src="img/sds/analysis.jpg" alt="Analysis of redundancies, gaps and industry best practice" loading="lazy"></figure>
+
+    <h3><span class="mono">05</span>Styles and variables</h3>
+    <p>Standardised foundational design variables, including colour palettes, typography, and grid systems, to establish a cohesive visual framework.</p>
+    <figure class="fig"><img data-single-zoom src="img/sds/styles.jpg" alt="Colour palettes, typography and grid variables" loading="lazy"></figure>
+
+    <h3><span class="mono">06</span>Components</h3>
+    <p>Using the defined variables and styles, I designed modular, reusable components optimised for B2B workflows.</p>
+    <figure class="fig"><img data-single-zoom src="img/sds/components.jpg" alt="Modular components for B2B workflows" loading="lazy"></figure>
+
+    <h3><span class="mono">07</span>Documentation</h3>
+    <p>I developed documentation for the design system, detailing how components should be used.<br>I also encouraged team members to contribute by sharing their use cases or suggesting improvements.</p>
+    <figure class="fig"><img data-single-zoom src="img/sds/docs.jpg" alt="Design system documentation showing component usage" loading="lazy"></figure>
+
+    <h3><span class="mono">08</span>A11y</h3>
+    <p>All components were created to meet WCAG 2.1 AA standards, ensuring sufficient colour contrast.</p>
+    <figure class="fig"><img data-single-zoom src="img/sds/a11y.jpg" alt="Colour contrast checks against WCAG 2.1 AA" loading="lazy"></figure>
+
+    <h3><span class="mono">09</span>Testing</h3>
+    <p>Conducted usability testing with iterative feedback loops, continuously refining components and styles to ensure the system effectively addressed real-world user needs.</p>
+
+    <h3><span class="mono">10</span>Collaboration</h3>
+    <p>I worked closely with developers to ensure smooth integration of the design system into the platform. Facilitated collaborative workshops and design reviews to align stakeholders and proactively address gaps during implementation.</p>
+
+    <h3><span class="mono">11</span>Success metrics</h3>
+    <p>Detachment of design instances was reduced by 80%, significantly improving Figma design specification consistency and accelerating delivery timelines. Development time decreased due to well-prepared documentation aligned with developers, eliminating ambiguities and assumptions.</p>
+    <div class="next"><span class="mono">Next</span><a href="#kyc">KYC Verification →</a></div>
+  </div>
+</article>
+
+<article class="case" id="case-dooh" aria-label="DOOH Booking Process case study">
+  <div class="case-bar"><div class="wrap"><span class="mono">Case study · crossvertise</span><button class="close" type="button">Close ✕</button></div></div>
+  <div class="case-inner">
+    <div class="meta mono"><span>crossvertise GmbH</span><span>Marketplace</span><span>Responsive web</span></div>
+    <h2>DOOH Booking Process</h2>
+    <p class="sub">Redesign to address high user abandonment rates during the purchase phase.</p>
+
+    <h3><span class="mono">01</span>My Role and Contributions</h3>
+    <p>As the product designer at Crossvertise GmbH, I managed the redesign from initial research to final implementation. I conducted user interviews, developed wireframes and prototypes, and iterated based on user feedback to improve the product.</p>
+
+    <h3><span class="mono">02</span>Challenges</h3>
+    <ul>
+      <li><strong>Simplifying Onboarding:</strong> Making it easy for new users to navigate the booking process.</li>
+      <li><strong>Clarifying Information:</strong> Ensuring all necessary details were presented clearly.</li>
+      <li><strong>Effective Communication:</strong> Implementing notifications to keep users informed throughout the process.</li>
+    </ul>
+    <figure class="fig" style="max-width:600px;margin-left:auto;margin-right:auto"><img data-single-zoom src="img/dooh/challenges.jpg" alt="Booking flow challenges overview" loading="lazy"></figure>
+
+    <h3><span class="mono">03</span>Design Process</h3>
+    <ul>
+      <li><strong>Research:</strong> Utilised market analysis and user interviews to identify key needs and challenges.</li>
+      <li><strong>Ideation:</strong> Facilitated brainstorming sessions to develop innovative solutions.</li>
+      <li><strong>Prototyping:</strong> Created and iterated on prototypes to visualise solutions effectively.</li>
+      <li><strong>User Testing:</strong> Conducted extensive user testing to gather feedback and refine our approach.</li>
+      <li><strong>Iteration:</strong> Adjusted the product based on user input for better experience and engagement.</li>
+    </ul>
+    <figure class="fig"><img data-single-zoom src="img/dooh/process.jpg" alt="Design process from research to iteration" loading="lazy"></figure>
+
+    <h3><span class="mono">04</span>Results and Insights</h3>
+    <p>The introduction of a simplified user flow led to a 35% decrease in bounce rates, indicating improved user engagement and satisfaction with the booking process.</p>
+
+    <h3><span class="mono">05</span>Visuals and Prototypes</h3>
+    <p>Detailed mockups and prototypes are available upon request, showcasing the design's evolution from initial concepts to the final product.</p>
+    <div class="fig-grid"><figure class="fig"><img data-single-zoom src="img/dooh/v1.jpg" alt="Booking start: city search" loading="lazy"></figure><figure class="fig"><img data-single-zoom src="img/dooh/v2.jpg" alt="City search with suggestions" loading="lazy"></figure><figure class="fig"><img data-single-zoom src="img/dooh/v3.jpg" alt="Results with map, location details and dates" loading="lazy"></figure><figure class="fig"><img data-single-zoom src="img/dooh/v4.jpg" alt="Selected dates added to the booking" loading="lazy"></figure></div>
+
+    <h3><span class="mono">06</span>Responsive</h3>
+    <p>Detailed mockups and prototypes are available upon request, showcasing the design's evolution from initial concepts to the final product.</p>
+    <figure class="fig"><img data-single-zoom src="img/dooh/responsive.jpg" alt="Responsive booking screens on mobile" loading="lazy"></figure>
+
+    <h3><span class="mono">07</span>Conclusion</h3>
+    <p>By prioritising user needs and streamlining the booking process, we've significantly improved user satisfaction and engagement. This project underscores the importance of user-centred design and continuous iteration to create intuitive experiences.</p>
+    <div class="next"><span class="mono">Back to</span><a href="#work">All projects →</a></div>
+  </div>
+</article>
+
+<article class="case" id="case-search" aria-label="Enhancing Transaction Search case study">
+  <div class="case-bar"><div class="wrap"><span class="mono">Case study · Sopra Banking Software</span><button class="close" type="button">Close ✕</button></div></div>
+  <div class="case-inner">
+    <div class="meta mono"><span>Sopra Banking Software</span><span>Banking</span><span>Mobile</span></div>
+    <h2>Enhancing Transaction Search</h2>
+
+    <h3><span class="mono">01</span>Situation</h3>
+    <p>I was responsible for the end-to-end design process of an audit around account and transaction features at <strong>Sopra Banking Software</strong> to identify opportunities for improvement. During this audit, I discovered that users were struggling to locate specific transactions and view their details, leading to frustration and inefficiency.</p>
+
+    <h3><span class="mono">02</span>Task</h3>
+    <p>My task was to propose and design solutions that would simplify the process of finding and viewing transaction details. The goal was to improve user experience by making the process more intuitive and efficient.</p>
+
+    <h3><span class="mono">03</span>Action</h3>
+    <p>I analyzed how other apps addressed similar issues and used those insights to propose two design solutions:</p>
+    <ul>
+      <li><strong>Full-page filter:</strong> Displayed all filter options on one page, providing a comprehensive view but overwhelming users with too much information.</li>
+      <li><strong>Pill filters:</strong> Allowed users to filter results through clickable pills, offering a more streamlined, manageable approach.</li>
+    </ul>
+    <p>I created high-fidelity prototypes for both options and conducted usability testing. During testing, it became clear that the full-page filter caused cognitive overload, while the pill filter offered a more intuitive and user-friendly experience.</p>
+
+        <h3><span class="mono">04</span>Try both versions</h3>
+    <p>Here is the usability test as an interactive prototype, rebuilt from my designs. Pick a version and complete the task. The panel counts your taps and time, so you can compare the full-page filter with the pill filters that shipped.</p>
+    <div class="ts" id="ts">
+      <div class="ts-device">
+        <div class="ts-screen" id="ts-screen"></div>
+        <div class="ts-sheet-wrap" id="ts-sheet"></div>
+      </div>
+      <aside class="ts-side">
+        <div class="ts-ver" role="group" aria-label="Version">
+          <button type="button" data-ver="A" aria-pressed="false"><b>A</b> Full-page filter</button>
+          <button type="button" data-ver="B" aria-pressed="true"><b>B</b> Pill filters <em>Shipped</em></button>
+        </div>
+        <div class="ts-task">
+          <span class="mono">Your task</span>
+          <p id="ts-task-t">Find the <b>£0.56 Spotify payment</b> and open its details. Using a filter is the quickest way.</p>
+          <div class="ts-meter"><div><span>Taps</span><b id="ts-taps">0</b></div><div><span>Time</span><b id="ts-time">0s</b></div><button type="button" id="ts-restart" class="ts-restart">Restart</button></div>
+          <div class="ts-res" id="ts-res"></div>
+        </div>
+        <div class="pp-note"><span class="mono" id="ts-note-k">Version B</span><h4 id="ts-note-t"></h4><p id="ts-note-p"></p></div>
+      </aside>
+    </div>
+
+    <h3><span class="mono">05</span>Results</h3>
+    <p>The pill filter solution resulted in:</p>
+    <ul>
+      <li>Faster task completion times.</li>
+      <li>Increased user satisfaction, as users found it easier to navigate and locate specific transactions.</li>
+      <li>A more intuitive and enjoyable user experience overall. The pill filter proved to be the more effective design solution, as confirmed by usability tests and positive user feedback.</li>
+    </ul>
+
+    <h3><span class="mono">06</span>Learnings</h3>
+    <p>Through this project, I learned the importance of simplifying user interactions. The contrast between the full-page filter and the pill filter reinforced how users value clarity over complexity. I also realised the significance of user testing in validating design decisions, as it highlighted the cognitive load caused by overwhelming options. This experience strengthened my ability to make design choices that prioritize user ease, and reinforced the need for continuous iteration to refine the user experience.</p>
+    <div class="next"><span class="mono">Next</span><a href="#uw">Mobile-First DS →</a></div>
+  </div>
+</article>
+
+<article class="case" id="case-kyc" aria-label="KYC Verification case study">
+  <div class="case-bar"><div class="wrap"><span class="mono">Case study · Sopra Banking Software</span><button class="close" type="button">Close ✕</button></div></div>
+  <div class="case-inner">
+    <div class="meta mono"><span>Sopra Banking Software</span><span>Back office</span><span>Web</span></div>
+    <h2>KYC Verification</h2>
+    <p class="sub">User-centric solution to streamline identity verification workflows.</p>
+
+    <h3><span class="mono">01</span>My Role and Contributions</h3>
+    <p>As the product designer at Sopra Banking Software, I developed the KYC system from scratch, focusing on the needs of back-office bank employees. I conducted user research to identify workflow inefficiencies and pain points, creating wireframes and prototypes that iterated based on employee feedback to ensure intuitiveness and efficiency.</p>
+
+    <h3><span class="mono">02</span>Challenges</h3>
+    <ul>
+      <li><strong>Streamlining Workflows:</strong> Designing an efficient process for quick and accurate identity verification.</li>
+      <li><strong>Enhancing Information Presentation:</strong> Clearly presenting necessary customer information for informed decision-making.</li>
+      <li><strong>Facilitating Communication:</strong> Developing a robust notification system to keep employees updated throughout the verification stages.</li>
+    </ul>
+
+    <h3><span class="mono">03</span>Results and Insights</h3>
+    <p>Investing in user-centric design for KYC processes leads to improved compliance and risk management while fostering a positive organisational culture centred around collaboration and innovation.</p>
+
+    <h3><span class="mono">04</span>Visuals and Prototypes</h3>
+    <p>Try the verification workflow I designed for back-office staff. Open John Doe from the Pending Review queue, check his details and documents, verify each KYC step, then approve or reject his bank account. The prototype is rebuilt from my designs and uses sample data.</p>
+    <div class="ky-under">
+        <div class="pp-note"><span class="mono" id="ky-note-k">Step 1</span><h4 id="ky-note-t"></h4><p id="ky-note-p"></p></div>
+        <button type="button" class="ts-restart" id="ky-restart">Restart</button>
+    </div>
+    <div class="ky" id="ky">
+      <div class="ky-frame">
+        <div class="ky-top"><span class="ky-logo"><b>S</b>bank</span><span class="ky-burger" aria-hidden="true">☰</span><span class="ky-sp"></span><span class="ky-lang">◍ English ⌄</span><span class="ky-user">John <i>JS</i> ⌄</span></div>
+        <div class="ky-body">
+          <main class="ky-main" id="ky-main"></main>
+        </div>
+        <div class="ky-toast" id="ky-toast" role="status"></div>
+        <div class="ky-layer" id="ky-layer"></div>
+      </div>
+    </div>
+
+    <h3><span class="mono">05</span>Conclusion</h3>
+    <p>The KYC design process has transformed the verification workflow into a more intuitive experience for bank employees. By emphasising a user-centred approach, we have addressed key pain points, enhancing usability and streamlining operations. Continuous monitoring and updates will ensure the KYC process remains responsive to user needs and industry changes.</p>
+    <div class="next"><span class="mono">Next</span><a href="#dooh">DOOH Booking Process →</a></div>
+  </div>
+</article>
+
+<script>
+(function(){
+  var ids=["ig","uw","sopra-ds","dooh","search","kyc"];
+  var lastScroll=0;
+  function show(){
+    var h=(location.hash||"").slice(1);
+    var open=null;
+    document.querySelectorAll(".case").forEach(function(c){
+      var on=c.id==="case-"+h;
+      c.classList.toggle("open",on);
+      if(on) open=c;
+    });
+    if(open){
+      if(!document.body.classList.contains("locked")) lastScroll=window.scrollY;
+      document.body.classList.add("locked");
+      open.scrollTop=0;
+      var b=open.querySelector(".close"); if(b) b.focus({preventScroll:true});
+    } else if(document.body.classList.contains("locked")){
+      document.body.classList.remove("locked");
+      if(ids.indexOf(h)===-1 && h!=="work") window.scrollTo(0,lastScroll);
+    }
+  }
+  document.querySelectorAll(".close").forEach(function(b){
+    b.addEventListener("click",function(){ location.hash="work"; });
+  });
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape" && document.body.classList.contains("locked")) location.hash="work";
+  });
+  window.addEventListener("hashchange",show);
+  show();
+})();
+</script>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <div class="lb-bar"><span id="lb-hint">Click the image to zoom in</span><button type="button" id="lb-close">Close ✕</button></div>
+  <div class="lb-stage"><img id="lb-img" alt=""></div>
+</div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),img=document.getElementById('lb-img'),hint=document.getElementById('lb-hint'),last=null;
+  var single=false;function open(src,alt,from){last=from;single=from&&from.hasAttribute('data-single-zoom');img.src=src;img.alt=alt||'';lb.classList.remove('zoomed');lb.classList.toggle('single',single);lb.classList.add('open');lb.scrollTop=0;hint.textContent=single?'Click outside the image or press Esc to close':'Click the image to zoom in';document.getElementById('lb-close').focus({preventScroll:true});}
+  function close(){lb.classList.remove('open','zoomed');img.removeAttribute('src');if(last) last.focus&&last.focus({preventScroll:true});}
+  document.addEventListener('click',function(e){
+    var t=e.target;
+    if(t.matches&&t.matches('.fig img')){e.preventDefault();t.tabIndex=0;open(t.currentSrc||t.src,t.alt,t);}
+  });
+  document.addEventListener('keydown',function(e){
+    var t=e.target;
+    if((e.key==='Enter'||e.key===' ')&&t.matches&&t.matches('.fig img')){e.preventDefault();open(t.currentSrc||t.src,t.alt,t);}
+  });
+  img.addEventListener('click',function(e){
+    e.stopPropagation();
+    if(single) return;
+    var r=img.getBoundingClientRect(),fx=(e.clientX-r.left)/r.width,fy=(e.clientY-r.top)/r.height;
+    var z=!lb.classList.contains('zoomed');lb.classList.toggle('zoomed',z);
+    hint.textContent=z?'Scroll to move around · click to zoom out':'Click the image to zoom in';
+    if(z){requestAnimationFrame(function(){var R=img.getBoundingClientRect();lb.scrollLeft=fx*R.width-innerWidth/2;lb.scrollTop=fy*R.height-innerHeight/2;});}
+  });
+  lb.addEventListener('click',function(e){if(e.target===lb||e.target.classList.contains('lb-stage')) close();});
+  document.getElementById('lb-close').addEventListener('click',close);
+  window.addEventListener('keydown',function(e){if(e.key==='Escape'&&lb.classList.contains('open')){e.stopImmediatePropagation();close();}},true);
+  document.querySelectorAll('.fig img').forEach(function(i){i.tabIndex=0;i.setAttribute('role','button');i.setAttribute('aria-label','Enlarge image: '+(i.alt||''));});
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('pp'); if(!root) return;
+  var dev=root.querySelector('.pp-device'), scr=document.getElementById('pp-screen'), toast=document.getElementById('pp-toast'), nav=document.getElementById('pp-nav');
+  var A={
+    GOOGL:{n:'Alphabet Inc',p:141.16,c:-1.1,bg:'#FFFFFF',fg:'#4285F4',l:'G',ring:1,about:'Alphabet is the parent company of Google, operating across search, advertising, cloud and other technology businesses.'},
+    BARC:{n:'Barclays PLC',p:327.22,c:8.9,bg:'#00AEEF',fg:'#fff',l:'B',about:'Barclays is a British multinational bank providing retail, corporate and investment banking services.'},
+    NVDA:{n:'NVIDIA Corp.',p:182.01,c:1.56,bg:'#76B900',fg:'#fff',l:'N',about:'NVIDIA designs graphics processors and accelerated computing platforms used in gaming, data centres and AI.'},
+    SPOT:{n:'Spotify Technology SA',p:761.09,c:18.6,bg:'#1DB954',fg:'#fff',l:'S',about:'Spotify runs a global audio streaming platform for music and podcasts.'},
+    TSLA:{n:'Tesla Inc.',p:37.55,c:1.0,bg:'#CC0000',fg:'#fff',l:'T',about:'Tesla designs and manufactures electric vehicles, batteries and energy storage systems.'},
+    V:{n:'Visa Inc.',p:98.22,c:0.3,bg:'#1A1F71',fg:'#fff',l:'V',about:'Visa operates a global payments network connecting consumers, merchants and banks.'},
+    AMZN:{n:'Amazon.com Inc.',p:29.83,c:0.16,bg:'#232F3E',fg:'#fff',l:'a',about:'Amazon operates e-commerce, cloud computing (AWS), streaming and advertising businesses.'},
+    AMC:{n:'AMC Entertainment',p:2.91,c:-0.17,bg:'#C8102E',fg:'#fff',l:'amc',about:'AMC Entertainment operates movie theatres across the United States and Europe.'},
+    BP:{n:'BP plc',p:5.36,c:-0.17,bg:'#fff',fg:'#009B3A',l:'bp',ring:1,about:'BP is a global energy company with operations in oil, gas and low-carbon energy.'},
+    DBS:{n:'DBS Bank Ltd.',p:28.44,c:-0.17,bg:'#111',fg:'#fff',l:'✕',about:'DBS is a Singapore-based bank offering consumer, wealth and institutional banking.'}
+  };
+  Object.keys(A).forEach(function(k){A[k].id=k;});
+  var POPULAR=['GOOGL','BARC','NVDA','SPOT','TSLA','V'];
+  var HOLD=[{id:'AMZN',sh:51,tot:51.2},{id:'AMC',sh:142,tot:12.4},{id:'BP',sh:121,tot:8.9},{id:'DBS',sh:42,tot:22.7},{id:'GOOGL',sh:12,tot:31.6}];
+  var STEPS=[['welcome','Welcome'],['overview','Overview'],['search','Search'],['market','Market details'],['ticket','Deal ticket'],['review','Review']];
+  var NOTES={
+    welcome:['A welcoming first impression','The UK app felt "elitist" to European investors. The new onboarding leads with an approachable message and the two things they cared about: choice and 0% commission. Skip for now lets people explore before signing up.'],
+    overview:['Dashboard first','Holdings are the home screen, so new investors land on one clear starting point. P&L labels say "Today" and "Total" explicitly, a fix from usability testing. Tap a holding to expand it.'],
+    search:['Search with popular assets','Search opens with popular assets so beginners have somewhere to start. Try typing "nv" or "tes". Every price shows the € symbol, another testing fix.'],
+    market:['Market details','Summary, AI Market watch and trade signals sit in one place, with Sell and Buy always within reach. Drag across the chart to read prices, or open AI Market watch.'],
+    ticket:['Deal ticket','Buying by an amount in € instead of a number of shares made the ticket approachable for first-time investors. Choose Limit to see the order expiry highlighted, a fix after users missed it in testing.'],
+    review:['Review before confirming','A final summary with costs shown up front, because research asked for transparency on fees. Confirming shows a toast 12 px above the bottom navigation, as specified in the design system.'],
+    done:['Order placed','The order now appears under My orders, so users can see what happens next.'],
+    account:['A fixed constraint','Technical dependencies meant the account page couldn\'t change. I designed the surrounding flows so it still felt part of one product.']
+  };
+  function fresh(){return {screen:'welcome',tab:'investments',q:'',asset:null,mtab:'summary',side:'buy',type:'market',amt:250,orders:[],open:null,justDone:false};}
+  var S=fresh();
+  function eur(x){return x.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+'€';}
+  function pct(x){return (x>0?'+':'')+x.toLocaleString('de-DE',{minimumFractionDigits:x%1?1:1,maximumFractionDigits:2})+'%';}
+  function cls(x){return x>=0?'up':'down';}
+  function logo(a){return '<span class="pp-ic'+(a.ring?' ring':'')+(a.l.length>1?' sm':'')+'" style="background:'+a.bg+';color:'+a.fg+'">'+a.l+'</span>';}
+  var CHEV='<svg class="chev" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function status(light){return '<div class="pp-status'+(light?' on-photo':'')+'"><span>9:41</span><svg width="62" height="12" viewBox="0 0 62 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="4.5" y="6" width="3" height="6" rx=".8"/><rect x="9" y="3.5" width="3" height="8.5" rx=".8"/><rect x="13.5" y="1" width="3" height="11" rx=".8"/><path d="M28 3.2c2.2 0 4.2.8 5.7 2.2l1.1-1.1A9.6 9.6 0 0 0 28 1.6a9.6 9.6 0 0 0-6.8 2.7l1.1 1.1A8 8 0 0 1 28 3.2zm0 3.2c1.3 0 2.5.5 3.4 1.3l1.1-1.1A6.4 6.4 0 0 0 28 4.8c-1.7 0-3.3.7-4.5 1.8l1.1 1.1c.9-.8 2.1-1.3 3.4-1.3zm0 3.2c-.5 0-.9.2-1.2.5L28 11.3l1.2-1.2c-.3-.3-.7-.5-1.2-.5z"/><rect x="40" y="1" width="20" height="10" rx="3" fill="currentColor"/><rect x="60.6" y="4" width="1.4" height="4" rx=".7"/></g></svg></div>';}
+  function back(to,title){return '<div class="pp-head"><button type="button" class="pp-back" data-go="'+to+'" aria-label="Back"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="pp-title">'+title+'</div><span style="width:30px"></span></div>';}
+  function seed(str){var h=0;for(var i=0;i<str.length;i++)h=(h*31+str.charCodeAt(i))|0;return function(){h=(h*1103515245+12345)|0;return ((h>>>16)&0x7fff)/0x7fff;};}
+  var CH={};
+  function series(a){
+    if(CH[a.id]) return CH[a.id];
+    var r=seed(a.id),n=72,v=a.p*0.9,pts=[];
+    for(var i=0;i<n;i++){v*=1+(r()-0.48)*0.025;pts.push(v);}
+    var f=a.p/pts[n-1];pts=pts.map(function(x){return x*f;});
+    return CH[a.id]=pts;
+  }
+  var CW=300,CHh=200,PADR=44;
+  function chartSVG(a,hi){
+    var pts=series(a),n=pts.length,mn=Math.min.apply(null,pts),mx=Math.max.apply(null,pts),pad=(mx-mn)*0.12;mn-=pad;mx+=pad;
+    var W=CW-PADR,H=CHh-22;
+    function X(i){return 2+i/(n-1)*(W-6);} function Y(v){return 8+(1-(v-mn)/(mx-mn))*(H-14);}
+    var d=pts.map(function(v,i){return X(i).toFixed(1)+','+Y(v).toFixed(1);}).join(' ');
+    var ticks=[];for(var k=0;k<5;k++){var tv=mn+(mx-mn)*(k+0.5)/5;ticks.push(tv);}
+    var idx=hi==null?n-1:hi,px=X(idx),py=Y(pts[idx]),pv=pts[idx];
+    var days=['Jun','Jul','Aug'],xl=days.map(function(m,i){return '<text x="'+(X(Math.round((i+0.5)*n/3))).toFixed(0)+'" y="'+(CHh-4)+'" text-anchor="middle" class="ax">'+m+'</text>';}).join('');
+    var hour=9+Math.floor(idx/n*8), min=String(Math.floor((idx*37)%60)).padStart(2,'0');
+    return '<svg viewBox="0 0 '+CW+' '+CHh+'" id="pp-chart" role="img" aria-label="'+a.n+' price chart. Drag to read prices.">'+
+      '<defs><linearGradient id="ppl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4F8DF7"/><stop offset=".8" stop-color="#7B6CF0"/><stop offset="1" stop-color="#C21FD9"/></linearGradient></defs>'+
+      ticks.map(function(t){var y=Y(t).toFixed(1);return '<line x1="0" x2="'+W+'" y1="'+y+'" y2="'+y+'" class="gl"/><text x="'+(W+6)+'" y="'+(+y+3)+'" class="ax">'+t.toFixed(2)+'</text>';}).join('')+
+      [1,2].map(function(i){var x=X(Math.round(i*n/3)).toFixed(1);return '<line y1="0" y2="'+H+'" x1="'+x+'" x2="'+x+'" class="gl"/>';}).join('')+
+      '<line x1="0" x2="'+W+'" y1="'+py.toFixed(1)+'" y2="'+py.toFixed(1)+'" stroke="#C21FD9" stroke-dasharray="2 2" stroke-width=".8"/>'+
+      (hi!=null?'<line x1="'+px.toFixed(1)+'" x2="'+px.toFixed(1)+'" y1="0" y2="'+H+'" stroke="var(--pp-muted)" stroke-width=".8"/>':'')+
+      '<polyline points="'+d+'" fill="none" stroke="url(#ppl)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>'+
+      '<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="3" fill="#C21FD9"/>'+
+      '<g transform="translate('+(W+1)+','+(Math.max(2,Math.min(H-24,py-11))).toFixed(1)+')"><rect width="'+(PADR-1)+'" height="22" rx="2" fill="#C21FD9"/><text x="'+((PADR-1)/2)+'" y="9.5" text-anchor="middle" class="tg">'+pv.toFixed(2)+'</text><text x="'+((PADR-1)/2)+'" y="18.5" text-anchor="middle" class="tg s">'+String(hour).padStart(2,'0')+':'+min+':04</text></g>'+
+      xl+'<g transform="translate('+(W+18)+','+(CHh-13)+')" class="ax-ic"><circle cx="5" cy="5" r="4.2" fill="none" stroke="currentColor" stroke-width="1.1"/><circle cx="5" cy="5" r="1.5" fill="none" stroke="currentColor" stroke-width="1.1"/></g></svg>';
+  }
+  function shares(){return S.asset? S.amt/S.asset.p : 0;}
+  function holdRow(h){
+    var a=A[h.id],v=a.p*h.sh,open=S.open===h.id;
+    return '<div class="pp-hold'+(open?' open':'')+'"><button type="button" class="pp-row" data-toggle="'+h.id+'" aria-expanded="'+open+'">'+logo(a)+'<div class="n"><b>'+a.n+'</b><span>'+a.id+'</span><span>'+h.sh+' shares</span></div><div class="p"><b>'+eur(v)+'</b><span><i class="'+cls(a.c)+'">'+pct(a.c)+' Today</i> · <i class="up">'+pct(h.tot)+' Total</i></span></div>'+CHEV+'</button>'+
+      (open?'<div class="pp-exp"><div><span>Avg. price</span><b>'+eur(a.p/(1+h.tot/100))+'</b></div><div><span>Current price</span><b>'+eur(a.p)+'</b></div><div><span>Total return</span><b class="up">+'+eur(v-v/(1+h.tot/100))+'</b></div><div class="acts"><button type="button" class="pp-btn line sm" data-asset="'+h.id+'">Details</button><button type="button" class="pp-btn fill sm" data-quick="'+h.id+'">Buy more</button></div></div>':'')+'</div>';
+  }
+  var V={
+    welcome:function(){
+      return '<div class="pp-welcome"><div class="photo">'+status(true)+'</div><div class="sheet"><button type="button" class="pp-btn fill" data-go="overview">Sign-up with email</button><div class="or">OR</div><button type="button" class="pp-btn line" data-go="overview"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3zM12 22c2.7 0 5-.9 6.6-2.5l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22zM6.4 13.9a6 6 0 0 1 0-3.8V7.5H3.1a10 10 0 0 0 0 9zM12 6c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.5l3.3 2.6C7.2 7.8 9.4 6 12 6z"/></svg>Continue with Google</button><button type="button" class="pp-btn line" data-go="overview"><svg width="15" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.8-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.8 1.2 1.8 2.6 3.1 2.5 1.3 0 1.7-.8 3.3-.8 1.5 0 1.9.8 3.3.8 1.4 0 2.2-1.2 3-2.5 1-1.4 1.4-2.8 1.4-2.9-.1 0-2.7-1-2.3-4zM13.9 4.9c.7-.9 1.2-2 1-3.2-1 0-2.2.7-3 1.6-.6.7-1.2 1.9-1 3 1.1.1 2.3-.6 3-1.4z"/></svg>Continue with Apple</button><button type="button" class="skip" data-go="overview">Skip for now</button></div></div>';
+    },
+    overview:function(){
+      var list = S.tab==='investments' ? HOLD.map(holdRow).join('')
+        : (S.orders.length? S.orders.map(function(o){return '<div class="pp-row static">'+logo(o.a)+'<div class="n"><b>'+o.a.n+'</b><span>'+(o.side==='buy'?'Buy':'Sell')+' '+eur(o.amt)+'</span><span>'+(o.type==='market'?'Market order':'Limit · expires end of day')+'</span></div><div class="p"><b>'+(o.type==='market'?'Filled':'Pending')+'</b><span>Just now</span></div></div>';}).join('') : '<div class="pp-empty">No orders yet.<br>Find an asset in Search to place one.</div>');
+      return status()+'<div class="pp-head brand"><div class="pp-logo"><span>IG</span>INVESTMENTS</div>'+CHEV+'</div>'+
+        '<div class="pp-tabs" role="tablist"><button type="button" role="tab" data-tab="investments" aria-selected="'+(S.tab==='investments')+'">Investments</button><button type="button" role="tab" data-tab="orders" aria-selected="'+(S.tab==='orders')+'">My orders</button><button type="button" role="tab" data-tab="past" aria-selected="'+(S.tab==='past')+'">Past activity</button></div>'+
+        (S.tab==='past'?'<div class="pp-empty">Your completed trades and dividends will appear here.</div>':list);
+    },
+    search:function(){
+      var q=S.q.trim().toLowerCase(),ids=q?Object.keys(A).filter(function(k){return A[k].n.toLowerCase().indexOf(q)>-1||k.toLowerCase().indexOf(q)>-1;}):POPULAR;
+      return status()+'<div class="pp-search"><label class="pp-field"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 16l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="pp-q" type="search" autocomplete="off" placeholder="Shares, ETFs or companies" value="'+S.q.replace(/"/g,'')+'" aria-label="Search assets"></label><button type="button" class="cancel" data-go="overview">Cancel</button></div>'+
+        '<div class="pp-sec">'+(q?'Results':'Popular assets')+'</div>'+(ids.length?ids.map(function(k){var a=A[k];return '<button type="button" class="pp-row" data-asset="'+k+'">'+logo(a)+'<div class="n"><b>'+a.n+'</b><span>'+k+'</span></div><div class="p"><b class="reg">'+eur(a.p)+'</b><span class="'+cls(a.c)+'">'+pct(a.c)+'</span></div></button>';}).join(''):'<div class="pp-empty">No matches for "'+S.q.replace(/</g,'')+'"</div>');
+    },
+    market:function(){
+      var a=S.asset,body;
+      if(S.mtab==='summary') body='<div class="pp-chart" id="pp-chartwrap">'+chartSVG(a,null)+'</div><div class="pp-about"><h6>Company profile</h6><p>'+a.about+'</p></div>';
+      else if(S.mtab==='ai') body='<div class="pp-ai"><div class="pp-ai-h"><span class="spark">✦</span>AI Market watch <small>Updated 2 min ago</small></div><ul><li>Shares moved '+pct(a.c)+' today, '+(Math.abs(a.c)>2?'well above':'in line with')+' the sector average.</li><li>News sentiment over the past week is mostly positive.</li><li>Trading volume is 12% higher than the 30-day average.</li></ul><p class="disc">AI-generated summary for information only. It isn\'t investment advice.</p></div>';
+      else body='<div class="pp-sig">'+[['Short term','Bullish','up'],['Medium term','Neutral',''],['Long term','Bullish','up']].map(function(r){return '<div><span>'+r[0]+'</span><b class="'+r[2]+'">'+r[1]+'</b></div>';}).join('')+'<p class="disc">Signals based on technical indicators. Past performance isn\'t a guide to future returns.</p></div>';
+      return status()+back('search','Market details')+'<div class="pp-md"><h5>'+a.n+' <small>('+a.id+')</small> <span class="pp-chip">Closed</span></h5><div class="px">'+eur(a.p)+' <span class="'+cls(a.c)+'">'+(a.c>=0?'↑':'↓')+' '+pct(a.c)+'</span></div></div>'+
+        '<div class="pp-sub" role="tablist"><button type="button" role="tab" data-mtab="summary" aria-selected="'+(S.mtab==='summary')+'"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Summary</button><button type="button" role="tab" data-mtab="ai" class="ai" aria-selected="'+(S.mtab==='ai')+'">AI Market watch</button><button type="button" role="tab" data-mtab="sig" aria-selected="'+(S.mtab==='sig')+'"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7l6 6 4-4 8 8M3 17l6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Trade signals</button></div>'+
+        body+'<div class="pp-cta"><button type="button" class="pp-btn line" data-trade="sell">Sell</button><button type="button" class="pp-btn fill" data-trade="buy">Buy</button></div>';
+    },
+    ticket:function(){
+      var a=S.asset;
+      return status()+back('market',(S.side==='buy'?'Buy ':'Sell ')+a.n)+
+        '<div class="pp-seg2" role="group" aria-label="Order type"><button type="button" data-type="market" aria-pressed="'+(S.type==='market')+'">Market</button><button type="button" data-type="limit" aria-pressed="'+(S.type==='limit')+'">Limit</button></div>'+
+        '<div class="pp-amt"><label>Amount to '+(S.side==='buy'?'invest':'sell')+'</label><div class="box"><button type="button" class="step" data-amt="-50" aria-label="Decrease by 50 euros">−</button><div class="val">'+eur(S.amt)+'</div><button type="button" class="step" data-amt="50" aria-label="Increase by 50 euros">+</button></div><div class="hint">≈ '+shares().toLocaleString('de-DE',{maximumFractionDigits:4})+' shares at '+eur(a.p)+'</div><div class="pp-quick">'+[100,250,500,1000].map(function(v){return '<button type="button" data-set="'+v+'" aria-pressed="'+(S.amt===v)+'">'+v+'€</button>';}).join('')+'</div></div>'+
+        '<div class="pp-kv"><div><span>Order type</span><b>'+(S.type==='market'?'Market order':'Limit order')+'</b></div>'+
+        (S.type==='limit'?'<div><span>Limit price</span><b>'+eur(Math.round(a.p*0.98*100)/100)+'</b></div><div class="hl"><span>Expires <span class="pp-fixtag">Testing fix</span></span><b>End of day</b></div>':'')+
+        '<div><span>Commission</span><b>0,00€</b></div></div>'+
+        '<div class="pp-cta"><button type="button" class="pp-btn fill" data-go="review">Review order</button></div>';
+    },
+    review:function(){
+      var a=S.asset;
+      return status()+back('ticket','Review order')+
+        '<div class="pp-rev">'+logo(a)+'<div><b>'+(S.side==='buy'?'Buy ':'Sell ')+a.n+'</b><span>'+(S.type==='market'?'Market order':'Limit order · expires end of day')+'</span></div></div>'+
+        '<div class="pp-kv"><div><span>Amount</span><b>'+eur(S.amt)+'</b></div><div><span>Estimated shares</span><b>'+shares().toLocaleString('de-DE',{maximumFractionDigits:4})+'</b></div><div><span>Price per share</span><b>'+eur(a.p)+'</b></div><div><span>Commission</span><b>0,00€</b></div><div class="tot"><span>Total</span><b>'+eur(S.amt)+'</b></div></div>'+
+        '<p class="pp-fine">Prices may change before your order is filled. Sample data for this prototype.</p>'+
+        '<div class="pp-cta"><button type="button" class="pp-btn fill" id="pp-confirm">Confirm '+(S.side==='buy'?'buy':'sell')+'</button></div>';
+    },
+    account:function(){
+      return status()+'<div class="pp-head"><div class="pp-title">Account</div></div><div class="pp-acct"><div class="lock"><b>Existing account page</b><br>Kept from the UK app because of technical dependencies. Everything around it was designed to feel consistent with it.</div></div>';
+    }
+  };
+  var TAB={overview:'overview',search:'search',account:'account'};
+  function render(anim){
+    if(['market','ticket','review'].indexOf(S.screen)>-1 && !S.asset) S.asset=A.NVDA;
+    var hasNav=!!TAB[S.screen];
+    dev.classList.toggle('no-nav',!hasNav); dev.classList.toggle('photo',S.screen==='welcome');
+    scr.innerHTML='<div class="pp-view'+(anim?' pp-anim':'')+'">'+V[S.screen]()+'</div>';
+    nav.querySelectorAll('button').forEach(function(b){ if(b.dataset.go===TAB[S.screen]) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current');});
+    var stepIx=STEPS.map(function(x){return x[0];}).indexOf(S.screen);
+    document.getElementById('pp-steps').innerHTML=STEPS.map(function(st,i){return '<button type="button" data-jump="'+st[0]+'"'+(i===stepIx&&!S.justDone?' aria-current="step"':'')+'>'+(i+1)+'. '+st[1]+'</button>';}).join('');
+    var key=S.justDone?'done':S.screen,n=NOTES[key];
+    document.getElementById('pp-note-k').textContent=S.justDone?'Done':stepIx>-1?('Step '+(stepIx+1)+' of '+STEPS.length):'Constraint';
+    document.getElementById('pp-note-t').textContent=n[0];
+    document.getElementById('pp-note-p').textContent=n[1];
+    if(S.screen==='market'&&S.mtab==='summary') bindChart();
+  }
+  function bindChart(){
+    var w=document.getElementById('pp-chartwrap'); if(!w) return;
+    var pts=series(S.asset);
+    function at(e){var svg=w.querySelector('svg'),r=svg.getBoundingClientRect(),x=((e.touches?e.touches[0].clientX:e.clientX)-r.left)/r.width*CW;var W=CW-PADR;var i=Math.round((x-2)/(W-6)*(pts.length-1));return Math.max(0,Math.min(pts.length-1,i));}
+    function mv(e){w.innerHTML=chartSVG(S.asset,at(e));}
+    function out(){w.innerHTML=chartSVG(S.asset,null);}
+    w.addEventListener('pointermove',mv);w.addEventListener('pointerdown',mv);w.addEventListener('pointerleave',out);w.addEventListener('pointerup',function(e){if(e.pointerType!=='mouse')out();});
+  }
+  function go(s){S.justDone=false;S.screen=s;render(true);scr.scrollTop=0;}
+  function showToast(msg){toast.innerHTML='<i aria-hidden="true">✓</i>'+msg;toast.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(function(){toast.classList.remove('show');},2800);}
+  root.addEventListener('click',function(e){
+    var t=e.target.closest('button'); if(!t||!root.contains(t)) return;
+    if(t.dataset.go){ if(t.dataset.go==='search') S.q=''; if(t.dataset.go==='overview'&&S.screen==='welcome') S.tab='investments'; go(t.dataset.go); return;}
+    if(t.dataset.jump){ go(t.dataset.jump); return;}
+    if(t.dataset.tab){S.tab=t.dataset.tab;S.justDone=false;render(false);return;}
+    if(t.dataset.toggle){S.open=S.open===t.dataset.toggle?null:t.dataset.toggle;render(false);return;}
+    if(t.dataset.asset){S.asset=A[t.dataset.asset];S.mtab='summary';go('market');return;}
+    if(t.dataset.quick){S.asset=A[t.dataset.quick];S.side='buy';S.type='market';S.amt=250;go('ticket');return;}
+    if(t.dataset.mtab){S.mtab=t.dataset.mtab;render(false);return;}
+    if(t.dataset.trade){S.side=t.dataset.trade;S.type='market';S.amt=250;go('ticket');return;}
+    if(t.dataset.type){S.type=t.dataset.type;render(false);return;}
+    if(t.dataset.amt){S.amt=Math.max(50,Math.min(5000,S.amt+parseInt(t.dataset.amt,10)));render(false);return;}
+    if(t.dataset.set){S.amt=parseInt(t.dataset.set,10);render(false);return;}
+    if(t.id==='pp-confirm'){S.orders.unshift({a:S.asset,side:S.side,type:S.type,amt:S.amt});S.tab='orders';S.screen='overview';S.justDone=true;render(true);showToast(S.type==='market'?'Order placed':'Limit order placed');return;}
+    if(t.dataset.themeSet){setTheme(t.dataset.themeSet);return;}
+    if(t.id==='pp-reset'){S=fresh();render(true);return;}
+  });
+  root.addEventListener('input',function(e){ if(e.target.id==='pp-q'){S.q=e.target.value;var pos=e.target.selectionStart;render(false);var q=document.getElementById('pp-q');q.focus();q.setSelectionRange(pos,pos);} });
+  function lum(hex){var c=[1,3,5].map(function(i){var v=parseInt(hex.substr(i,2),16)/255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4);});return .2126*c[0]+.7152*c[1]+.0722*c[2];}
+  function ratio(a,b){var x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);}
+  function setTheme(t){
+    dev.setAttribute('data-theme',t);
+    root.querySelectorAll('[data-theme-set]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.themeSet===t));});
+    var cs=getComputedStyle(dev),fg=cs.getPropertyValue('--pp-text').trim(),bg=cs.getPropertyValue('--pp-bg').trim(),r=ratio(fg,bg);
+    document.getElementById('pp-ratio').textContent=(Math.floor(r*10)/10).toFixed(1)+':1';
+    document.getElementById('pp-level').textContent=(r>=7?'AAA':r>=4.5?'AA':'Fail')+' · '+fg.toUpperCase()+' on '+bg.toUpperCase();
+  }
+  setTheme('light'); render(false);
+})();
+</script>
+
+<script>
+(function(){
+  var root=document.getElementById('ts'); if(!root) return;
+  var scr=document.getElementById('ts-screen'), sheet=document.getElementById('ts-sheet'), dev=root.querySelector('.ts-device');
+  var TODAY=new Date('2023-03-15T12:00:00');
+  var T=[
+    ['p1','Spotify',16.99,1,'2023-03-15','Refund',1],
+    ['t1','Uber',9.47,0,'2023-03-14','Card payment'],['t2','Amazon',159.47,1,'2023-03-14','Refund'],['t3','Uber',66.02,1,'2023-03-14','Transfer'],['t4','Netflix',13.99,0,'2023-03-14','Direct debit'],
+    ['t5','Heights',89.10,0,'2023-03-13','Card payment'],['t6','Hyperoptic',60.00,0,'2023-03-13','Direct debit'],['t7','Tailsuk',73.01,0,'2023-03-13','Card payment'],
+    ['t8','Uber',15.14,0,'2023-03-12','Card payment'],['t9','Uber',11.66,0,'2023-03-12','Card payment'],['t10','Tesco',42.18,0,'2023-03-12','Card payment'],
+    ['t11','Pret A Manger',6.45,0,'2023-03-09','Card payment'],['t12','TfL',2.80,0,'2023-03-09','Card payment'],['t13','Salary',2450.00,1,'2023-02-28','Transfer'],
+    ['t14','Netflix',13.99,0,'2023-02-14','Direct debit'],['t15','Spotify',10.54,0,'2023-02-05','Direct debit'],['target','Spotify',0.56,0,'2023-02-05','Local payment'],
+    ['t16','Tesco',38.90,0,'2023-01-21','Card payment'],['t17','Spotify',10.54,0,'2023-01-08','Direct debit'],['t18','Spotify',0.32,1,'2023-01-08','Refund'],
+    ['t19','Amazon',24.99,0,'2022-12-18','Card payment'],['t20','Spotify',10.54,0,'2022-12-05','Direct debit'],['t21','Uber',9.47,0,'2022-11-06','Local payment'],
+    ['t22','Spotify',0.56,1,'2022-10-05','Refund'],['t23','Spotify',10.54,0,'2022-10-05','Direct debit']
+  ].map(function(r){return {id:r[0],n:r[1],a:r[2],inc:!!r[3],d:new Date(r[4]+'T13:45:00'),type:r[5],pend:!!r[6]};});
+  var TYPES=['Card payment','Direct debit','Local payment','Refund','Transfer'];
+  var DATE_OPTS=[['all','All'],['7','Last 7 days'],['30','Last 30 days'],['90','Last 90 days'],['range','Date range']];
+  var DIR_OPTS=[['all','All'],['in','In'],['out','Out']];
+  function F0(){return {date:'all',from:'',to:'',dir:'all',type:'all',min:'',max:''};}
+  var S={ver:'B',screen:'account',q:'',f:F0(),draft:null,sheet:null,tx:null,taps:0,t0:null,done:false,results:{}};
+  var timer=null;
+  function gbp(x,inc){return (inc?'+':'')+'£'+x.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  var WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function dlabel(d){return WD[d.getDay()]+', '+String(d.getDate()).padStart(2,'0')+' '+MO[d.getMonth()];}
+  function dlong(d){return WD[d.getDay()]+', '+d.getDate()+' '+MO[d.getMonth()]+' '+d.getFullYear()+', 13:45';}
+  var CHEV='<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var MAG='<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  var FIL='<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  var BACK='<svg width="18" height="18" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function status(){return '<div class="ts-status"><span>9:41</span><svg width="62" height="12" viewBox="0 0 62 12" aria-hidden="true"><g fill="currentColor"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="4.5" y="6" width="3" height="6" rx=".8"/><rect x="9" y="3.5" width="3" height="8.5" rx=".8"/><rect x="13.5" y="1" width="3" height="11" rx=".8"/><path d="M28 3.2c2.2 0 4.2.8 5.7 2.2l1.1-1.1A9.6 9.6 0 0 0 28 1.6a9.6 9.6 0 0 0-6.8 2.7l1.1 1.1A8 8 0 0 1 28 3.2zm0 3.2c1.3 0 2.5.5 3.4 1.3l1.1-1.1A6.4 6.4 0 0 0 28 4.8c-1.7 0-3.3.7-4.5 1.8l1.1 1.1c.9-.8 2.1-1.3 3.4-1.3zm0 3.2c-.5 0-.9.2-1.2.5L28 11.3l1.2-1.2c-.3-.3-.7-.5-1.2-.5z"/><rect x="40" y="1" width="20" height="10" rx="3"/><rect x="60.6" y="4" width="1.4" height="4" rx=".7"/></g></svg></div>';}
+  function active(f){return f.date!=='all'||f.dir!=='all'||f.type!=='all'||f.min!==''||f.max!=='';}
+  function match(t,f,q){
+    if(q&&t.n.toLowerCase().indexOf(q.toLowerCase().trim())<0) return false;
+    if(f.dir==='in'&&!t.inc) return false; if(f.dir==='out'&&t.inc) return false;
+    if(f.type!=='all'&&t.type!==f.type) return false;
+    var mn=parseFloat(String(f.min).replace(',','.')),mx=parseFloat(String(f.max).replace(',','.'));
+    if(!isNaN(mn)&&t.a<mn) return false; if(!isNaN(mx)&&t.a>mx) return false;
+    if(f.date!=='all'){
+      if(f.date==='range'){ if(f.from&&t.d<new Date(f.from+'T00:00:00')) return false; if(f.to&&t.d>new Date(f.to+'T23:59:59')) return false; }
+      else { var days=+f.date; if((TODAY-t.d)/864e5>days) return false; }
+    }
+    return true;
+  }
+  function list(q,f){
+    var rows=T.filter(function(t){return match(t,f,q);});
+    if(!rows.length) return '<div class="ts-empty">No transactions match.<br>Try changing your search or filters.</div>';
+    var out='',last=null,pend=rows.filter(function(t){return t.pend;}),rest=rows.filter(function(t){return !t.pend;});
+    if(pend.length){out+='<div class="ts-grp"><span>Pending</span>'+(S.screen==='account'?'<em>Upcoming</em>':'')+'</div>';pend.forEach(function(t){out+=tx(t);});}
+    rest.forEach(function(t){var k=t.d.toDateString(); if(k!==last){out+='<div class="ts-grp"><span>'+dlabel(t.d)+'</span></div>';last=k;} out+=tx(t);});
+    return out;
+  }
+  function tx(t){return '<button type="button" class="ts-tx" data-tx="'+t.id+'"><span class="nm">'+t.n+'</span><span class="am'+(t.inc?' in':'')+'">'+gbp(t.a,t.inc)+'</span>'+CHEV+'</button>';}
+  function kb(){
+    var r=['qwertyuiop','asdfghjkl','zxcvbnm'];
+    return '<div class="ts-kb">'+'<div class="kr">'+r[0].split('').map(function(k){return '<button type="button" data-key="'+k+'">'+k+'</button>';}).join('')+'</div><div class="kr r2">'+r[1].split('').map(function(k){return '<button type="button" data-key="'+k+'">'+k+'</button>';}).join('')+'</div><div class="kr"><button type="button" class="fn" aria-label="Shift">⇧</button>'+r[2].split('').map(function(k){return '<button type="button" data-key="'+k+'">'+k+'</button>';}).join('')+'<button type="button" class="fn" data-key="del" aria-label="Delete">⌫</button></div><div class="kr"><button type="button" class="fn w">123</button><button type="button" class="sp" data-key=" ">space</button><button type="button" class="fn w" data-key="ret">return</button></div></div>';
+  }
+  function pillLabel(k,f){
+    if(k==='date'){ if(f.date==='all') return null; if(f.date==='range') return (f.from||'…')+' – '+(f.to||'…'); return DATE_OPTS.filter(function(o){return o[0]===f.date;})[0][1]; }
+    if(k==='dir') return f.dir==='all'?null:(f.dir==='in'?'In':'Out');
+    if(k==='type') return f.type==='all'?null:f.type;
+    if(k==='amount') return (f.min===''&&f.max==='')?null:('£'+(f.min||'0')+(f.max!==''?'–£'+f.max:'+'));
+  }
+  function pills(){
+    var defs=[['date','Date'],['dir','In/out'],['type','Types'],['amount','Amount']];
+    var on=defs.filter(function(d){return pillLabel(d[0],S.f);}),off=defs.filter(function(d){return !pillLabel(d[0],S.f);});
+    return '<div class="ts-pills">'+on.map(function(d){return '<button type="button" class="ts-pill on" data-pill="'+d[0]+'">'+pillLabel(d[0],S.f)+'<i data-pclear="'+d[0]+'" aria-label="Remove filter">✕</i></button>';}).join('')+off.map(function(d){return '<button type="button" class="ts-pill" data-pill="'+d[0]+'">'+d[1]+'</button>';}).join('')+'</div>';
+  }
+  var V={
+    account:function(){
+      return '<div class="ts-purple">'+status()+'<div class="ts-head"><span class="b">'+BACK+'</span><span class="t">Account details</span><span class="b"></span></div></div>'+
+        '<div class="ts-scroll"><div class="ts-acc"><div class="tp"><b>Current account</b><span>IBAN: 234543222333</span><div class="bal">£5,543.66</div></div><button type="button" class="man" data-noop>Manage account</button></div>'+
+        '<div class="ts-sbar"><button type="button" class="ts-fake" data-go="search">'+MAG+'Search</button>'+(S.ver==='A'?'<button type="button" class="ts-ficon'+(active(S.f)?' dot':'')+'" data-full aria-label="Filters">'+FIL+'</button>':'')+'</div>'+
+        (S.ver==='A'&&active(S.f)?'<div class="ts-grp" style="border:0;padding-top:4px"><span>Filters applied</span><button type="button" data-clearall style="color:var(--t-purple-ink);font-weight:600;font-size:12px">Clear all</button></div>':'')+
+        list('',S.ver==='A'?S.f:F0())+'</div>';
+    },
+    search:function(){
+      return status()+'<div class="ts-srch"><label>'+MAG+'<input id="ts-q" type="search" autocomplete="off" placeholder="Search" value="'+S.q.replace(/"/g,'')+'" aria-label="Search transactions">'+(S.q?'<button type="button" class="clr" data-qclear aria-label="Clear search">✕</button>':'')+'</label>'+(S.ver==='A'?'<button type="button" class="ts-ficon'+(active(S.f)?' dot':'')+'" data-full aria-label="Filters" style="width:30px;height:30px;display:grid;place-items:center;color:var(--t-purple)">'+FIL+'</button>':'')+'<button type="button" class="cancel" data-go="account">Cancel</button></div>'+
+        (S.ver==='B'?pills():'')+'<div class="ts-scroll" style="padding-bottom:0">'+list(S.q,S.f)+'</div>'+(S.kb?kb():'');
+    },
+    details:function(){
+      var t=S.tx;
+      return '<div class="ts-purple">'+status()+'<div class="ts-head"><button type="button" class="b" data-go="'+S.from+'" aria-label="Back">'+BACK+'</button><span class="t">Transaction details</span><span class="b"></span></div></div>'+
+        '<div class="ts-scroll ts-bgrey"><div class="ts-det"><div class="a">'+gbp(t.a,t.inc)+'</div><div class="n">'+t.n+'</div><div class="d">'+dlong(t.d)+'</div><span class="chip">'+t.type+'</span></div><button type="button" class="ts-disp" data-noop>Dispute transaction'+CHEV+'</button></div>';
+    }
+  };
+  function radios(name,opts,val){return '<div class="ts-radios" role="radiogroup">'+opts.map(function(o){return '<button type="button" class="ts-radio" role="radio" data-r="'+name+'" data-v="'+o[0]+'" aria-checked="'+(val===o[0])+'">'+o[1]+'<i></i></button>';}).join('')+'</div>';}
+  function rangeInputs(d){return d.date==='range'?'<div class="ts-row2" style="margin:-6px 0 14px"><input class="ts-inp" type="date" data-in="from" value="'+d.from+'" aria-label="From date"><span>to</span><input class="ts-inp" type="date" data-in="to" value="'+d.to+'" aria-label="To date"></div>':'';}
+  function amountInputs(d){return '<div class="ts-row2"><input class="ts-inp" inputmode="decimal" placeholder="Min" data-in="min" value="'+d.min+'" aria-label="Minimum amount"><span>to</span><input class="ts-inp" inputmode="decimal" placeholder="Max" data-in="max" value="'+d.max+'" aria-label="Maximum amount"></div>';}
+  function sheetHTML(){
+    var d=S.draft,k=S.sheet;
+    if(k==='full') return '<div class="ts-dim"></div><div class="ts-sheet full"><div class="hd"><button type="button" class="x" data-sclose aria-label="Close">✕</button><b>Filters</b><span style="width:28px"></span></div><div class="bd">'+
+      '<div class="ts-lbl">Date</div>'+radios('date',DATE_OPTS,d.date)+rangeInputs(d)+'<div class="ts-lbl">In/out</div>'+radios('dir',[['all','All'],['in','Incoming'],['out','Outgoing']],d.dir)+
+      '<label class="ts-sel"><span>Transaction type</span><select data-in="type"><option value="all">Select an option</option>'+TYPES.map(function(t){return '<option'+(d.type===t?' selected':'')+'>'+t+'</option>';}).join('')+'</select></label>'+
+      '<div class="ts-lbl">Amount range (optional)</div>'+amountInputs(d)+'</div><button type="button" class="ts-apply" data-apply>Apply</button></div>';
+    var title={date:'Date',dir:'In/out',type:'Types',amount:'Amount'}[k],body;
+    if(k==='date') body=radios('date',DATE_OPTS,d.date)+rangeInputs(d);
+    else if(k==='dir') body=radios('dir',DIR_OPTS,d.dir);
+    else if(k==='type') body=radios('type',[['all','All']].concat(TYPES.map(function(t){return [t,t];})),d.type);
+    else body=amountInputs(d);
+    return '<div class="ts-dim" data-sclose></div><div class="ts-sheet"><div class="grab"></div><div class="hd"><b>'+title+'</b><button type="button" class="x" data-sclose aria-label="Close">✕</button></div><div class="bd">'+body+'</div><button type="button" class="ts-apply" data-apply>Apply</button></div>';
+  }
+  function render(anim){
+    scr.innerHTML='<div class="ts-screen'+(anim?' ts-anim':'')+'" style="position:absolute;inset:0;display:flex;flex-direction:column">'+V[S.screen]()+'</div>';
+    if(S.sheet){sheet.innerHTML=sheetHTML();sheet.classList.add('open');} else {sheet.innerHTML='';sheet.classList.remove('open');}
+    root.querySelectorAll('[data-ver]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.ver===S.ver));});
+    var n=S.ver==='A'?['Version A','Full-page filter','Every filter sits on one page. It gives a complete overview, but in testing it caused cognitive overload: people had to read through every option before seeing any results.']
+                     :['Version B · shipped','Pill filters','Filters sit as pills under the search field, and each one opens a short sheet. People refine one thing at a time and see the results straight away. This is the version that tested best and shipped.'];
+    document.getElementById('ts-note-k').textContent=n[0];document.getElementById('ts-note-t').textContent=n[1];document.getElementById('ts-note-p').textContent=n[2];
+    meter();
+  }
+  function meter(){
+    document.getElementById('ts-taps').textContent=S.taps;
+    var s=S.t0?Math.round(((S.doneAt||Date.now())-S.t0)/1000):0;document.getElementById('ts-time').textContent=s+'s';
+    var r=S.results,html='';
+    ['A','B'].forEach(function(v){ if(r[v]) html+='<div class="'+(S.done&&S.ver===v?'done':'')+'"><span>'+(S.done&&S.ver===v?'✓ ':'')+'Version '+v+'</span><b>'+r[v].taps+' taps · '+r[v].s+'s</b></div>'; });
+    if(S.done&&!(r.A&&r.B)) html+='<div><span>Now try version '+(S.ver==='A'?'B':'A')+'</span><b>→</b></div>';
+    document.getElementById('ts-res').innerHTML=html;
+  }
+  function reset(keepResults){S.screen='account';S.q='';S.f=F0();S.draft=null;S.sheet=null;S.tx=null;S.taps=0;S.t0=null;S.done=false;S.doneAt=null;S.kb=false;if(!keepResults)S.results={};clearInterval(timer);timer=null;render(true);}
+  function go(s){S.screen=s;if(s==='search'){S.kb=true;}render(true);}
+  dev.addEventListener('pointerdown',function(e){
+    if(S.done) return;
+    if(!e.target.closest('button,input,select,label')) return;
+    S.taps++; if(!S.t0){S.t0=Date.now();timer=setInterval(meter,500);} meter();
+  });
+  root.addEventListener('click',function(e){
+    var clr=e.target.closest('[data-pclear]');
+    if(clr&&root.contains(clr)){e.stopPropagation();var k=clr.dataset.pclear;if(k==='date'){S.f.date='all';S.f.from='';S.f.to='';}else if(k==='dir')S.f.dir='all';else if(k==='type')S.f.type='all';else{S.f.min='';S.f.max='';}render(false);return;}
+    var t=e.target.closest('button'); if(!t||!root.contains(t)){ if(e.target.closest('[data-sclose]')){S.sheet=null;render(false);} return;}
+    if(t.dataset.ver){S.ver=t.dataset.ver;reset(true);return;}
+    if(t.id==='ts-restart'){reset(false);return;}
+    if('noop' in t.dataset) return;
+    if(t.dataset.go){ if(t.dataset.go==='account'){S.q='';if(S.ver==='B')S.f=F0();S.kb=false;} go(t.dataset.go); return;}
+    if('full' in t.dataset){S.draft=JSON.parse(JSON.stringify(S.f));S.sheet='full';S.kb=false;render(false);return;}
+    if(t.dataset.pill){S.draft=JSON.parse(JSON.stringify(S.f));S.sheet=t.dataset.pill;S.kb=false;render(false);return;}
+    if('sclose' in t.dataset){S.sheet=null;render(false);return;}
+    if(t.dataset.r){S.draft[t.dataset.r]=t.dataset.v;sheet.innerHTML=sheetHTML();return;}
+    if('apply' in t.dataset){S.f=S.draft;S.sheet=null;if(S.ver==='A'&&S.screen!=='search')S.screen='account';render(false);return;}
+    if('clearall' in t.dataset){S.f=F0();render(false);return;}
+    if('qclear' in t.dataset){S.q='';render(false);return;}
+    if(t.dataset.key){var k=t.dataset.key;if(k==='del')S.q=S.q.slice(0,-1);else if(k==='ret')S.kb=false;else S.q+=k;render(false);return;}
+    if(t.dataset.tx){
+      S.tx=T.filter(function(x){return x.id===t.dataset.tx;})[0];S.from=S.screen;S.kb=false;S.screen='details';
+      if(S.tx.id==='target'&&!S.done){S.done=true;S.doneAt=Date.now();clearInterval(timer);S.results[S.ver]={taps:S.taps,s:Math.max(1,Math.round((S.doneAt-(S.t0||S.doneAt))/1000))};}
+      render(true);return;
+    }
+  });
+  root.addEventListener('input',function(e){
+    var el=e.target;
+    if(el.id==='ts-q'){S.q=el.value;var p=el.selectionStart;if(!S.done){S.taps++;if(!S.t0){S.t0=Date.now();timer=setInterval(meter,500);}}render(false);var q=document.getElementById('ts-q');q.focus();q.setSelectionRange(p,p);return;}
+    if(el.dataset.in&&S.draft){S.draft[el.dataset.in]=el.value; if(el.dataset.in==='type'){} }
+  });
+  root.addEventListener('change',function(e){var el=e.target;if(el.dataset.in&&S.draft){S.draft[el.dataset.in]=el.value;}});
+  render(false);
+})();
+</script>
+
+<script>
+(function(){
+  var root=document.getElementById('ky'); if(!root) return;
+  var main=document.getElementById('ky-main'), toastEl=document.getElementById('ky-toast'), layer=document.getElementById('ky-layer');
+  var STEPS=[['product','Product',''],['basic','Basic Info','KYC'],['address','Address','KYC'],['id','ID','KYC'],['tax','Tax',''],['aml','AML',''],['manual','Manual Review',''],['digital','Digital Access','']];
+  var KYC=['basic','address','id'];
+  function person(id,name,ph,em,sub,a1,city,zip,state,country,dob,nat){var n=name.split(' ');return {id:id,name:name,init:n[0][0]+n[1][0],mobile:ph,email:em,sub:sub,
+    basic:[['First name',n[0]],['Last name',n[1]],['Date of birth',dob],['Nationality',nat],['Mobile',ph],['Email',em]],
+    address:[['Address 1',a1],['Address 2 (Optional)','-'],['State',state],['City',city],['Zip Code',zip],['Country',country]],
+    idd:[['Document type','Passport'],['Document number','•••• •••• 4821'],['Expiry date','04 Aug 2029'],['Issuing country',nat==='British'?'United Kingdom':country],['Name on document',name],['Date of birth',dob]],
+    emp:[['Employment status','Employed'],['Occupation','Software engineer'],['Annual income','£45,000 – £60,000']]};}
+  var BASE=[person('jd','John Doe','+233 2344 45 785','john.doe@gmail.com','12 Mar 2023 10:32','Duart Crescent','Edinburgh','EH4 7JP','Midlothian','United Kingdom','14 Feb 1989','British'),
+    person('am','Amira Malik','+44 7700 900 412','amira.malik@mail.com','12 Mar 2023 09:15','Clifton Road','Bristol','BS8 1AB','Avon','United Kingdom','02 Jun 1993','British'),
+    person('lb','Lucas Bernard','+33 6 12 34 56 78','l.bernard@mail.fr','11 Mar 2023 16:48','Rue Oberkampf','Paris','75011','Île-de-France','France','21 Sep 1986','French'),
+    person('so','Sara Okafor','+44 7700 900 733','sara.okafor@mail.com','11 Mar 2023 11:02','Deansgate','Manchester','M3 4LZ','Greater Manchester','United Kingdom','30 Nov 1990','British')];
+  var S;
+  function fresh(){
+    var cs={};BASE.forEach(function(p){cs[p.id]={p:p,steps:{product:'ok',basic:'act',address:'act',id:'act',tax:'ok',aml:'wait',manual:'none',digital:'none'},outcome:null,reason:null,
+      ev:[['grey','Application submitted for Banking',p.sub],['ok','Product check passed',p.sub],['ok','Tax check passed · no manual review needed',p.sub],['grey','AML screening waiting for KYC checks',p.sub]]};});
+    return {view:'queue',cur:null,tab:'address',cs:cs,layer:null,rej:'Document unreadable'};
+  }
+  S=fresh();
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function tag(cls,t){return '<span class="ky-tag '+cls+'">'+t+'</span>';}
+  function stTag(v){return v==='ok'?tag('ok','Verified'):v==='bad'?tag('bad','Rejected'):tag('pending','Pending');}
+  function c(){return S.cs[S.cur];}
+  function pending(){return BASE.filter(function(p){return !S.cs[p.id].outcome;});}
+  function custStatus(k){return k.outcome==='approved'?tag('ok','Active'):k.outcome==='rejected'?tag('bad','Blocked'):tag('pending','Pending');}
+  function allKyc(k){return KYC.every(function(s){return k.steps[s]==='ok';});}
+  function anyBad(k){return KYC.some(function(s){return k.steps[s]==='bad';});}
+  function sideHTML(){
+    var items=[['Your Work','▢'],['Customers','⚇',1],['Applications','▭'],['Loyalty & Rewards','◇'],['Community','◎'],['Products','▦'],['Onboarding','⚲'],['Payments','⇄'],['Design Studio','◐'],['System Settings','⚙']];
+    var n=pending().length;
+    return '<div class="ky-srch">⌕ Search</div>'+items.map(function(it){return '<div class="ky-nav"><em>'+it[1]+'</em><span>'+it[0]+'</span><em>'+(it[2]?'⌄':'›')+'</em></div>'+(it[2]?'<button type="button" class="ky-sub" data-view="queue"'+(S.view==='queue'||(S.view==='profile'&&!c().outcome)?' aria-current="page"':'')+'><i></i>Pending Review'+(n?'<b>'+n+'</b>':'')+'</button><button type="button" class="ky-sub" data-view="retail"'+(S.view==='retail'||(S.view==='profile'&&c().outcome)?' aria-current="page"':'')+'><i></i>Retail Customers</button>':'');}).join('');
+  }
+  function switcher(){return '<span class="ky-switch"><button type="button" data-view="queue" aria-pressed="'+(S.view==='queue')+'">Pending Review</button><button type="button" data-view="retail" aria-pressed="'+(S.view==='retail')+'">Retail Customers</button></span>';}
+  function mini(k){return '<span class="ky-mini">'+STEPS.map(function(s){var v=k.steps[s[0]];return '<i class="'+(v==='ok'?'ok':v==='act'?'act':v==='bad'?'bad':'')+'" title="'+s[1]+'"></i>';}).join('')+'</span>';}
+  function queueHTML(){
+    var list=pending();
+    return '<div class="ky-crumbs">Your Work › Customers › Pending Review</div><div class="ky-box"><div class="ky-ph">Pending Review <span class="ky-tag pending">'+list.length+' to review</span>'+switcher()+'</div>'+
+      (list.length?'<table class="ky-table"><thead><tr><th>Customer</th><th>Product</th><th>Submitted</th><th>Workflow</th><th>Status</th></tr></thead><tbody>'+list.map(function(p){var k=S.cs[p.id];return '<tr class="click" data-open="'+p.id+'" tabindex="0"><td><b>'+p.name+'</b><br><span style="color:var(--k-muted)">'+p.email+'</span></td><td>Banking</td><td>'+p.sub+'</td><td>'+mini(k)+'</td><td>'+tag('pending','Pending')+'</td></tr>';}).join('')+'</tbody></table></div>'
+      :'<div style="padding:40px;text-align:center;color:var(--k-muted)">All caught up. No customers waiting for review.</div></div>');
+  }
+  function retailHTML(){
+    return '<div class="ky-crumbs">Your Work › Customers › Retail Customers</div><div class="ky-box"><div class="ky-ph">Retail Customers'+switcher()+'</div><table class="ky-table"><thead><tr><th>Customer</th><th>Mobile</th><th>Last update</th><th>Status</th></tr></thead><tbody>'+
+      BASE.map(function(p){var k=S.cs[p.id];return '<tr class="click" data-open="'+p.id+'" tabindex="0"><td><b>'+p.name+'</b></td><td>'+p.mobile+'</td><td>'+(k.outcome?'15 Mar 2023 · just now':p.sub)+'</td><td>'+custStatus(k)+'</td></tr>';}).join('')+'</tbody></table></div>';
+  }
+  function stepCard(k,s){
+    var v=k.steps[s[0]],isK=KYC.indexOf(s[0])>-1,dec=!!k.outcome;
+    var icon=v==='ok'?'<span class="s ok">✓</span>':v==='act'?'<span class="s act">→</span>':v==='wait'?'<span class="s wait">•••</span>':v==='bad'?'<span class="s bad">−</span>':'<span class="s none"></span>';
+    var tip={product:'Banking product selected',tax:'No manual review needed',aml:v==='ok'?'AML screening passed':'Runs after KYC checks',manual:v==='ok'?'All manual checks complete':'Waiting for KYC checks',digital:k.outcome==='approved'?'Access granted':'Granted after approval'}[s[0]];
+    var ic=isK?'<button type="button" data-req="'+s[0]+'" data-tip="Request again"'+(dec?' disabled':'')+'>↻</button><button type="button" data-tabgo="'+s[0]+'" data-tip="View details">▤</button><button type="button" class="'+(v==='act'?'vf':'')+'" data-verify="'+s[0]+'" data-tip="'+(v==='ok'?'Verified':'Verify')+'"'+(v!=='act'||dec?' disabled':'')+'>✓</button>'
+      :'<button type="button" data-tip="'+tip+'">ⓘ</button>';
+    return '<div class="ky-st'+(isK&&S.tab===s[0]?' cur':'')+'">'+icon+'<b>'+s[1]+'</b><small>'+(s[2]||'&nbsp;')+'</small><span class="ic">'+ic+'</span></div>';
+  }
+  function fields(arr){return '<div class="ky-fields">'+arr.map(function(f){return '<div class="ky-f"><span>'+f[0]+'</span><div>'+esc(f[1])+'</div></div>';}).join('')+'</div>';}
+  function panel(k){
+    var t=S.tab,p=k.p,v=k.steps[t],dec=!!k.outcome;
+    var title={basic:'Basic information',address:'Address',id:'Identity document',emp:'Employment'}[t];
+    var info='<div class="ky-h6">Information Details '+(t==='emp'?'':stTag(v))+'</div>';var docT='<div class="ky-h6 mt">Supporting document(s)</div>';var ver=t==='emp'?'':'<div class="ky-h6 mt">Verification</div><div class="ky-fields"><div class="ky-f"><span>Verification Type</span><div>Manual</div></div></div>';
+    var body=t==='basic'?info+fields(p.basic)+ver:t==='address'?info+fields(p.address)+docT+'<div class="ky-docs"><div class="ky-doc"><span>ELECTRICITY_BILL_FRONT</span><div class="pg"></div></div><div class="ky-doc"><span>ELECTRICITY_BILL_BACK</span><div class="pg"></div></div></div>'+ver
+      :t==='id'?info+fields(p.idd)+docT+'<div class="ky-docs"><div class="ky-doc"><span>PASSPORT_PHOTO_PAGE</span><div class="pg id"></div></div><div class="ky-doc"><span>SELFIE_CHECK</span><div class="pg id"></div></div></div>'+ver
+      :info+fields(p.emp)+'<p class="ky-empty" style="margin:10px 0 0">Employment details are collected for information and don’t need manual verification.</p>';
+    var foot=t==='emp'?'':'<div class="ky-pfoot">'+(v==='act'&&!dec?'<button type="button" class="ky-fb rej" data-stepreject="'+t+'">Reject</button><button type="button" class="ky-fb" data-verify="'+t+'">Verify '+title.toLowerCase()+'</button>':stTag(v))+'</div>';
+    return '<div class="ky-panel"><div class="hd"><span>'+title+'</span><span class="r">'+(t==='emp'?tag('grey','Not required'):stTag(v))+'<span aria-hidden="true">⌃</span></span></div>'+body+foot+'</div>';
+  }
+  function profileHTML(){
+    var k=c(),p=k.p,ready=allKyc(k)&&k.steps.manual==='ok'&&!k.outcome;
+    var wfTag=k.outcome==='approved'?tag('ok','Approved'):k.outcome==='rejected'?tag('bad','Rejected'):tag('pending','Pending');
+    var ma=function(s){return stTag(k.steps[s]==='act'?'pend':k.steps[s]);};
+    var kycCard=k.outcome==='approved'?'<div class="ky-li"><span>Status</span>'+tag('ok','Verified')+'</div><div class="ky-li"><span>Last review</span>15 Mar 2023</div><div class="ky-li"><span>Next review</span>15 Mar 2024</div><div class="ky-li"><span>Risk level</span>Low</div><div class="ky-li"><span>Blocking</span>–</div><div class="ky-kbtns"><button type="button" class="ky-ob" data-info="Review date updated">Review Date</button><button type="button" class="ky-ob" data-info="KYC review triggered">Trigger KYC</button></div>'
+      :k.outcome==='rejected'?'<div class="ky-li"><span>Status</span>'+tag('bad','Rejected')+'</div><div class="ky-li"><span>Last review</span>15 Mar 2023</div><div class="ky-li"><span>Reason</span>'+esc(k.reason)+'</div><div class="ky-li"><span>Risk level</span>High</div><div class="ky-li"><span>Blocking</span>15 Mar 2023</div>'
+      :'<p class="ky-empty">No info during onboarding</p>';
+    var tabs=[['basic','Basic'],['address','Address'],['id','ID'],['emp','Employment']].map(function(t){var dot=KYC.indexOf(t[0])>-1&&k.steps[t[0]]==='act';return '<button type="button" role="tab" data-tab="'+t[0]+'" aria-selected="'+(S.tab===t[0])+'">'+t[1]+(dot?'<i></i>':'')+'</button>';}).join('');
+    return '<div class="ky-crumbs"><button type="button" data-view="queue">Your Work</button> › <button type="button" data-view="retail">Customers</button> › '+(k.outcome?'Retail Customers':'Pending Review')+'</div>'+
+      '<div class="ky-box"><div class="ky-ph"><button type="button" class="bk" data-view="'+(k.outcome?'retail':'queue')+'" aria-label="Back">←</button>Customer Profile<button type="button" class="hist" data-hist>⟲ History <b>'+k.ev.length+'</b></button></div><div class="ky-boxb">'+
+      '<div class="ky-grid3"><div class="ky-card ky-c"><h5>'+p.name+'</h5><div class="ky-av">'+p.init+'</div><div class="ky-kv"><span>Full Name</span><span style="color:var(--k-text)">'+p.name+'</span><span>Mobile</span><span style="color:var(--k-text)">'+p.mobile+'</span><span>Email</span><span style="color:var(--k-text)">'+p.email+'</span><span>Customer ⓘ</span><span>'+custStatus(k)+'</span><span>Last Update</span><span style="color:var(--k-text)">'+(k.outcome?'15 Mar 2023 · just now':p.sub)+'</span></div></div>'+
+      '<div class="ky-card ky-c"><h5>Digital Access ⓘ</h5><div class="ky-li"><span>Bank Account</span>'+(k.outcome==='approved'?tag('ok','Active'):k.outcome==='rejected'?tag('bad','Blocked'):tag('pending','Pending'))+'</div><div class="ky-sub2">Manual Review</div><div class="ky-li"><span>Basic Info</span>'+ma('basic')+'</div><div class="ky-li"><span>Address</span>'+ma('address')+'</div><div class="ky-li"><span>ID</span>'+ma('id')+'</div></div>'+
+      '<div class="ky-card ky-c"><h5>KYC</h5>'+kycCard+'</div></div>'+
+      '<div class="ky-card ky-sec"><h4>Bank Account</h4><div class="ky-wfh"><p>Digital Access: <b>Banking</b> | Workflow Name: <b>Manual Workflow</b> | Version: <b>1</b><small>'+p.sub+'</small></p><div class="ky-acts"><button type="button" class="ky-fb rej" data-reject'+(k.outcome?' disabled':'')+'>Reject</button><button type="button" class="ky-fb" data-approve'+(ready?'':' disabled')+' title="'+(ready?'':'Verify every KYC step first')+'">Approve</button></div></div><div style="margin-top:8px">'+wfTag+'</div>'+
+      '<div class="ky-steps">'+STEPS.map(function(s){return stepCard(k,s);}).join('')+'</div></div>'+
+      '<div class="ky-card ky-sec data"><h4>Customer Profile Data</h4><div class="ky-tabs" role="tablist">'+tabs+'</div>'+panel(k)+'</div></div></div>';
+  }
+  function layerHTML(){
+    var k=c();
+    if(S.layer==='hist') return '<div class="ky-dim" data-lclose></div><div class="ky-drawer" role="dialog" aria-label="History"><h5>History <button type="button" data-lclose aria-label="Close">✕</button></h5>'+k.ev.slice().reverse().map(function(e){return '<div class="ky-ev"><i class="'+e[0]+'"></i><div><b>'+esc(e[1])+'</b><span>'+e[2]+'</span></div></div>';}).join('')+'</div>';
+    if(S.layer&&S.layer.indexOf('reject')===0){
+      var step=S.layer.split(':')[1],R=['Document unreadable','Address doesn’t match document','Document expired','Possible sanctions match','Other'];
+      return '<div class="ky-dim" data-lclose></div><div class="ky-dlg" role="dialog" aria-label="Reject"><h5>'+(step?'Reject '+({basic:'basic info',address:'address',id:'ID'}[step]):'Reject KYC review')+' <button type="button" data-lclose aria-label="Close">✕</button></h5><p>'+(step?'The customer will be asked to resubmit. Choose a reason:':'This blocks the bank account and notifies the customer. Choose a reason:')+'</p>'+
+        R.map(function(r){return '<button type="button" class="ky-rad" role="radio" data-reason="'+esc(r)+'" aria-checked="'+(S.rej===r)+'"><i></i>'+r+'</button>';}).join('')+
+        '<div class="row"><button type="button" class="ky-ob" data-lclose>Cancel</button><button type="button" class="ky-fb rej" style="background:var(--k-bad) !important;color:#fff !important" data-confirmreject="'+(step||'')+'">Reject</button></div></div>';
+    }
+    return '';
+  }
+  var NOTES={
+    queue:['Step 1 · Queue','Every case in one list','Customers waiting for a decision sit in Pending Review, with dots showing which checks still need attention. Open John Doe to start.'],
+    profile:['Step 2 · Customer profile','One view for the decision','Identity, digital access, manual review and KYC status sit side by side, so staff don’t jump between screens. Blue arrows mark the steps that need a manual check: open a tab, review the details and documents, then verify.'],
+    progress:['Step 3 · Verify','Statuses update everywhere at once','Each verification updates the step, the Manual Review card and the tab, and is logged in History. Verify Basic Info, Address and ID to unlock the decision.'],
+    ready:['Step 4 · Decide','Ready for a decision','With every KYC check verified, AML screening runs automatically and Approve becomes available. You can also reject with a reason.'],
+    approved:['Done','Approved and communicated','The decision updates the customer, the bank account and the KYC record, shows a confirmation and adds an entry to History, so everyone sees the same status.'],
+    rejected:['Done','Rejected and communicated','The account is blocked, the reason is recorded on the KYC card and in History, and the case leaves the queue.'],
+    retail:['Customers','Retail Customers','All customers with their current status. Decided cases move here from Pending Review.']
+  };
+  function noteKey(){
+    if(S.view!=='profile') return S.view;
+    var k=c(); if(k.outcome) return k.outcome;
+    if(allKyc(k)) return 'ready';
+    if(KYC.some(function(s){return k.steps[s]!=='act';})) return 'progress';
+    return 'profile';
+  }
+  function render(){
+    main.innerHTML=S.view==='queue'?queueHTML():S.view==='retail'?retailHTML():profileHTML();
+    if(S.layer){layer.innerHTML=layerHTML();layer.classList.add('open');}else{layer.innerHTML='';layer.classList.remove('open');}
+    var n=NOTES[noteKey()];document.getElementById('ky-note-k').textContent=n[0];document.getElementById('ky-note-t').textContent=n[1];document.getElementById('ky-note-p').textContent=n[2];
+    
+  }
+  function toast(kind,msg){toastEl.className='ky-toast '+kind+' show';toastEl.innerHTML=esc(msg)+'<button type="button" data-tclose aria-label="Dismiss" style="color:#fff">✕</button>';clearTimeout(toast.t);toast.t=setTimeout(function(){toastEl.classList.remove('show');},3200);}
+  function log(k,cls,msg){k.ev.push([cls,msg,'15 Mar 2023 · just now']);}
+  function afterVerify(k){
+    if(allKyc(k)&&k.steps.aml!=='ok'){
+      k.steps.aml='wait';render();
+      setTimeout(function(){k.steps.aml='ok';log(k,'ok','AML screening passed');k.steps.manual='ok';log(k,'ok','Manual review complete');render();toast('info','All checks complete · ready to approve');},1100);
+    }
+  }
+  function openCase(id){S.cur=id;S.view='profile';S.tab='address';var k=c();var first=KYC.filter(function(s){return k.steps[s]==='act';})[0];if(first)S.tab=first;render();main.scrollTop=0;}
+  root.addEventListener('click',function(e){
+    var tr=e.target.closest('tr[data-open]'); if(tr&&root.contains(tr)){openCase(tr.dataset.open);return;}
+    var t=e.target.closest('button'); if(!t||!root.contains(t)){ if(e.target.closest('[data-lclose]')){S.layer=null;render();} return; }
+    if('tclose' in t.dataset){toastEl.classList.remove('show');return;}
+    if('lclose' in t.dataset){S.layer=null;render();return;}
+    if(t.dataset.view){S.view=t.dataset.view;S.layer=null;render();main.scrollTop=0;return;}
+    var k=S.cur?c():null;
+    if(t.dataset.tab||t.dataset.tabgo){S.tab=t.dataset.tab||t.dataset.tabgo;render();return;}
+    if(t.dataset.verify){var s=t.dataset.verify;if(k.steps[s]!=='act')return;k.steps[s]='ok';var nm={basic:'Basic info',address:'Address',id:'ID'}[s];log(k,'ok',nm+' verified');toast('ok',nm+' verified');
+      var next=KYC.filter(function(x){return k.steps[x]==='act';})[0]; if(next) S.tab=next; render(); afterVerify(k); return;}
+    if(t.dataset.req){var s2=t.dataset.req;k.steps[s2]='act';log(k,'grey',({basic:'Basic info',address:'Address',id:'ID'}[s2])+' · new document requested from customer');toast('info','Request sent to customer');render();return;}
+    if(t.dataset.stepreject!==undefined){S.layer='reject:'+t.dataset.stepreject;render();return;}
+    if('reject' in t.dataset){S.layer='reject';render();return;}
+    if(t.dataset.reason){S.rej=t.dataset.reason;layer.innerHTML=layerHTML();return;}
+    if(t.dataset.confirmreject!==undefined){
+      var st=t.dataset.confirmreject;
+      if(st){k.steps[st]='bad';log(k,'bad',({basic:'Basic info',address:'Address',id:'ID'}[st])+' rejected · '+S.rej);}
+      k.outcome='rejected';k.reason=S.rej;['manual','digital'].forEach(function(x){k.steps[x]='bad';});if(k.steps.aml!=='ok')k.steps.aml='none';
+      log(k,'bad','KYC review rejected · '+S.rej);log(k,'grey','Customer notified by email');S.layer=null;render();toast('bad','KYC review rejected');return;}
+    if('approve' in t.dataset){k.outcome='approved';k.steps.digital='ok';log(k,'ok','KYC review approved · bank account active');log(k,'grey','Customer notified by email');render();toast('ok','KYC review approved');return;}
+    if('hist' in t.dataset){S.layer='hist';render();return;}
+    if(t.dataset.info){log(k,'grey',t.dataset.info);toast('info',t.dataset.info);render();return;}
+  });
+  root.addEventListener('keydown',function(e){var tr=e.target.closest&&e.target.closest('tr[data-open]');if(tr&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openCase(tr.dataset.open);} if(e.key==='Escape'&&S.layer){e.stopPropagation();S.layer=null;render();}});
+  document.getElementById('ky-restart').addEventListener('click',function(){S=fresh();toastEl.classList.remove('show');render();main.scrollTop=0;});
+  render();
+})();
+</script>
+
+
+
+</body>
 </html>

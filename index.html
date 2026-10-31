@@ -62,6 +62,11 @@ h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;font-weight:500;l
 .proj p{margin:12px 0 0;font-size:clamp(16px,1.4vw,18px);line-height:1.55;font-weight:300;color:var(--muted);max-width:40ch}
 .proj .res{display:block;margin-top:10px;font-size:14px;font-weight:500;color:var(--accent-ink)}
 .proj:hover h2{color:var(--accent-ink)}
+.proj.soon{cursor:default}
+.soon-img{position:relative}
+.soon-img svg{width:100%;height:100%;display:block}
+.soon-chip{position:absolute;left:16px;bottom:16px;background:rgba(255,255,255,.92);color:#0E2A33;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px}
+.proj.soon:hover h2{color:inherit}
 footer{border-top:1px solid var(--line);padding:40px 20px;text-align:center;font-size:13px;color:var(--muted)}
 footer a{color:var(--muted)}
 /* case study overlay */
@@ -573,6 +578,78 @@ button.pp-row:hover{background:var(--pp-surface)}
 .ky-table th{padding:12px 22px;font-size:12px}
 .ky-table td{padding:14px 22px}
 .ky-ph .hist{font-size:12.5px;padding:6px 12px}
+
+/* KYC concept dashboard */
+.ky-concept{font:600 10.5px var(--mono);letter-spacing:.04em;text-transform:uppercase;color:#8A1FB5;background:#F3E8FA;border:1px solid #E2CCF0;padding:2px 7px;border-radius:3px;margin-left:4px;vertical-align:2px}
+.ky-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.ky-kpi{background:#fff;border:1px solid var(--k-line);border-radius:4px;padding:16px 18px;display:flex;flex-direction:column;gap:4px}
+.ky-kpi span{font-size:12px;color:var(--k-muted)}
+.ky-kpi b{font-size:26px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.ky-kpi b.bad{color:var(--k-bad)}
+.ky-kpi small{font-size:11.5px;color:var(--k-muted)}
+.ky-grid2{display:grid;grid-template-columns:1.25fr 1fr;gap:14px}
+.ky-c h5 small{font-size:12px;color:var(--k-muted);margin-left:6px}
+.ky-leg{display:flex;gap:16px;font-size:12px;color:#3A3A3C;margin:-8px 0 8px}
+.ky-leg span,.ky-tip span{display:flex;gap:6px;align-items:center}
+.ky-leg i,.ky-tip i{width:12px;height:3px;border-radius:2px;display:inline-block}
+i.c1{background:#8A1FB5}i.c2{background:#1F9EA8}
+.ky-chartwrap{position:relative}
+.ky-chart{width:100%;height:auto;display:block}
+.ky-chart .g{stroke:#EEF0F3}
+.ky-chart .ax{font:10px var(--body);fill:var(--k-muted)}
+.ky-chart .l1{fill:none;stroke:#8A1FB5;stroke-width:2;stroke-linejoin:round}
+.ky-chart .l2{fill:none;stroke:#1F9EA8;stroke-width:2;stroke-linejoin:round}
+.ky-chart .d1{fill:#8A1FB5;stroke:#fff;stroke-width:2}.ky-chart .d2{fill:#1F9EA8;stroke:#fff;stroke-width:2}
+.ky-chart .xh{stroke:#9A9CA3;stroke-width:1;stroke-dasharray:3 3}
+.ky-tip{position:absolute;display:none;background:#fff;border:1px solid var(--k-line);box-shadow:0 6px 18px -8px rgba(0,0,0,.25);border-radius:4px;padding:8px 10px;font-size:12px;pointer-events:none;min-width:118px}
+.ky-tip b{display:block;margin-bottom:4px}
+.ky-hb{display:grid;gap:10px}
+.ky-hb .row{display:grid;grid-template-columns:150px 1fr 40px;gap:10px;align-items:center;font-size:12.5px}
+.ky-hb .row span{color:#3A3A3C}
+.ky-hb .row b{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.ky-hb .trk{height:10px;background:#F1F2F4;border-radius:5px;overflow:hidden}
+.ky-hb .trk i{display:block;height:100%;background:#8A1FB5;border-radius:0 5px 5px 0}
+.ky-stack{display:flex;gap:2px;height:14px;border-radius:7px;overflow:hidden;margin-bottom:12px}
+.ky-stack i{display:block;height:100%}
+.ky-stack i.low{background:#D9C2EB}.ky-stack i.medium{background:#A865D0}.ky-stack i.high{background:#5E0F80}
+.ky-stackl{display:flex;gap:18px;flex-wrap:wrap}
+.ky-stackl button{display:flex;gap:6px;align-items:center;font-size:12.5px}
+.ky-stackl button span{color:var(--k-muted)}
+.ky-stackl button:hover b{text-decoration:underline}
+.ky-risk{display:inline-flex;gap:6px;align-items:center;font-size:12.5px}
+.ky-risk i{width:9px;height:9px;border-radius:2px}
+.ky-risk.low i{background:#D9C2EB}.ky-risk.medium i{background:#A865D0}.ky-risk.high i{background:#5E0F80}
+.ky-team th.n,.ky-team td.n{text-align:right}
+.ky-team td{padding:11px 14px !important}.ky-team th{padding:10px 14px !important}
+.ky-cap{height:6px;background:#F1F2F4;border-radius:3px;width:80px}
+.ky-cap i{display:block;height:100%;background:#1F9EA8;border-radius:3px}
+.ky-tools{display:flex;gap:12px;align-items:center;padding:14px 22px;border-bottom:1px solid var(--k-line);flex-wrap:wrap}
+.ky-views{display:flex;gap:4px}
+.ky-views button{font-size:12.5px;padding:6px 11px !important;border-radius:3px;color:var(--k-muted)}
+.ky-views button b{font-weight:600;margin-left:3px;color:var(--k-text)}
+.ky-views button[aria-pressed="true"]{background:#F3E8FA;color:var(--k-purple);font-weight:600}
+.ky-sp{flex:1}
+.ky-qs{display:flex;gap:6px;align-items:center;border:1px solid var(--k-line);border-radius:3px;padding:6px 10px;color:var(--k-muted)}
+.ky-qs input{border:0;outline:none;font:inherit;font-size:12.5px;width:170px;color:var(--k-text);background:none}
+.ky-sel2{font:inherit;font-size:12.5px;border:1px solid var(--k-line);border-radius:3px;padding:6px 8px;background:#fff;color:var(--k-text)}
+.ky-bulk{display:flex;gap:10px;align-items:center;padding:10px 22px;background:#F3E8FA;font-size:12.5px;font-weight:600;color:var(--k-purple)}
+.ky-table th button{font-weight:600;font-size:12px;color:var(--k-muted)}
+.ky-table th button:hover{color:var(--k-text)}
+.ky-table input[type=checkbox]{accent-color:#8A1FB5;width:15px;height:15px}
+.ky-sla{font-size:12px;font-variant-numeric:tabular-nums;color:#3A3A3C}
+.ky-sla.warn{color:#9A5B00;font-weight:600}
+.ky-sla.bad{color:var(--k-bad);font-weight:600}
+.ky-sla.bad::before{content:"! "}
+.ky-pager{display:flex;gap:8px;align-items:center;justify-content:flex-end;padding:12px 22px;font-size:12.5px;color:var(--k-muted)}
+.ky-pager span{margin-right:auto}
+.ky-tag.warn{background:#FFF3DC;color:#8A5200}
+.ky-riskgrid{display:grid;grid-template-columns:1fr 1.1fr;gap:28px}
+.ky-score{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+.ky-score b{font-size:36px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.ky-score span{color:var(--k-muted);font-size:13px}
+.ky-scorebar{position:relative;height:8px;border-radius:4px;background:linear-gradient(90deg,#D9C2EB 0 33%,#A865D0 33% 66%,#5E0F80 66%)}
+.ky-scorebar i{position:absolute;top:-4px;width:4px;height:16px;margin-left:-2px;background:#1C1C1E;border-radius:2px;box-shadow:0 0 0 2px #fff}
+.ky-scorel{display:flex;justify-content:space-between;font-size:11px;color:var(--k-muted);margin-top:6px}
 .ky-under{display:flex;gap:16px;align-items:flex-start}
 .ky-under .pp-note{flex:1}
 </style>
@@ -591,11 +668,12 @@ button.pp-row:hover{background:var(--pp-surface)}
   </section>
 
   <section class="grid" id="work" aria-label="Projects">
+    <div class="proj soon" aria-label="Peritas.ai, designs coming soon"><div class="img soon-img" aria-hidden="true"><svg viewBox="0 0 470 250" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0E2A33"/><stop offset="1" stop-color="#123F4A"/></linearGradient></defs><rect width="470" height="250" fill="url(#sg)"/><g stroke="#25B1E3" stroke-opacity=".14" stroke-width="1"><line x1="0" x2="470" y1="25" y2="25"/><line x1="0" x2="470" y1="50" y2="50"/><line x1="0" x2="470" y1="75" y2="75"/><line x1="0" x2="470" y1="100" y2="100"/><line x1="0" x2="470" y1="125" y2="125"/><line x1="0" x2="470" y1="150" y2="150"/><line x1="0" x2="470" y1="175" y2="175"/><line x1="0" x2="470" y1="200" y2="200"/><line x1="0" x2="470" y1="225" y2="225"/></g><polyline points="0,150 120,150 140,150 152,118 164,186 176,96 190,170 202,150 290,150 302,132 314,160 326,150 470,150" fill="none" stroke="#25B1E3" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="326" cy="150" r="5" fill="#25B1E3"/></svg><span class="soon-chip">Designs coming soon</span></div><span class="tags">Peritas.ai · Healthcare AI</span><h2>AI Surgical Intelligence</h2><p>Designing AI-powered experiences and a scalable design system for perioperative and sterile processing teams. Designs will be published soon.</p></div>
     <a class="proj" href="#ig"><div class="img"><img src="img/invest.jpg" alt="Investment app portfolio dashboard"></div><span class="tags">IG Group · Fintech · Mobile</span><h2>Investment App</h2><p>Led the end-to-end design of a new investment app, from early discovery to polished UI.</p></a>
+    <a class="proj" href="#kyc"><div class="img"><img src="img/kyc.jpg" alt="Back-office KYC console"></div><span class="tags">Sopra Banking · Back office · Data dashboard</span><h2>KYC Verification</h2><p>Streamlined the verification process to ensure compliance and reduce fraud.</p></a>
+    <a class="proj" href="#sopra-ds"><div class="img"><img src="img/sopds.jpg" alt="Design System title card"></div><span class="tags">Sopra Banking · B2B SaaS · Design system</span><h2>SaaS Design System</h2><p>Designed and managed a scalable DS for a B2B SaaS web application, ensuring consistency, efficiency, and scalability.</p></a>
     <a class="proj" href="#search"><div class="img"><img src="img/search.jpg" alt="Transaction search with pill filters"></div><span class="tags">Sopra Banking · Fintech · Mobile</span><h2>Enhancing Transaction Search</h2><p>Redesigned the transaction list experience to improve usability and help users find information faster.</p></a>
     <a class="proj" href="#uw"><div class="img"><img src="img/uwds.jpg" alt="Design system illustration of components and type"></div><span class="tags">Utility Warehouse · Design system</span><h2>Mobile-First DS</h2><p>Spearheaded the creation and implementation of a robust design system to unify products and accelerate delivery.</p></a>
-    <a class="proj" href="#sopra-ds"><div class="img"><img src="img/sopds.jpg" alt="Design System title card"></div><span class="tags">Sopra Banking · B2B SaaS · Design system</span><h2>SaaS Design System</h2><p>Designed and managed a scalable DS for a B2B SaaS web application, ensuring consistency, efficiency, and scalability.</p></a>
-    <a class="proj" href="#kyc"><div class="img"><img src="img/kyc.jpg" alt="Back-office KYC console"></div><span class="tags">Sopra Banking · Back office</span><h2>KYC Verification</h2><p>Streamlined the verification process to ensure compliance and reduce fraud.</p></a>
     <a class="proj" href="#dooh"><div class="img"><img src="img/dooh.jpg" alt="Billboard booking interface"></div><span class="tags">crossvertise · Marketplace</span><h2>DOOH Booking Process</h2><p>Redesigned the booking flow to reduce abandonment rates and improve the overall purchase experience.</p></a>
   </section>
 </main>
@@ -683,7 +761,7 @@ button.pp-row:hover{background:var(--pp-surface)}
       <li><strong>Design drives adoption:</strong> the app's early growth showed how UX decisions shape business outcomes.</li>
       <li><strong>Future-ready:</strong> the groundwork is in place for fractional shares, automation, tax wrappers and broader instrument coverage.</li>
     </ul>
-    <div class="next"><span class="mono">Next</span><a href="#search">Enhancing Transaction Search →</a></div>
+    <div class="next"><span class="mono">Next</span><a href="#kyc">KYC Verification →</a></div>
   </div>
 </article>
 
@@ -754,7 +832,7 @@ button.pp-row:hover{background:var(--pp-surface)}
       <li><strong>Collaboration:</strong> improved alignment between design and engineering through shared standards and documentation.</li>
       <li><strong>Future-proofing:</strong> positioned Utility Warehouse with a scalable, mobile-first foundation for the upcoming rebrand.</li>
     </ul>
-    <div class="next"><span class="mono">Next</span><a href="#sopra-ds">SaaS Design System →</a></div>
+    <div class="next"><span class="mono">Next</span><a href="#dooh">DOOH Booking Process →</a></div>
   </div>
 </article>
 
@@ -804,7 +882,7 @@ button.pp-row:hover{background:var(--pp-surface)}
 
     <h3><span class="mono">11</span>Success metrics</h3>
     <p>Detachment of design instances was reduced by 80%, significantly improving Figma design specification consistency and accelerating delivery timelines. Development time decreased due to well-prepared documentation aligned with developers, eliminating ambiguities and assumptions.</p>
-    <div class="next"><span class="mono">Next</span><a href="#kyc">KYC Verification →</a></div>
+    <div class="next"><span class="mono">Next</span><a href="#search">Enhancing Transaction Search →</a></div>
   </div>
 </article>
 
@@ -930,7 +1008,8 @@ button.pp-row:hover{background:var(--pp-surface)}
     <p>Investing in user-centric design for KYC processes leads to improved compliance and risk management while fostering a positive organisational culture centred around collaboration and innovation.</p>
 
     <h3><span class="mono">04</span>Visuals and Prototypes</h3>
-    <p>Try the verification workflow I designed for back-office staff. Open John Doe from the Pending Review queue, check his details and documents, verify each KYC step, then approve or reject his bank account. The prototype is rebuilt from my designs and uses sample data.</p>
+    <p>Try the verification workflow I designed for back-office staff. Open John Doe from the Pending Review queue, check his details and documents, verify each KYC step, then approve or reject his bank account. The workflow is rebuilt from my designs and uses sample data.</p>
+    <p>The Overview dashboard, the data-table features of the queue and the Risk &amp; AML tab are a <strong>concept</strong>, marked as such. They show how I would extend the console for operations leads, with KPIs, SLA tracking and risk insight.</p>
     <div class="ky-under">
         <div class="pp-note"><span class="mono" id="ky-note-k">Step 1</span><h4 id="ky-note-t"></h4><p id="ky-note-p"></p></div>
         <button type="button" class="ts-restart" id="ky-restart">Restart</button>
@@ -948,7 +1027,7 @@ button.pp-row:hover{background:var(--pp-surface)}
 
     <h3><span class="mono">05</span>Conclusion</h3>
     <p>The KYC design process has transformed the verification workflow into a more intuitive experience for bank employees. By emphasising a user-centred approach, we have addressed key pain points, enhancing usability and streamlining operations. Continuous monitoring and updates will ensure the KYC process remains responsive to user needs and industry changes.</p>
-    <div class="next"><span class="mono">Next</span><a href="#dooh">DOOH Booking Process →</a></div>
+    <div class="next"><span class="mono">Next</span><a href="#sopra-ds">SaaS Design System →</a></div>
   </div>
 </article>
 
@@ -1366,11 +1445,56 @@ button.pp-row:hover{background:var(--pp-surface)}
     person('am','Amira Malik','+44 7700 900 412','amira.malik@mail.com','12 Mar 2023 09:15','Clifton Road','Bristol','BS8 1AB','Avon','United Kingdom','02 Jun 1993','British'),
     person('lb','Lucas Bernard','+33 6 12 34 56 78','l.bernard@mail.fr','11 Mar 2023 16:48','Rue Oberkampf','Paris','75011','Île-de-France','France','21 Sep 1986','French'),
     person('so','Sara Okafor','+44 7700 900 733','sara.okafor@mail.com','11 Mar 2023 11:02','Deansgate','Manchester','M3 4LZ','Greater Manchester','United Kingdom','30 Nov 1990','British')];
+  /* ---------- concept: operations data ---------- */
+  var FIRST=['Olivia','Noah','Mia','Ethan','Chloe','Daniel','Grace','Leo','Isla','Omar','Hannah','Mateo','Zara','Ryan','Elena','Kofi','Priya','Jonas','Aisha','Marco','Freya','Tomás','Yuki','Sam','Nadia','Ben','Lina','Oscar','Ruth','Iván','Maya','Hugo','Sofia','Adam','Nina','Felix'];
+  var LAST=['Smith','Garcia','Nowak','Reid','Haddad','Rossi','Mensah','Kowalski','Murphy','Silva','Patel','Fischer','Dubois','Ahmed','Jensen','Costa','Byrne','Novak','Moreau','Ali','Clarke','Santos','Tanaka','Price','Kaur','Hughes','Weber','Lund','Owen','Ruiz','Kim','Laurent','Bianchi','Shah','Berg','Walsh'];
+  var REVIEWERS=['John Smith (you)','Ana Torres','Liam Chen','Fatima Rahman','Peter Novak'];
+  (function(){var r=function(){var x=0;return function(){x=(x*9301+49297)%233280;return x/233280;};}();
+    for(var i=0;i<36;i++){var fn=FIRST[i],ln=LAST[(i*7)%LAST.length],day=String(1+(i%12)).padStart(2,'0'),hh=String(8+(i*3)%10).padStart(2,'0');
+      BASE.push(person('g'+i,fn+' '+ln,'+44 7700 9'+String(10000+i*137).slice(-5),(fn+'.'+ln).toLowerCase().replace(/[^a-z.]/g,'')+'@mail.com',day+' Mar 2023 '+hh+':'+String((i*17)%60).padStart(2,'0'),['High St','Park Lane','Church Rd','Mill Way','King St'][i%5]+' '+(3+i),['London','Leeds','Glasgow','Cardiff','Bristol'][i%5],['E1 6AN','LS1 4DY','G2 1QX','CF10 1EP','BS1 5TR'][i%5],['Greater London','West Yorkshire','Lanarkshire','South Glamorgan','Avon'][i%5],'United Kingdom','0'+(1+i%9)+' '+['Jan','Apr','Jul','Oct'][i%4]+' 19'+(70+i%28),'British'));}
+  })();
+  var META={};
+  BASE.forEach(function(p,i){var risk=i===0?'Low':i<4?['Medium','Low','High'][i-1]:['Low','Low','Medium','Low','High','Medium','Low','Low','Medium'][i%9];
+    var age=[30,26,41,52][i]!==undefined?[30,26,41,52][i]:(3+((i*13)%70));
+    META[p.id]={risk:risk,age:age,assignee:i<4?REVIEWERS[0]:REVIEWERS[i%5],score:risk==='High'?78-(i%9):risk==='Medium'?52-(i%7):18+(i%11)};});
+  function slaLeft(m){return 48-m.age;}
+  function slaTag(m){var l=slaLeft(m);return l<0?'<span class="ky-sla bad">'+(-l)+'h overdue</span>':l<=8?'<span class="ky-sla warn">'+l+'h left</span>':'<span class="ky-sla">'+l+'h left</span>';}
+  function riskTag(r){return '<span class="ky-risk '+r.toLowerCase()+'"><i></i>'+r+'</span>';}
+  function stepOf(k){var s=KYC.filter(function(x){return k.steps[x]==='act';})[0];return s?{basic:'Basic Info',address:'Address',id:'ID'}[s]:k.steps.aml!=='ok'?'AML':'Decision';}
+  function DAYS(){var out=[],r=function(){var x=7;return function(){x=(x*9301+49297)%233280;return x/233280;};}();for(var i=0;i<30;i++){var rc=24+Math.round(r()*16)+(i%7<5?6:-8),dc=rc-4+Math.round(r()*8);out.push({d:i+1,rec:rc,dec:Math.max(8,dc)});}return out;}
+  var D30=DAYS();
+  function dlab(i){var d=new Date(2023,1,14+i);return d.getDate()+' '+['Jan','Feb','Mar'][d.getMonth()];}
+  function lineChart(){
+    var W=520,H=170,P={l:30,r:10,t:10,b:22},mx=50,xs=function(i){return P.l+i*(W-P.l-P.r)/29;},ys=function(v){return H-P.b-v/mx*(H-P.t-P.b);};
+    var grid=[0,10,20,30,40,50].map(function(v){return '<line x1="'+P.l+'" x2="'+(W-P.r)+'" y1="'+ys(v)+'" y2="'+ys(v)+'" class="g"/><text x="'+(P.l-6)+'" y="'+(ys(v)+3)+'" text-anchor="end" class="ax">'+v+'</text>';}).join('');
+    var path=function(k){return D30.map(function(o,i){return (i?'L':'M')+xs(i).toFixed(1)+' '+ys(o[k]).toFixed(1);}).join(' ');};
+    var xl=[0,7,14,21,29].map(function(i){return '<text x="'+xs(i)+'" y="'+(H-6)+'" text-anchor="middle" class="ax">'+dlab(i)+'</text>';}).join('');
+    var hits=D30.map(function(o,i){return '<rect x="'+(xs(i)-8)+'" y="'+P.t+'" width="16" height="'+(H-P.t-P.b)+'" fill="transparent" data-tip-line="'+i+'"/>';}).join('');
+    var last=D30[29];
+    return '<svg viewBox="0 0 '+W+' '+H+'" class="ky-chart" role="img" aria-label="Cases received and decided per day, last 30 days">'+grid+xl+'<path d="'+path('rec')+'" class="l1"/><path d="'+path('dec')+'" class="l2"/><circle cx="'+xs(29)+'" cy="'+ys(last.rec)+'" r="4" class="d1"/><circle cx="'+xs(29)+'" cy="'+ys(last.dec)+'" r="4" class="d2"/><line class="xh" id="ky-xh" x1="0" x2="0" y1="'+P.t+'" y2="'+(H-P.b)+'" style="display:none"/>'+hits+'</svg>';
+  }
+  function hbars(rows,max,unit){return '<div class="ky-hb">'+rows.map(function(r){return '<div class="row" title="'+r[0]+': '+r[1]+unit+'"><span>'+r[0]+'</span><div class="trk"><i style="width:'+(r[1]/max*100).toFixed(1)+'%"></i></div><b>'+r[1]+unit+'</b></div>';}).join('')+'</div>';}
+  function dashHTML(){
+    var pend=pending(),overdue=pend.filter(function(p){return slaLeft(META[p.id])<0;}).length,high=pend.filter(function(p){return META[p.id].risk==='High';}).length;
+    var decided=BASE.filter(function(p){return S.cs[p.id].outcome;}).length,appr=BASE.filter(function(p){return S.cs[p.id].outcome==='approved';}).length;
+    var rate=decided?Math.round(appr/decided*100):86;
+    var rc={Low:0,Medium:0,High:0};pend.forEach(function(p){rc[META[p.id].risk]++;});var tot=pend.length||1;
+    var kpi=function(l,v,s,cls){return '<div class="ky-kpi"><span>'+l+'</span><b'+(cls?' class="'+cls+'"':'')+'>'+v+'</b><small>'+s+'</small></div>';};
+    var team=REVIEWERS.map(function(n,i){var mine=pend.filter(function(p){return META[p.id].assignee===n;});var old=mine.reduce(function(a,p){return Math.max(a,META[p.id].age);},0);return '<tr><td>'+n+'</td><td class="n">'+mine.length+'</td><td class="n">'+(mine.length?old+'h':'–')+'</td><td class="n">'+[6.2,7.8,5.4,9.1,6.9][i].toFixed(1).replace('.',',')+'h</td><td><div class="ky-cap"><i style="width:'+Math.min(100,mine.length/12*100)+'%"></i></div></td></tr>';}).join('');
+    return '<div class="ky-crumbs">Your Work › Customers › Overview</div><div class="ky-box"><div class="ky-ph">KYC Operations <span class="ky-concept">Concept</span>'+switcher()+'</div><div class="ky-boxb">'+
+      '<div class="ky-kpis">'+kpi('Cases pending',pend.length,'+6 since yesterday')+kpi('Past SLA (48h)',overdue,overdue?'Needs attention':'All within SLA',overdue?'bad':'')+kpi('Avg. time to decision','6,8h','−1,4h vs last month')+kpi('Approval rate',rate+'%','Last 30 days')+kpi('Checked automatically','64%','36% manual review')+'</div>'+
+      '<div class="ky-grid2"><div class="ky-card ky-c"><h5>Cases received vs decided <small>Last 30 days</small></h5><div class="ky-leg"><span><i class="c1"></i>Received</span><span><i class="c2"></i>Decided</span></div><div class="ky-chartwrap">'+lineChart()+'<div class="ky-tip" id="ky-tip"></div></div></div>'+
+      '<div class="ky-card ky-c"><h5>Where cases wait <small>Pending, by current step</small></h5>'+hbars([['Basic Info',Math.round(pend.length*.38)],['Address',Math.round(pend.length*.27)],['ID',Math.round(pend.length*.2)],['AML screening',Math.round(pend.length*.1)],['Decision',Math.max(1,Math.round(pend.length*.05))]],Math.round(pend.length*.38)||1,'')+'</div></div>'+
+      '<div class="ky-grid2"><div class="ky-card ky-c"><h5>Risk mix <small>Pending cases</small></h5><div class="ky-stack" role="img" aria-label="Risk mix">'+['Low','Medium','High'].map(function(r){return '<i class="'+r.toLowerCase()+'" style="width:'+(rc[r]/tot*100)+'%" title="'+r+' risk: '+rc[r]+' cases"></i>';}).join('')+'</div><div class="ky-stackl">'+['Low','Medium','High'].map(function(r){return '<button type="button" data-riskview="'+r+'">'+riskTag(r)+' <b>'+rc[r]+'</b> <span>'+Math.round(rc[r]/tot*100)+'%</span></button>';}).join('')+'</div>'+
+      '<h5 style="margin-top:22px">Rejection reasons <small>Last 30 days</small></h5>'+hbars([['Document unreadable',34],['Address mismatch',27],['Document expired',18],['Possible sanctions match',6],['Other',9]],34,'')+'</div>'+
+      '<div class="ky-card ky-c"><h5>Team workload <small>Open cases per reviewer</small></h5><table class="ky-table ky-team"><thead><tr><th>Reviewer</th><th class="n">Open</th><th class="n">Oldest</th><th class="n">Avg. handling</th><th>Capacity</th></tr></thead><tbody>'+team+'</tbody></table><button type="button" class="ky-ob" data-view="queue" style="margin-top:14px">Open Pending Review →</button></div></div>'+
+      '</div></div>';
+  }
   var S;
   function fresh(){
     var cs={};BASE.forEach(function(p){cs[p.id]={p:p,steps:{product:'ok',basic:'act',address:'act',id:'act',tax:'ok',aml:'wait',manual:'none',digital:'none'},outcome:null,reason:null,
       ev:[['grey','Application submitted for Banking',p.sub],['ok','Product check passed',p.sub],['ok','Tax check passed · no manual review needed',p.sub],['grey','AML screening waiting for KYC checks',p.sub]]};});
-    return {view:'queue',cur:null,tab:'address',cs:cs,layer:null,rej:'Document unreadable'};
+    return {view:'dash',cur:null,tab:'address',cs:cs,layer:null,rej:'Document unreadable',q:'',qv:'all',sort:'sla',dir:1,pg:0,fr:'',sel:{}};
   }
   S=fresh();
   function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
@@ -1386,13 +1510,23 @@ button.pp-row:hover{background:var(--pp-surface)}
     var n=pending().length;
     return '<div class="ky-srch">⌕ Search</div>'+items.map(function(it){return '<div class="ky-nav"><em>'+it[1]+'</em><span>'+it[0]+'</span><em>'+(it[2]?'⌄':'›')+'</em></div>'+(it[2]?'<button type="button" class="ky-sub" data-view="queue"'+(S.view==='queue'||(S.view==='profile'&&!c().outcome)?' aria-current="page"':'')+'><i></i>Pending Review'+(n?'<b>'+n+'</b>':'')+'</button><button type="button" class="ky-sub" data-view="retail"'+(S.view==='retail'||(S.view==='profile'&&c().outcome)?' aria-current="page"':'')+'><i></i>Retail Customers</button>':'');}).join('');
   }
-  function switcher(){return '<span class="ky-switch"><button type="button" data-view="queue" aria-pressed="'+(S.view==='queue')+'">Pending Review</button><button type="button" data-view="retail" aria-pressed="'+(S.view==='retail')+'">Retail Customers</button></span>';}
+  function switcher(){return '<span class="ky-switch"><button type="button" data-view="dash" aria-pressed="'+(S.view==='dash')+'">Overview</button><button type="button" data-view="queue" aria-pressed="'+(S.view==='queue')+'">Pending Review</button><button type="button" data-view="retail" aria-pressed="'+(S.view==='retail')+'">Retail Customers</button></span>';}
   function mini(k){return '<span class="ky-mini">'+STEPS.map(function(s){var v=k.steps[s[0]];return '<i class="'+(v==='ok'?'ok':v==='act'?'act':v==='bad'?'bad':'')+'" title="'+s[1]+'"></i>';}).join('')+'</span>';}
   function queueHTML(){
-    var list=pending();
-    return '<div class="ky-crumbs">Your Work › Customers › Pending Review</div><div class="ky-box"><div class="ky-ph">Pending Review <span class="ky-tag pending">'+list.length+' to review</span>'+switcher()+'</div>'+
-      (list.length?'<table class="ky-table"><thead><tr><th>Customer</th><th>Product</th><th>Submitted</th><th>Workflow</th><th>Status</th></tr></thead><tbody>'+list.map(function(p){var k=S.cs[p.id];return '<tr class="click" data-open="'+p.id+'" tabindex="0"><td><b>'+p.name+'</b><br><span style="color:var(--k-muted)">'+p.email+'</span></td><td>Banking</td><td>'+p.sub+'</td><td>'+mini(k)+'</td><td>'+tag('pending','Pending')+'</td></tr>';}).join('')+'</tbody></table></div>'
-      :'<div style="padding:40px;text-align:center;color:var(--k-muted)">All caught up. No customers waiting for review.</div></div>');
+    var all=pending(),q=(S.q||'').toLowerCase(),v=S.qv||'all';
+    var rows=all.filter(function(p){var m=META[p.id];if(q&&p.name.toLowerCase().indexOf(q)<0&&p.email.indexOf(q)<0)return false;if(v==='mine'&&m.assignee!==REVIEWERS[0])return false;if(v==='High'&&m.risk!=='High')return false;if(v==='overdue'&&slaLeft(m)>=0)return false;if(S.fr&&m.risk!==S.fr)return false;return true;});
+    var key=S.sort||'sla',dir=S.dir||1,rk={Low:0,Medium:1,High:2};
+    rows.sort(function(a,b){var A=META[a.id],B=META[b.id];var x=key==='sla'?slaLeft(A)-slaLeft(B):key==='risk'?rk[A.risk]-rk[B.risk]:key==='name'?a.name.localeCompare(b.name):A.age-B.age;return x*dir;});
+    var per=10,pages=Math.max(1,Math.ceil(rows.length/per));if((S.pg||0)>=pages)S.pg=0;var pg=S.pg||0,view=rows.slice(pg*per,pg*per+per);
+    S.sel=S.sel||{};var nsel=Object.keys(S.sel).filter(function(k){return S.sel[k];}).length;
+    var th=function(k,l,cls){return '<th'+(cls?' class="'+cls+'"':'')+'><button type="button" data-sort="'+k+'">'+l+(key===k?(dir>0?' ↑':' ↓'):'')+'</button></th>';};
+    var views=[['all','All',all.length],['mine','My cases',all.filter(function(p){return META[p.id].assignee===REVIEWERS[0];}).length],['High','High risk',all.filter(function(p){return META[p.id].risk==='High';}).length],['overdue','Overdue',all.filter(function(p){return slaLeft(META[p.id])<0;}).length]];
+    return '<div class="ky-crumbs">Your Work › Customers › Pending Review</div><div class="ky-box"><div class="ky-ph">Pending Review <span class="ky-tag pending">'+all.length+' to review</span>'+switcher()+'</div>'+
+      '<div class="ky-tools"><div class="ky-views">'+views.map(function(x){return '<button type="button" data-qv="'+x[0]+'" aria-pressed="'+(v===x[0])+'">'+x[1]+' <b>'+x[2]+'</b></button>';}).join('')+'</div><span class="ky-sp"></span><label class="ky-qs">⌕ <input id="ky-q" type="search" placeholder="Search name or email" value="'+esc(S.q||'')+'" aria-label="Search cases"></label><select id="ky-fr" class="ky-sel2" aria-label="Filter by risk"><option value="">All risk levels</option>'+['Low','Medium','High'].map(function(r){return '<option'+(S.fr===r?' selected':'')+'>'+r+'</option>';}).join('')+'</select></div>'+
+      (nsel?'<div class="ky-bulk">'+nsel+' selected <button type="button" class="ky-ob" data-assign>Assign to me</button><button type="button" class="ky-ob" data-clearsel>Clear</button></div>':'')+
+      '<table class="ky-table"><thead><tr><th style="width:34px"><input type="checkbox" id="ky-all" aria-label="Select all on page"'+(view.length&&view.every(function(p){return S.sel[p.id];})?' checked':'')+'></th>'+th('name','Customer')+th('risk','Risk')+'<th>Current step</th><th>Assignee</th>'+th('age','Submitted')+th('sla','SLA')+'<th>Workflow</th></tr></thead><tbody>'+
+      (view.length?view.map(function(p){var k=S.cs[p.id],m=META[p.id];return '<tr class="click" data-open="'+p.id+'" tabindex="0"><td data-stop><input type="checkbox" data-sel="'+p.id+'" aria-label="Select '+esc(p.name)+'"'+(S.sel[p.id]?' checked':'')+'></td><td><b>'+p.name+'</b><br><span style="color:var(--k-muted)">'+p.email+'</span></td><td>'+riskTag(m.risk)+'</td><td>'+stepOf(k)+'</td><td>'+m.assignee.replace(' (you)','')+'</td><td>'+m.age+'h ago</td><td>'+slaTag(m)+'</td><td>'+mini(k)+'</td></tr>';}).join(''):'<tr><td colspan="8" style="text-align:center;color:var(--k-muted);padding:30px">No cases match these filters.</td></tr>')+
+      '</tbody></table><div class="ky-pager"><span>'+(rows.length?(pg*per+1)+'–'+Math.min(rows.length,pg*per+per)+' of '+rows.length:'0 results')+'</span><button type="button" class="ky-ob" data-pg="-1"'+(pg?'':' disabled')+'>‹ Prev</button><button type="button" class="ky-ob" data-pg="1"'+(pg<pages-1?'':' disabled')+'>Next ›</button></div></div>';
   }
   function retailHTML(){
     return '<div class="ky-crumbs">Your Work › Customers › Retail Customers</div><div class="ky-box"><div class="ky-ph">Retail Customers'+switcher()+'</div><table class="ky-table"><thead><tr><th>Customer</th><th>Mobile</th><th>Last update</th><th>Status</th></tr></thead><tbody>'+
@@ -1407,8 +1541,17 @@ button.pp-row:hover{background:var(--pp-surface)}
     return '<div class="ky-st'+(isK&&S.tab===s[0]?' cur':'')+'">'+icon+'<b>'+s[1]+'</b><small>'+(s[2]||'&nbsp;')+'</small><span class="ic">'+ic+'</span></div>';
   }
   function fields(arr){return '<div class="ky-fields">'+arr.map(function(f){return '<div class="ky-f"><span>'+f[0]+'</span><div>'+esc(f[1])+'</div></div>';}).join('')+'</div>';}
+  function riskPanel(k){var m=META[k.p.id],sc=m.score,lv=m.risk;
+    var f=[['Country risk',lv==='High'?62:18],['Product risk (Banking)',35],['Occupation',lv==='High'?48:22],['Transaction profile',lv==='High'?71:lv==='Medium'?44:15],['Document checks',k.steps.id==='ok'?8:30]];
+    var aml=[['UN Consolidated Sanctions','0%','No match','ok'],['EU Financial Sanctions','0%','No match','ok'],['OFAC SDN','0%','No match','ok'],['PEP database',lv==='High'?'61%':'4%',lv==='High'?'Possible match':'No match',lv==='High'?'warn':'ok'],['Adverse media',lv==='High'?'38%':'2%',lv==='High'?'Review':'No match',lv==='High'?'warn':'ok']];
+    var dc=[['Name on ID matches application',98],['Date of birth matches',100],['Address matches proof of address',lv==='Low'?94:72],['Document authenticity',96],['Selfie matches ID photo',91]];
+    return '<div class="ky-panel"><div class="hd"><span>Risk &amp; AML <span class="ky-concept">Concept</span></span><span class="r">'+riskTag(lv)+'</span></div>'+
+      '<div class="ky-riskgrid"><div><div class="ky-h6">Risk score</div><div class="ky-score"><b>'+sc+'</b><span>/ 100 · '+lv+' risk</span></div><div class="ky-scorebar"><i style="left:'+sc+'%"></i></div><div class="ky-scorel"><span>Low</span><span>Medium</span><span>High</span></div><div class="ky-h6 mt">What drives the score</div>'+hbars(f,100,'')+'</div>'+
+      '<div><div class="ky-h6">AML screening</div><table class="ky-table ky-team"><thead><tr><th>List</th><th class="n">Best match</th><th>Result</th></tr></thead><tbody>'+aml.map(function(r){return '<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td><td>'+(r[3]==='ok'?tag('ok','✓ '+r[2]):'<span class="ky-tag warn">! '+r[2]+'</span>')+'</td></tr>';}).join('')+'</tbody></table>'+
+      '<div class="ky-h6 mt">Document checks</div>'+hbars(dc,100,'%')+'</div></div></div>';}
   function panel(k){
     var t=S.tab,p=k.p,v=k.steps[t],dec=!!k.outcome;
+    if(t==='risk') return riskPanel(k);
     var title={basic:'Basic information',address:'Address',id:'Identity document',emp:'Employment'}[t];
     var info='<div class="ky-h6">Information Details '+(t==='emp'?'':stTag(v))+'</div>';var docT='<div class="ky-h6 mt">Supporting document(s)</div>';var ver=t==='emp'?'':'<div class="ky-h6 mt">Verification</div><div class="ky-fields"><div class="ky-f"><span>Verification Type</span><div>Manual</div></div></div>';
     var body=t==='basic'?info+fields(p.basic)+ver:t==='address'?info+fields(p.address)+docT+'<div class="ky-docs"><div class="ky-doc"><span>ELECTRICITY_BILL_FRONT</span><div class="pg"></div></div><div class="ky-doc"><span>ELECTRICITY_BILL_BACK</span><div class="pg"></div></div></div>'+ver
@@ -1424,7 +1567,7 @@ button.pp-row:hover{background:var(--pp-surface)}
     var kycCard=k.outcome==='approved'?'<div class="ky-li"><span>Status</span>'+tag('ok','Verified')+'</div><div class="ky-li"><span>Last review</span>15 Mar 2023</div><div class="ky-li"><span>Next review</span>15 Mar 2024</div><div class="ky-li"><span>Risk level</span>Low</div><div class="ky-li"><span>Blocking</span>–</div><div class="ky-kbtns"><button type="button" class="ky-ob" data-info="Review date updated">Review Date</button><button type="button" class="ky-ob" data-info="KYC review triggered">Trigger KYC</button></div>'
       :k.outcome==='rejected'?'<div class="ky-li"><span>Status</span>'+tag('bad','Rejected')+'</div><div class="ky-li"><span>Last review</span>15 Mar 2023</div><div class="ky-li"><span>Reason</span>'+esc(k.reason)+'</div><div class="ky-li"><span>Risk level</span>High</div><div class="ky-li"><span>Blocking</span>15 Mar 2023</div>'
       :'<p class="ky-empty">No info during onboarding</p>';
-    var tabs=[['basic','Basic'],['address','Address'],['id','ID'],['emp','Employment']].map(function(t){var dot=KYC.indexOf(t[0])>-1&&k.steps[t[0]]==='act';return '<button type="button" role="tab" data-tab="'+t[0]+'" aria-selected="'+(S.tab===t[0])+'">'+t[1]+(dot?'<i></i>':'')+'</button>';}).join('');
+    var tabs=[['basic','Basic'],['address','Address'],['id','ID'],['emp','Employment'],['risk','Risk & AML']].map(function(t){var dot=KYC.indexOf(t[0])>-1&&k.steps[t[0]]==='act';return '<button type="button" role="tab" data-tab="'+t[0]+'" aria-selected="'+(S.tab===t[0])+'">'+t[1]+(dot?'<i></i>':'')+'</button>';}).join('');
     return '<div class="ky-crumbs"><button type="button" data-view="queue">Your Work</button> › <button type="button" data-view="retail">Customers</button> › '+(k.outcome?'Retail Customers':'Pending Review')+'</div>'+
       '<div class="ky-box"><div class="ky-ph"><button type="button" class="bk" data-view="'+(k.outcome?'retail':'queue')+'" aria-label="Back">←</button>Customer Profile<button type="button" class="hist" data-hist>⟲ History <b>'+k.ev.length+'</b></button></div><div class="ky-boxb">'+
       '<div class="ky-grid3"><div class="ky-card ky-c"><h5>'+p.name+'</h5><div class="ky-av">'+p.init+'</div><div class="ky-kv"><span>Full Name</span><span style="color:var(--k-text)">'+p.name+'</span><span>Mobile</span><span style="color:var(--k-text)">'+p.mobile+'</span><span>Email</span><span style="color:var(--k-text)">'+p.email+'</span><span>Customer ⓘ</span><span>'+custStatus(k)+'</span><span>Last Update</span><span style="color:var(--k-text)">'+(k.outcome?'15 Mar 2023 · just now':p.sub)+'</span></div></div>'+
@@ -1446,7 +1589,8 @@ button.pp-row:hover{background:var(--pp-surface)}
     return '';
   }
   var NOTES={
-    queue:['Step 1 · Queue','Every case in one list','Customers waiting for a decision sit in Pending Review, with dots showing which checks still need attention. Open John Doe to start.'],
+    dash:['Concept · Operations overview','How the team is doing, at a glance','A concept extension of the console: KPIs, SLA breaches, case flow over 30 days, where cases wait, the risk mix, rejection reasons and team workload. Hover the chart, or open Pending Review.'],
+    queue:['Step 1 · Queue','A working data table','Sort by SLA, risk or age, filter by risk, search, switch saved views (My cases, High risk, Overdue) and bulk-assign cases. Open John Doe to start a review.'],
     profile:['Step 2 · Customer profile','One view for the decision','Identity, digital access, manual review and KYC status sit side by side, so staff don’t jump between screens. Blue arrows mark the steps that need a manual check: open a tab, review the details and documents, then verify.'],
     progress:['Step 3 · Verify','Statuses update everywhere at once','Each verification updates the step, the Manual Review card and the tab, and is logged in History. Verify Basic Info, Address and ID to unlock the decision.'],
     ready:['Step 4 · Decide','Ready for a decision','With every KYC check verified, AML screening runs automatically and Approve becomes available. You can also reject with a reason.'],
@@ -1462,7 +1606,7 @@ button.pp-row:hover{background:var(--pp-surface)}
     return 'profile';
   }
   function render(){
-    main.innerHTML=S.view==='queue'?queueHTML():S.view==='retail'?retailHTML():profileHTML();
+    main.innerHTML=S.view==='dash'?dashHTML():S.view==='queue'?queueHTML():S.view==='retail'?retailHTML():profileHTML();
     if(S.layer){layer.innerHTML=layerHTML();layer.classList.add('open');}else{layer.innerHTML='';layer.classList.remove('open');}
     var n=NOTES[noteKey()];document.getElementById('ky-note-k').textContent=n[0];document.getElementById('ky-note-t').textContent=n[1];document.getElementById('ky-note-p').textContent=n[2];
     
@@ -1477,11 +1621,18 @@ button.pp-row:hover{background:var(--pp-surface)}
   }
   function openCase(id){S.cur=id;S.view='profile';S.tab='address';var k=c();var first=KYC.filter(function(s){return k.steps[s]==='act';})[0];if(first)S.tab=first;render();main.scrollTop=0;}
   root.addEventListener('click',function(e){
+    if(e.target.closest('[data-stop]')) return;
     var tr=e.target.closest('tr[data-open]'); if(tr&&root.contains(tr)){openCase(tr.dataset.open);return;}
     var t=e.target.closest('button'); if(!t||!root.contains(t)){ if(e.target.closest('[data-lclose]')){S.layer=null;render();} return; }
     if('tclose' in t.dataset){toastEl.classList.remove('show');return;}
     if('lclose' in t.dataset){S.layer=null;render();return;}
     if(t.dataset.view){S.view=t.dataset.view;S.layer=null;render();main.scrollTop=0;return;}
+    if(t.dataset.qv){S.qv=t.dataset.qv;S.pg=0;render();return;}
+    if(t.dataset.sort){if(S.sort===t.dataset.sort)S.dir=-S.dir;else{S.sort=t.dataset.sort;S.dir=t.dataset.sort==='risk'||t.dataset.sort==='age'?-1:1;}render();return;}
+    if(t.dataset.pg){S.pg=(S.pg||0)+parseInt(t.dataset.pg,10);render();main.scrollTop=0;return;}
+    if(t.dataset.riskview){S.view='queue';S.qv='all';S.fr=t.dataset.riskview;S.pg=0;render();return;}
+    if('assign' in t.dataset){var n=0;Object.keys(S.sel).forEach(function(id){if(S.sel[id]){META[id].assignee=REVIEWERS[0];n++;}});S.sel={};render();toast('info',n+(n>1?' cases':' case')+' assigned to you');return;}
+    if('clearsel' in t.dataset){S.sel={};render();return;}
     var k=S.cur?c():null;
     if(t.dataset.tab||t.dataset.tabgo){S.tab=t.dataset.tab||t.dataset.tabgo;render();return;}
     if(t.dataset.verify){var s=t.dataset.verify;if(k.steps[s]!=='act')return;k.steps[s]='ok';var nm={basic:'Basic info',address:'Address',id:'ID'}[s];log(k,'ok',nm+' verified');toast('ok',nm+' verified');
@@ -1499,6 +1650,9 @@ button.pp-row:hover{background:var(--pp-surface)}
     if('hist' in t.dataset){S.layer='hist';render();return;}
     if(t.dataset.info){log(k,'grey',t.dataset.info);toast('info',t.dataset.info);render();return;}
   });
+  root.addEventListener('change',function(e){var el=e.target;if(el.dataset&&el.dataset.sel){S.sel[el.dataset.sel]=el.checked;render();return;}if(el.id==='ky-all'){main.querySelectorAll('[data-sel]').forEach(function(c){S.sel[c.dataset.sel]=el.checked;});render();return;}if(el.id==='ky-fr'){S.fr=el.value;S.pg=0;render();}});
+  root.addEventListener('input',function(e){if(e.target.id==='ky-q'){S.q=e.target.value;S.pg=0;var pos=e.target.selectionStart;render();var q=document.getElementById('ky-q');q.focus();q.setSelectionRange(pos,pos);}});
+  root.addEventListener('mousemove',function(e){var tip=document.getElementById('ky-tip');if(!tip)return;var h=e.target.closest&&e.target.closest('[data-tip-line]');var xh=document.getElementById('ky-xh');if(!h){tip.style.display='none';if(xh)xh.style.display='none';return;}var i=+h.dataset.tipLine,o=D30[i],x=+h.getAttribute('x')+8;if(xh){xh.setAttribute('x1',x);xh.setAttribute('x2',x);xh.style.display='';}tip.innerHTML='<b>'+dlab(i)+'</b><span><i class="c1"></i>Received '+o.rec+'</span><span><i class="c2"></i>Decided '+o.dec+'</span>';var w=h.ownerSVGElement.getBoundingClientRect(),wr=tip.parentNode.getBoundingClientRect();tip.style.display='block';tip.style.left=Math.min(wr.width-130,(x/520)*w.width+12)+'px';tip.style.top='18px';});
   root.addEventListener('keydown',function(e){var tr=e.target.closest&&e.target.closest('tr[data-open]');if(tr&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openCase(tr.dataset.open);} if(e.key==='Escape'&&S.layer){e.stopPropagation();S.layer=null;render();}});
   document.getElementById('ky-restart').addEventListener('click',function(){S=fresh();toastEl.classList.remove('show');render();main.scrollTop=0;});
   render();

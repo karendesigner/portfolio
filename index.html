@@ -637,7 +637,7 @@ button.pp-row:hover{background:var(--pp-surface)}
 .pp-hrow2 .pl{grid-column:3;grid-row:2;justify-self:end;font-size:13px;font-variant-numeric:tabular-nums}
 
 
-.dkv{position:relative;width:100%;margin:var(--s3) 0 var(--s5);border-radius:12px;overflow:hidden;box-shadow:0 24px 60px -32px rgba(0,0,0,.35);aspect-ratio:1314/802}
+.dkv{position:relative;width:min(1120px,calc(100vw - 40px));left:50%;transform:translateX(-50%);margin:var(--s4) 0 var(--s5);border-radius:12px;overflow:hidden;box-shadow:0 24px 60px -32px rgba(0,0,0,.35);aspect-ratio:1314/802}
 .dkv iframe{position:absolute;left:0;top:0;width:1314px;height:802px;border:0;transform-origin:0 0;background:#fff}
 /* ===== Transaction search prototype ===== */
 .ts{display:grid;grid-template-columns:350px 1fr;gap:32px;align-items:start;margin:var(--s4) 0 var(--s5)}

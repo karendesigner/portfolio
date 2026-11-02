@@ -637,6 +637,8 @@ button.pp-row:hover{background:var(--pp-surface)}
 .pp-hrow2 .pl{grid-column:3;grid-row:2;justify-self:end;font-size:13px;font-variant-numeric:tabular-nums}
 
 
+.dkv{position:relative;width:100%;margin:var(--s3) 0 var(--s5);border-radius:12px;overflow:hidden;box-shadow:0 24px 60px -32px rgba(0,0,0,.35);aspect-ratio:1314/802}
+.dkv iframe{position:absolute;left:0;top:0;width:1314px;height:802px;border:0;transform-origin:0 0;background:#fff}
 /* ===== Transaction search prototype ===== */
 .ts{display:grid;grid-template-columns:350px 1fr;gap:32px;align-items:start;margin:var(--s4) 0 var(--s5)}
 @media (max-width:760px){.ts{grid-template-columns:1fr;justify-items:center}.ts-side{width:100%;max-width:400px}}
@@ -1091,13 +1093,17 @@ i.c1{background:#8A1FB5}i.c2{background:#1F9EA8}
       </aside>
     </div>
 
-    <h3><span class="mono">07</span>Design system</h3>
+    <h3><span class="mono">07</span>Desktop overview</h3>
+    <p>The same product on a larger screen. The bottom tab bar becomes a sidebar, the summary sits in one row of cards, and holdings move into a sortable table. Selecting a holding opens its details in the right-hand panel instead of a new screen. Try sorting the table, switching the chart range or selecting a holding.</p>
+    <div class="dkv" id="dkv"><iframe src="desktop-overview.html" title="Investment App desktop overview, interactive preview" loading="lazy" tabindex="0"></iframe></div>
+
+    <h3><span class="mono">08</span>Design system</h3>
     <p>To make the product scalable, I created a design system with reusable tokens, variables and components. It supported both mobile and web, sped up delivery and kept the brand consistent for future European launches.</p>
 
-    <h3><span class="mono">08</span>Dark mode and accessibility</h3>
+    <h3><span class="mono">09</span>Dark mode and accessibility</h3>
     <p>I added dark mode on the same token architecture, so colours adapt across themes without extra component variants. I also applied WCAG standards to colour contrast, typography and interaction states, so the system is accessible by default and needs less rework from designers and developers.</p>
 
-    <h3><span class="mono">09</span>Learnings</h3>
+    <h3><span class="mono">10</span>Learnings</h3>
     <ul>
       <li><strong>Localisation matters:</strong> research showed that reusing the UK app would have failed in France.</li>
       <li><strong>Balance simplicity and sophistication:</strong> investors valued clarity, but advanced users also needed depth.</li>
@@ -2351,5 +2357,10 @@ i.c1{background:#8A1FB5}i.c2{background:#1F9EA8}
 
 
 
+<script>
+(function(){var w=document.getElementById('dkv');if(!w)return;var f=w.querySelector('iframe');
+function fit(){var s=w.clientWidth/1314;f.style.transform='scale('+s+')';}
+fit();if(window.ResizeObserver)new ResizeObserver(fit).observe(w);else window.addEventListener('resize',fit);})();
+</script>
 </body>
 </html>

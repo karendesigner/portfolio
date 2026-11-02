@@ -1068,7 +1068,7 @@ i.c1{background:#8A1FB5}i.c2{background:#1F9EA8}
     </ul>
 
         <h3><span class="mono">06</span>Try the prototype</h3>
-    <p>Tap through the core journey I designed: welcome → overview → search → market details → deal ticket → review. It's rebuilt in code from the final designs, with sample data. Switch the theme to see the token-based dark mode.</p>
+    <p>Tap through the core journey I designed: overview → search → market details → deal ticket → review. It's rebuilt in code from the final designs, with sample data. Switch the theme to see the token-based dark mode.</p>
     <div class="pp" id="pp">
       <div class="pp-device" data-theme="light">
         <div class="pp-sbar" id="pp-sbar" aria-hidden="true"></div><div class="pp-screen" id="pp-screen" aria-live="polite"></div>
@@ -1456,7 +1456,7 @@ i.c1{background:#8A1FB5}i.c2{background:#1F9EA8}
   var POPULAR=['GOOGL','BARC','NVDA','SPOT','TSLA','V'];
   var HOLD=[{id:'AMZN',sh:51,book:10000},{id:'AMC',sh:142,book:656.94},{id:'BP',sh:121,book:595.55},{id:'DBS',sh:42,book:973.50},{id:'GOOG',sh:121,book:14729.33}];
   HOLD.forEach(function(h){h.tot=(A[h.id].p*h.sh/h.book-1)*100;});
-  var STEPS=[['welcome','Welcome'],['overview','Overview'],['search','Search'],['market','Market details'],['ticket','Deal ticket'],['review','Review']];
+  var STEPS=[['overview','Overview'],['search','Search'],['market','Market details'],['ticket','Deal ticket'],['review','Review']];
   var NOTES={
     welcome:['A welcoming first impression','The UK app felt "elitist" to European investors. The new onboarding leads with an approachable message and the two things they cared about: choice and 0% commission. Skip for now lets people explore before signing up.'],
     overview:['Dashboard first','Holdings are the home screen, so new investors land on one clear starting point. P&L labels say "Today" and "Total" explicitly, a fix from usability testing. Tap a holding to expand it.'],
@@ -1471,7 +1471,7 @@ i.c1{background:#8A1FB5}i.c2{background:#1F9EA8}
     odetail:['Order details','Every order has one clear status (In progress, Completed or Canceled) with its price, time and how much is filled. In-progress orders can be canceled after a confirmation step; finished ones offer “Place another order”.'],
     account:['A fixed constraint','Technical dependencies meant the account page couldn\'t change. I designed the surrounding flows so it still felt part of one product.']
   };
-  function fresh(){return {screen:'welcome',tab:'investments',q:'',asset:null,mtab:'summary',side:'buy',type:'market',amt:250,orders:[],open:null,justDone:false,oseg:'progress',ord:ORD0(),oid:null,pseg:'tx',tx:TX0(),iseg:'shares',cat:'immo',prev:'search',sheet:false,back:'overview',sp:'24h',cmk:'us',cpg:18,cdesc:true,cper:'1Y',dpg:1,more:false,pr:'1M',hs:'val'};}
+  function fresh(){return {screen:'overview',tab:'investments',q:'',asset:null,mtab:'summary',side:'buy',type:'market',amt:250,orders:[],open:null,justDone:false,oseg:'progress',ord:ORD0(),oid:null,pseg:'tx',tx:TX0(),iseg:'shares',cat:'immo',prev:'search',sheet:false,back:'overview',sp:'24h',cmk:'us',cpg:18,cdesc:true,cper:'1Y',dpg:1,more:false,pr:'1M',hs:'val'};}
   var S=fresh();
   function eur(x){return x.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+'€';}
   function pct(x){return (x>0?'+':'')+x.toLocaleString('de-DE',{minimumFractionDigits:x%1?1:1,maximumFractionDigits:2})+'%';}
